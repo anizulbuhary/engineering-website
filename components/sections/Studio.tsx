@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
 import { principles, contact } from "@/content/pages";
 import { ContactForm } from "@/components/forms/ContactForm";
@@ -5,7 +6,10 @@ import { sectionCopy as copy } from "@/content/sections";
 export function StudioImage() {
   return (
     <figure className="shell">
-      <div className="relative aspect-[4/3] md:aspect-[2.4/1]">
+      <Reveal
+        variant="image"
+        className="relative aspect-[4/3] md:aspect-[2.4/1]"
+      >
         <Image
           src="/images/projects/courtyard.webp"
           alt="Illustrative concrete courtyard and colonnade"
@@ -13,7 +17,7 @@ export function StudioImage() {
           sizes="100vw"
           className="object-cover"
         />
-      </div>
+      </Reveal>
       <figcaption className="eyebrow text-muted mt-4">
         {copy.studio.imageCaption}
       </figcaption>
@@ -33,13 +37,17 @@ export function Principles({ about = false }: { about?: boolean }) {
       </div>
       <div>
         {principles.map((p, i) => (
-          <article key={p.title} className="border-t border-line pt-7 pb-10">
+          <Reveal
+            as="article"
+            key={p.title}
+            className="border-t border-line pt-7 pb-10"
+          >
             <span className="eyebrow text-accent">0{i + 1}</span>
             <h3 className="text-2xl md:text-3xl tracking-tight mt-4">
               {p.title}
             </h3>
             <p className="text-muted leading-relaxed mt-5 max-w-xl">{p.text}</p>
-          </article>
+          </Reveal>
         ))}
       </div>
     </section>

@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
 import type { Project } from "@/types/content";
 import { projects } from "@/content/projects";
@@ -15,7 +16,10 @@ export function ProjectDetail({ project: p }: { project: Project }) {
             {p.description}
           </p>
         </div>
-        <div className="relative aspect-[4/3] md:aspect-[2/1]">
+        <Reveal
+          variant="image"
+          className="relative aspect-[4/3] md:aspect-[2/1]"
+        >
           <Image
             src={p.image}
             alt={p.alt}
@@ -24,7 +28,7 @@ export function ProjectDetail({ project: p }: { project: Project }) {
             sizes="100vw"
             className="object-cover"
           />
-        </div>
+        </Reveal>
         <p className="eyebrow text-muted mt-4">
           ILLUSTRATIVE RENDERING / NOT A COMPLETED CLIENT PROJECT
         </p>

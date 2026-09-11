@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
 import type { Article } from "@/types/content";
 import { Breadcrumbs, TextLink } from "@/components/ui/Primitives";
@@ -12,7 +13,10 @@ export function ArticleDetail({ article: a }: { article: Article }) {
         <p className="eyebrow mt-8">FORMWORK EDITORIAL / INTRODUCTORY NOTE</p>
       </header>
       <figure>
-        <div className="relative aspect-[4/3] md:aspect-[2.4/1]">
+        <Reveal
+          variant="image"
+          className="relative aspect-[4/3] md:aspect-[2.4/1]"
+        >
           <Image
             src={a.image}
             alt="Illustrative architectural structure accompanying this editorial note"
@@ -21,7 +25,7 @@ export function ArticleDetail({ article: a }: { article: Article }) {
             sizes="100vw"
             className="object-cover"
           />
-        </div>
+        </Reveal>
         <figcaption className="eyebrow text-muted mt-4">
           CONCEPT VISUAL
         </figcaption>

@@ -1,8 +1,33 @@
-export const engineeringStory = {
-  label: "01 / FROM MODEL TO EXECUTION",
-  title: "See the structure.\nUnderstand the process.",
-  intro:
-    "One structure. Six perspectives. A connected journey from architectural intent to an organized delivery package.",
+export const immersiveStory = {
+  label: "THE ENGINEERING EXPERIENCE",
+  kicker: "ONE BUILDING. EVERY DISCIPLINE.",
+  title: ["Beyond", "the surface."],
+  words: ["FORM", "STRUCTURE", "DETAIL", "SYSTEMS", "DRAWING", "RESOLVED"],
+  nav: ["Form", "Structure", "Detail", "Systems", "Drawing", "Resolved"],
+  views: [
+    "01 / ARCHITECTURAL FORM",
+    "02 / EXPLODED STRUCTURE",
+    "03 / REINFORCEMENT STUDY",
+    "04 / SYSTEM COORDINATION",
+    "05 / ELEVATION STUDY",
+    "06 / ASSEMBLED MODEL",
+  ],
+  scroll: "SCROLL TO REVEAL",
+  pause: "Pause motion",
+  resume: "Resume motion",
+  pausedLabel: "THE ENGINEERING EXPERIENCE / STILL VIEW",
+  posterAlt:
+    "Architectural illustration of the completed terraced pavilion, with a finished roof and pale concrete floors",
+};
+export const editorialHero = {
+  label: "PRECISION. FROM THE INSIDE OUT.",
+  title: ["Engineering", "what", "endures."],
+  action: "Enter the experience",
+  scroll: "DISCOVER WHAT HOLDS IT ALL TOGETHER",
+  image: "/images/projects/frame.webp",
+  imageAlt:
+    "Concept image of an exposed concrete structure with repeating floor slabs, columns and reinforcement",
+  caption: "01 / THE FRAME / CONCEPT STUDY",
 };
 export const engineeringStages = [
   {

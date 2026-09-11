@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -13,9 +14,12 @@ export function ProjectCard({
 }) {
   const Heading = headingLevel;
   return (
-    <article>
-      <Link href={`/projects/${project.slug}`} className="group block">
-        <div className="relative aspect-[4/3] overflow-hidden bg-concrete">
+    <Reveal as="article" delay={(index % 2) * 90}>
+      <Link
+        href={`/projects/${project.slug}`}
+        className="project-link group block"
+      >
+        <div className="project-image relative aspect-[4/3] overflow-hidden bg-concrete">
           <Image
             src={project.image}
             alt={project.alt}
@@ -26,7 +30,7 @@ export function ProjectCard({
           <span className="absolute left-4 top-4 bg-paper px-3 py-1.5 eyebrow">
             CONCEPT STUDY / 0{index + 1}
           </span>
-          <span className="absolute bottom-5 right-5 grid h-11 w-11 place-items-center bg-paper text-ink">
+          <span className="project-arrow absolute bottom-5 right-5 grid h-11 w-11 place-items-center bg-paper text-ink">
             <ArrowUpRight size={20} aria-hidden />
           </span>
         </div>
@@ -38,6 +42,6 @@ export function ProjectCard({
         </div>
         <p className="text-xs text-muted mt-2">{project.scope}</p>
       </Link>
-    </article>
+    </Reveal>
   );
 }

@@ -240,7 +240,7 @@ test("Reduced motion and JavaScript-free content remain usable", async ({
   await staticPage.goto("/");
   await expect(staticPage.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(
-    staticPage.getByRole("link", { name: "Explore our work" }),
+    staticPage.getByRole("link", { name: "Enter the experience" }),
   ).toBeVisible();
   await staticPage.goto("/contact");
   await expect(

@@ -62,7 +62,7 @@ export function Header() {
                 key={n.href}
                 href={n.href}
                 aria-current={path.startsWith(n.href) ? "page" : undefined}
-                className="py-3 hover:text-accent aria-[current=page]:text-accent"
+                className="navigation-link py-3 hover:text-accent aria-[current=page]:text-accent"
               >
                 {n.label}
               </Link>
@@ -88,7 +88,7 @@ export function Header() {
         onKeyDown={containDialogFocus}
         ref={dialog}
         onClose={() => trigger.current?.focus()}
-        className="fixed inset-0 m-0 ml-auto h-dvh max-h-none w-full max-w-md bg-paper p-7 text-ink"
+        className="navigation-dialog fixed inset-0 m-0 ml-auto h-dvh max-h-none w-full max-w-md bg-paper p-7 text-ink"
       >
         <div className="flex justify-between items-center mb-12">
           <Brand />

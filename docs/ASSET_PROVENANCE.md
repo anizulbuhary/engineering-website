@@ -6,7 +6,7 @@ All four raster source images were generated for this project with the **built-i
 
 | Project asset | Use |
 | --- | --- |
-| `public/images/projects/frame.webp` | Homepage hero, The Frame study, coordination article |
+| `public/images/projects/frame.webp` | Editorial hero, The Frame study, coordination article |
 | `public/images/projects/courtyard.webp` | About, Courtyard House study, documentation article |
 | `public/images/projects/civic.webp` | Civic Exchange study, delivery article |
 | `public/images/projects/campus.webp` | Northlight Campus study |
@@ -17,7 +17,7 @@ All four raster source images were generated for this project with the **built-i
 
 Source PNGs remain in the original imagegen output directory under the operator's Codex home; deployed code references only workspace assets. WebP optimization and the social derivative use Sharp. Diagrams and PDFs are schematic demonstrations, not verified engineering documents; they intentionally do not specify construction dimensions or certified reinforcement designs.
 
-Geist Sans and Geist Mono are provided through `next/font/google`, downloaded at build time and self-hosted. UI icons come from Lucide. The engineering story is an original React SVG illustration; no Spline or third-party model is loaded.
+Geist Sans and Geist Mono are provided through `next/font/google`, downloaded at build time and self-hosted. UI icons come from Lucide. The engineering story uses an original procedural Blender pavilion displayed through Three.js. The editorial hero reuses The Frame concept image, with its origin labeled in the caption. The retired colonnade sequence is no longer shipped. The architectural model has a supported roof and parapets, covered setbacks, connected window rails and grounded podium/steps. Original React SVG illustrations provide static chapter fallbacks. No Spline or third-party model is loaded. See [Blender asset provenance and regeneration](BLENDER_EXPERIENCE.md).
 
 ## Exact generation prompts
 

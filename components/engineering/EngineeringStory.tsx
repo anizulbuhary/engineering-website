@@ -1,86 +1,385 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+﻿"use client";
+
+import Image from "next/image";
 import {
-  engineeringStages,
-  engineeringStory,
-} from "@/content/engineering-story";
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
+import { ArrowDown, Pause, Play } from "lucide-react";
+import { engineeringStages, immersiveStory } from "@/content/engineering-story";
 import { StructureDrawing } from "./StructureDrawing";
+import type { mountEngineeringScene } from "@/lib/engineering-scene";
+
+const preference = "(prefers-reduced-motion: no-preference)";
+function subscribe(callback: () => void) {
+  const media = matchMedia(preference);
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+}
+
 export function EngineeringStory() {
+  const capable = useSyncExternalStore(
+    subscribe,
+    () => matchMedia(preference).matches,
+    () => false,
+  );
+  const [paused, setPaused] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [ready, setReady] = useState(false);
   const [active, setActive] = useState(0);
-  const sections = useRef<(HTMLDivElement | null)[]>([]);
-  const reduced = useReducedMotion();
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries)
-          if (e.isIntersecting)
-            setActive(Number(e.target.getAttribute("data-stage")));
-      },
-      { rootMargin: "-25% 0px -45% 0px", threshold: 0 },
-    );
-    sections.current.forEach((el) => {
-      if (el) observer.observe(el);
+  const [openingImage, setOpeningImage] = useState<string | null>(null);
+  const [returning, setReturning] = useState(false);
+  const section = useRef<HTMLElement>(null);
+  const host = useRef<HTMLDivElement>(null);
+  const meter = useRef<HTMLDivElement>(null);
+  const scene = useRef<ReturnType<typeof mountEngineeringScene> | null>(null);
+  const progress = useRef(0);
+  const alignAfterToggle = useRef(false);
+  const cancelReturn = useRef<(() => void) | null>(null);
+  const immersive = capable && !failed && !paused;
+  const modelView = capable && !failed;
+
+  useEffect(() => () => cancelReturn.current?.(), []);
+
+  useLayoutEffect(() => {
+    if (!alignAfterToggle.current || !section.current) return;
+    alignAfterToggle.current = false;
+    window.scrollTo({
+      top: section.current.getBoundingClientRect().top + scrollY - 88,
+      behavior: "instant",
     });
-    return () => observer.disconnect();
-  }, []);
+    // Scrolling rounds to whole pixels; preserve the sticky frame's exact
+    // position when its replacement enters normal document flow.
+    section.current.style.setProperty(
+      "--story-alignment",
+      `${paused ? 88 - section.current.getBoundingClientRect().top : 0}px`,
+    );
+  }, [paused]);
+
+  useEffect(() => {
+    if (!immersive || !section.current || !host.current) return;
+    let cancelled = false;
+    const element = host.current;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        import("@/lib/engineering-scene")
+          .then(({ mountEngineeringScene }) => {
+            if (cancelled) return;
+            scene.current = mountEngineeringScene(
+              element,
+              () => setReady(true),
+              () => setFailed(true),
+            );
+            scene.current.setProgress(progress.current);
+          })
+          .catch(() => {
+            if (!cancelled) setFailed(true);
+          });
+      },
+      { rootMargin: "100px" },
+    );
+    observer.observe(section.current);
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+      scene.current?.dispose();
+      scene.current = null;
+    };
+  }, [immersive]);
+
+  useEffect(() => {
+    if (!immersive) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      if (!section.current || cancelReturn.current) return;
+      const rect = section.current.getBoundingClientRect();
+      const stage = section.current.querySelector(
+        ".engineering-stage",
+      ) as HTMLElement;
+      const travel = Math.max(
+        1,
+        section.current.offsetHeight - stage.offsetHeight,
+      );
+      // Browser scroll positions round to pixels; keep the opening exact.
+      const offset = 88 - rect.top;
+      const value = offset <= 1 ? 0 : Math.max(0, Math.min(1, offset / travel));
+      progress.current = value;
+      scene.current?.setProgress(value);
+      meter.current?.style.setProperty("transform", `scaleX(${value})`);
+      setActive(Math.min(5, Math.round(value * 5)));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    addEventListener("scroll", schedule, { passive: true });
+    addEventListener("resize", schedule);
+    schedule();
+    return () => {
+      cancelAnimationFrame(frame);
+      removeEventListener("scroll", schedule);
+      removeEventListener("resize", schedule);
+    };
+  }, [immersive]);
+
+  const goTo = (index: number) => {
+    if (!section.current) return;
+    const top = section.current.getBoundingClientRect().top + scrollY - 88;
+    const stage = section.current.querySelector(
+      ".engineering-stage",
+    ) as HTMLElement;
+    const travel = Math.max(
+      1,
+      section.current.offsetHeight - stage.offsetHeight,
+    );
+    window.scrollTo({ top: top + (travel * index) / 5, behavior: "smooth" });
+  };
+  const toggle = () => {
+    if (cancelReturn.current) return;
+    const activate = () => {
+      alignAfterToggle.current = true;
+      progress.current = 0;
+      setActive(0);
+      if (!paused) {
+        try {
+          setOpeningImage(scene.current?.captureOpening() ?? null);
+        } catch {
+          setFailed(true);
+        }
+      }
+      setReturning(false);
+      setReady(false);
+      setPaused(!paused);
+    };
+    if (paused || !section.current) {
+      activate();
+      return;
+    }
+
+    // Rewind the visible model and page together, then capture that exact
+    // opening in the same layout before removing the live renderer.
+    const from = scrollY;
+    const fromProgress = scene.current?.getProgress() ?? progress.current;
+    const destination = Math.max(
+      0,
+      section.current.getBoundingClientRect().top + from - 88,
+    );
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    if (
+      motion.matches ||
+      (Math.abs(destination - from) < 2 && fromProgress < 0.001)
+    ) {
+      window.scrollTo({ top: destination, behavior: "instant" });
+      activate();
+      return;
+    }
+    let frame = 0;
+    let previousTime = performance.now();
+    let elapsed = 0;
+    const cancel = () => {
+      cancelAnimationFrame(frame);
+      cancelReturn.current = null;
+      setReturning(false);
+      removeEventListener("wheel", cancel);
+      removeEventListener("touchstart", cancel);
+      removeEventListener("pointerdown", cancel);
+      removeEventListener("keydown", onKey);
+      motion.removeEventListener("change", cancel);
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (
+        [
+          "Escape",
+          "ArrowUp",
+          "ArrowDown",
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End",
+          " ",
+        ].includes(event.key)
+      )
+        cancel();
+    };
+    const step = (time: number) => {
+      // Preserve visible steps on slower GPUs instead of skipping the rewind.
+      elapsed += Math.min(65, Math.max(0, time - previousTime));
+      previousTime = time;
+      const fraction = Math.min(1, elapsed / 650);
+      const eased = fraction * fraction * (3 - 2 * fraction);
+      const value = fromProgress * (1 - eased);
+      progress.current = value;
+      scene.current?.setProgress(value, true);
+      setActive(Math.min(5, Math.round(value * 5)));
+      meter.current?.style.setProperty("transform", `scaleX(${value})`);
+      window.scrollTo({
+        top: from + (destination - from) * eased,
+        behavior: "instant",
+      });
+      if (fraction < 1) frame = requestAnimationFrame(step);
+      else {
+        cancel();
+        activate();
+      }
+    };
+    cancelReturn.current = cancel;
+    setReturning(true);
+    addEventListener("wheel", cancel, { passive: true });
+    addEventListener("touchstart", cancel, { passive: true });
+    addEventListener("pointerdown", cancel, { passive: true });
+    addEventListener("keydown", onKey);
+    motion.addEventListener("change", cancel);
+    window.scrollTo({ top: from, behavior: "instant" });
+    frame = requestAnimationFrame(step);
+  };
+
   return (
-    <section className="bg-[#263024] text-paper">
-      <div className="shell section-space">
-        <div className="grid md:grid-cols-2 gap-10 mb-14">
-          <p className="eyebrow text-[#d5b396]">{engineeringStory.label}</p>
-          <div>
-            <h2 className="heading whitespace-pre-line">
-              {engineeringStory.title}
-            </h2>
-            <p className="mt-6 text-sm leading-relaxed text-concrete max-w-md">
-              {engineeringStory.intro}
-            </p>
-          </div>
+    <section
+      id="engineering-story"
+      ref={section}
+      data-returning={returning || undefined}
+      className={`engineering-experience ${modelView ? "has-model-view" : ""} ${immersive ? "is-immersive" : "is-static"} ${paused && capable && !failed ? "is-paused" : ""}`}
+      aria-label="Anatomy of a building"
+    >
+      <div className="engineering-stage">
+        <div className="engineering-topline">
+          <p className="eyebrow">
+            <span className="story-dot" />{" "}
+            {paused && capable && !failed
+              ? immersiveStory.pausedLabel
+              : immersiveStory.label}
+          </p>
+          {capable && !failed && (
+            <button
+              className="story-motion eyebrow"
+              onClick={toggle}
+              aria-pressed={paused}
+              disabled={returning || (!ready && !paused)}
+            >
+              {paused ? <Play size={12} /> : <Pause size={12} />}{" "}
+              {paused ? immersiveStory.resume : immersiveStory.pause}
+            </button>
+          )}
         </div>
-        <div className="grid md:grid-cols-2 gap-10 lg:gap-20">
-          <div className="hidden md:block">
-            <div className="sticky top-30">
-              <motion.div
-                key={active}
-                animate={{ opacity: 1 }}
-                initial={reduced ? false : { opacity: 0.65 }}
-                transition={{ duration: reduced ? 0 : 0.35 }}
-              >
-                <StructureDrawing stage={active} />
-              </motion.div>
-              <div className="flex justify-between border-t border-white/25 pt-5 eyebrow text-concrete">
-                <span>ANATOMY OF A DELIVERY</span>
-                <span>{engineeringStages[active].label}</span>
+        {modelView ? (
+          <>
+            <div className="engineering-backword" aria-hidden="true">
+              {immersiveStory.words[active]}
+            </div>
+            <div className="engineering-visual" aria-hidden="true">
+              {openingImage && (
+                <div
+                  className={`story-paused-image ${immersive && ready ? "is-hidden" : ""}`}
+                >
+                  <Image
+                    src={openingImage}
+                    alt={immersiveStory.posterAlt}
+                    fill
+                    unoptimized
+                  />
+                </div>
+              )}
+              {!openingImage && (
+                <Image
+                  src="/models/pavilion-roofline.webp"
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 75vw, 100vw"
+                  className={`story-poster ${ready ? "is-loaded" : ""}`}
+                />
+              )}
+              {immersive && (
+                <div
+                  ref={host}
+                  className={`engineering-canvas ${ready ? "is-ready" : ""} ${openingImage ? "has-opening" : ""}`}
+                />
+              )}
+            </div>
+            <div className="engineering-narrative">
+              <p className="eyebrow story-kicker">{immersiveStory.kicker}</p>
+              <h2 className="story-heading">
+                {immersiveStory.title[0]}
+                <br />
+                <span>{immersiveStory.title[1]}</span>
+              </h2>
+              <div className="story-chapter" key={active}>
+                <p className="eyebrow story-chapter-label">
+                  0{active + 1} / {engineeringStages[active].label}
+                </p>
+                <h3>{engineeringStages[active].title}</h3>
+                <p className="story-description">
+                  {engineeringStages[active].description}
+                </p>
               </div>
             </div>
-          </div>
-          <div>
-            {engineeringStages.map((s, i) => (
-              <div
-                key={s.id}
-                data-stage={i}
-                ref={(el) => {
-                  sections.current[i] = el;
-                }}
-                className="py-9 md:min-h-[260px] md:flex md:flex-col md:justify-center border-t border-white/20"
-              >
-                <div className="md:hidden mb-6">
-                  <StructureDrawing stage={i} />
+            <div className="story-model-note eyebrow" aria-hidden="true">
+              <span>FW—01 / CONCEPT PAVILION</span>
+              <span>{immersiveStory.views[active]}</span>
+            </div>
+            {immersive && (
+              <>
+                <div className="story-bottom">
+                  <nav
+                    className="story-chapters"
+                    aria-label="Building story chapters"
+                  >
+                    {engineeringStages.map((stage, i) => (
+                      <button
+                        key={stage.id}
+                        onClick={() => goTo(i)}
+                        aria-current={active === i ? "step" : undefined}
+                        aria-label={`Chapter ${i + 1}: ${stage.label}`}
+                      >
+                        <span className="eyebrow">0{i + 1}</span>
+                        <span>{immersiveStory.nav[i]}</span>
+                      </button>
+                    ))}
+                  </nav>
+                  <div className="story-scroll eyebrow">
+                    <ArrowDown size={14} /> {immersiveStory.scroll}
+                  </div>
                 </div>
-                <p className="eyebrow text-[#d5b396] mb-5">
-                  0{i + 1} / {s.label}
-                </p>
-                <h3 className="text-2xl md:text-3xl tracking-[-.035em]">
-                  {s.title}
-                </h3>
-                <p className="text-sm leading-relaxed text-concrete max-w-sm mt-4">
-                  {s.description}
-                </p>
-              </div>
-            ))}
+                <div className="story-progress" aria-hidden="true">
+                  <div ref={meter} />
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <div className="story-static-content">
+            <p className="eyebrow story-kicker">{immersiveStory.kicker}</p>
+            <h2 className="story-heading">{immersiveStory.title.join(" ")}</h2>
+            <div className="story-static-poster">
+              <Image
+                src="/models/pavilion-roofline.webp"
+                alt="Blender-created architectural model of a terraced pavilion with bronze facade fins and pale concrete floors"
+                fill
+                sizes="(min-width: 768px) 70vw, 100vw"
+              />
+            </div>
+            <div className="story-static-chapters">
+              {engineeringStages.map((stage, i) => (
+                <article key={stage.id}>
+                  <div className="story-static-drawing">
+                    <StructureDrawing stage={i} />
+                  </div>
+                  <div>
+                    <p className="eyebrow story-chapter-label">
+                      0{i + 1} / {stage.label}
+                    </p>
+                    <h3>{stage.title}</h3>
+                    <p className="story-description">{stage.description}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

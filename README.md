@@ -26,7 +26,7 @@ No credentials or external services are needed. Next.js downloads the Geist font
 - Four statically generated concept case studies and three full editorial articles using dynamic routes.
 - Six original SVG sample sheets with matching real PDF downloads.
 - Responsive project/sample filters, native modal previews and mobile navigation with focus containment and restoration.
-- A six-stage engineering illustration story: sticky on desktop, stacked on mobile, ordinary browser scrolling and reduced-motion support.
+- An editorial hero with oversized type and a scroll-linked structural image reveal, plus a live six-stage Three.js engineering story on desktop and phones, with chapter navigation and accessible fallbacks.
 - A contact form preview that prevents submission and has no persistence, requests, uploads or simulated success state.
 - Page metadata, a social preview image, favicon, custom 404 and demo privacy/terms page.
 
@@ -76,14 +76,14 @@ Set `SITE_URL` to the verified HTTPS origin before building to generate real sit
 
 All pages deliberately remain **noindex, nofollow**, even when a domain is configured. `robots.txt` permits crawling so crawlers can read those directives. Replace/confirm company identity, project claims, contact information and legal copy before changing the root metadata's indexing policy. No client logos, testimonials or invented delivery metrics are included.
 
-## Deferred work
+## Implementation status
 
 - **Enquiries:** no Google Apps Script, Sheets connection, API route, server action, upload or submission handler. The user explicitly deferred this. Add real contact details and separately implement/validate submission before enabling the button.
-- **Live Spline:** the agreed illustrated alternative is complete. Replace only the visual renderer when a suitable scene is supplied; preserve HTML narrative, normal scrolling and static/mobile/reduced-motion fallbacks.
+- **3D experience:** implemented with Blender and Three.js. See [asset generation and runtime notes](docs/BLENDER_EXPERIENCE.md). Spline is not required.
 - **Deployment:** configuration is ready, but no public site or connected account was created.
 
 ## Assets and design sources
 
 See [asset provenance and generation prompts](docs/ASSET_PROVENANCE.md). The four generated concept images are optimized WebP files in `public/images/projects/`; the original generated PNGs are not required to run or build the site. `node scripts/prepare-assets.mjs` regenerates the SVG/PDF sheets and favicon. Passing the original source directory additionally regenerates the image derivatives.
 
-Project guidance: [design](docs/frontend-design-guide.md), [content](docs/content.md), [architecture](docs/REPO_STRUCTURE.md), [Spline plan](docs/SPLINE_PLAN.md). The user's approved plan supersedes live Spline and enquiry submission for this version. Small accent text uses a darker burnt-orange variant to meet contrast requirements.
+Project guidance: [design](docs/frontend-design-guide.md), [content](docs/content.md), [architecture](docs/REPO_STRUCTURE.md), [Spline plan](docs/SPLINE_PLAN.md). The Blender experience supersedes the original Spline proposal; enquiry submission remains deferred. Small accent text uses a darker burnt-orange variant to meet contrast requirements.

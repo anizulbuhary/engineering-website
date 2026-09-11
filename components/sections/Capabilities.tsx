@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import { services } from "@/content/services";
 import { TextLink } from "@/components/ui/Primitives";
 import { sectionCopy as copy } from "@/content/sections";
@@ -6,7 +7,7 @@ export function Capabilities({ full = false }: { full?: boolean }) {
   return (
     <section className="shell section-space border-t border-line">
       {!full && (
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <Reveal className="grid md:grid-cols-2 gap-8 mb-16">
           <p className="eyebrow text-accent">{copy.capabilities.label}</p>
           <div>
             <h2 className="heading whitespace-pre-line">
@@ -16,14 +17,14 @@ export function Capabilities({ full = false }: { full?: boolean }) {
               {copy.capabilities.description}
             </p>
           </div>
-        </div>
+        </Reveal>
       )}
       <div>
         {(full ? services : services.slice(0, 4)).map((s, i) => (
-          <div
+          <Reveal
             key={s.id}
             id={s.id}
-            className="group grid grid-cols-[30px_1fr] md:grid-cols-[60px_1fr_1fr] gap-x-4 md:gap-x-8 py-8 md:py-10 border-t border-line"
+            className="capability-row group grid grid-cols-[30px_1fr] md:grid-cols-[60px_1fr_1fr] gap-x-4 md:gap-x-8 py-8 md:py-10 border-t border-line"
           >
             <span className="eyebrow text-accent pt-2">0{i + 1}</span>
             <Heading className="text-2xl md:text-3xl tracking-[-.035em]">
@@ -43,7 +44,7 @@ export function Capabilities({ full = false }: { full?: boolean }) {
                 </ul>
               )}
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
       {!full && (

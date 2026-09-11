@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -6,10 +7,10 @@ export function ArticleList({ articles }: { articles: Article[] }) {
   return (
     <section className="shell pb-24">
       {articles.map((a, i) => (
-        <article key={a.slug} className="border-t border-line py-9">
+        <Reveal as="article" key={a.slug} className="border-t border-line py-9">
           <Link
             href={`/insights/${a.slug}`}
-            className="group grid md:grid-cols-[1fr_2fr_40px] gap-7 md:gap-12"
+            className="article-link group grid md:grid-cols-[1fr_2fr_40px] gap-7 md:gap-12"
           >
             <div className="relative aspect-[1.6/1] overflow-hidden">
               <Image
@@ -33,7 +34,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
             </div>
             <ArrowUpRight className="hidden md:block self-center" aria-hidden />
           </Link>
-        </article>
+        </Reveal>
       ))}
     </section>
   );

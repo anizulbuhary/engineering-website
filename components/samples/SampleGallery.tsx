@@ -45,7 +45,7 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
         {filtered.map((s) => (
           <article key={s.id}>
             <button
-              className="group relative w-full bg-concrete p-5 md:p-8"
+              className="sample-preview group relative w-full bg-concrete p-5 md:p-8"
               onClick={(e) => {
                 opener.current = e.currentTarget;
                 setSelected(samples.indexOf(s));
@@ -93,7 +93,7 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
             move(-1);
           }
         }}
-        className="m-auto w-[calc(100%-32px)] max-w-5xl max-h-[90dvh] bg-paper text-ink p-5 md:p-8"
+        className="sample-dialog m-auto w-[calc(100%-32px)] max-w-5xl max-h-[90dvh] bg-paper text-ink p-5 md:p-8"
       >
         <div className="flex justify-between gap-5 items-center mb-5">
           <div>

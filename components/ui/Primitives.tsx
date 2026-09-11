@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { ReactNode } from "react";
@@ -33,7 +34,9 @@ export function PageHero({
   return (
     <section className="shell pt-18 pb-18 md:pt-28 md:pb-24">
       <p className="eyebrow text-accent mb-9">{label}</p>
-      <h1 className="display whitespace-pre-line max-w-6xl">{title}</h1>
+      <Reveal>
+        <h1 className="display whitespace-pre-line max-w-6xl">{title}</h1>
+      </Reveal>
       <p className="mt-10 max-w-xl text-base md:text-lg leading-relaxed text-muted md:ml-auto">
         {intro}
       </p>

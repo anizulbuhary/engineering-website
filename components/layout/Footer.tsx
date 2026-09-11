@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import Link from "next/link";
 import { navigation, site } from "@/content/site";
 import { TextLink } from "@/components/ui/Primitives";
@@ -5,7 +6,7 @@ import { sectionCopy as copy } from "@/content/sections";
 export function ContactCTA() {
   return (
     <section className="bg-ink text-paper">
-      <div className="shell section-space grid md:grid-cols-[1fr_auto] gap-12 items-end">
+      <Reveal className="shell section-space grid md:grid-cols-[1fr_auto] gap-12 items-end">
         <div>
           <p className="eyebrow text-concrete mb-7">{copy.cta.label}</p>
           <h2 className="heading whitespace-pre-line">{copy.cta.title}</h2>
@@ -13,7 +14,7 @@ export function ContactCTA() {
         <TextLink href="/contact" className="w-fit">
           {copy.cta.link}
         </TextLink>
-      </div>
+      </Reveal>
     </section>
   );
 }
