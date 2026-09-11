@@ -105,9 +105,14 @@ for (const width of [390, 1440]) {
     expect(difference).toBeLessThan(1);
     await expect(
       section.locator(
-        ".story-chapters, .story-progress, .story-static-chapters",
+        ".story-chapters button, .story-progress, .story-static-chapters",
       ),
     ).toHaveCount(0);
+    await expect(section.locator(".story-chapters li")).toHaveCount(6);
+    await expect(section.locator(".story-chapters li").first()).toHaveAttribute(
+      "aria-current",
+      "step",
+    );
     const poster = section.locator(".story-paused-image img");
     await expect(poster).toBeVisible();
     await expect

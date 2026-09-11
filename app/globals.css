@@ -279,7 +279,7 @@ dialog::backdrop {
   flex: 1;
   justify-content: space-between;
 }
-.story-chapters button {
+.story-chapters .story-step {
   padding: 23px 8px 5px 0;
   min-height: 64px;
   text-align: left;
@@ -294,11 +294,11 @@ dialog::backdrop {
     border-color 0.2s;
   font-size: 12px;
 }
-.story-chapters button[aria-current] {
+.story-chapters .story-step[aria-current] {
   color: #f2b582;
   border-color: #d6925e;
 }
-.story-chapters button:hover {
+.story-chapters button.story-step:hover {
   color: #fff7e7;
 }
 .story-scroll {
@@ -390,7 +390,7 @@ dialog::backdrop {
   .story-scroll {
     display: none;
   }
-  .story-chapters button {
+  .story-chapters .story-step {
     gap: 8px;
   }
   .story-model-note {
@@ -676,7 +676,7 @@ dialog::backdrop {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
-  .has-model-view .story-chapters button {
+  .has-model-view .story-chapters .story-step {
     flex-direction: column;
     gap: 3px;
     justify-content: center;
@@ -750,7 +750,7 @@ dialog::backdrop {
   .has-model-view .story-bottom {
     bottom: 5px;
   }
-  .has-model-view .story-chapters button {
+  .has-model-view .story-chapters .story-step {
     min-height: 40px;
     padding-top: 5px;
   }

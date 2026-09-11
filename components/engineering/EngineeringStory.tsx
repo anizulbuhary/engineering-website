@@ -41,6 +41,8 @@ export function EngineeringStory() {
   const cancelReturn = useRef<(() => void) | null>(null);
   const immersive = capable && !failed && !paused;
   const modelView = capable && !failed;
+  const ChapterList = paused ? "ol" : "nav";
+  const Chapter = paused ? "li" : "button";
 
   useEffect(() => () => cancelReturn.current?.(), []);
 
@@ -321,33 +323,34 @@ export function EngineeringStory() {
               <span>FW—01 / CONCEPT PAVILION</span>
               <span>{immersiveStory.views[active]}</span>
             </div>
-            {immersive && (
-              <>
-                <div className="story-bottom">
-                  <nav
-                    className="story-chapters"
-                    aria-label="Building story chapters"
+            <div className="story-bottom">
+              <ChapterList
+                className="story-chapters"
+                aria-label="Building story chapters"
+              >
+                {engineeringStages.map((stage, i) => (
+                  <Chapter
+                    key={stage.id}
+                    className="story-step"
+                    onClick={paused ? undefined : () => goTo(i)}
+                    aria-current={active === i ? "step" : undefined}
+                    aria-label={`Chapter ${i + 1}: ${stage.label}`}
                   >
-                    {engineeringStages.map((stage, i) => (
-                      <button
-                        key={stage.id}
-                        onClick={() => goTo(i)}
-                        aria-current={active === i ? "step" : undefined}
-                        aria-label={`Chapter ${i + 1}: ${stage.label}`}
-                      >
-                        <span className="eyebrow">0{i + 1}</span>
-                        <span>{immersiveStory.nav[i]}</span>
-                      </button>
-                    ))}
-                  </nav>
-                  <div className="story-scroll eyebrow">
-                    <ArrowDown size={14} /> {immersiveStory.scroll}
-                  </div>
+                    <span className="eyebrow">0{i + 1}</span>
+                    <span>{immersiveStory.nav[i]}</span>
+                  </Chapter>
+                ))}
+              </ChapterList>
+              {immersive && (
+                <div className="story-scroll eyebrow">
+                  <ArrowDown size={14} /> {immersiveStory.scroll}
                 </div>
-                <div className="story-progress" aria-hidden="true">
-                  <div ref={meter} />
-                </div>
-              </>
+              )}
+            </div>
+            {immersive && (
+              <div className="story-progress" aria-hidden="true">
+                <div ref={meter} />
+              </div>
             )}
           </>
         ) : (
