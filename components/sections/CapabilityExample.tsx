@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ArrowUpRight, Plus } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/ui/SiteLink";
 import {
   capabilityExamples,
   capabilityExampleCopy as copy,

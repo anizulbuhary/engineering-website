@@ -149,6 +149,19 @@ test("Contact preview sends and stores nothing", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   const requests: string[] = [];
   page.on("request", (r) => {
+    const url = new URL(r.url());
+    // Native Next link prefetches can arrive as footer links enter view while
+    // the form is filled. Permit only its body-free, same-origin page requests.
+    const pagePrefetch =
+      r.method() === "GET" &&
+      !r.postData() &&
+      url.origin === new URL(page.url()).origin &&
+      routes.includes(url.pathname) &&
+      r.headers()["next-router-prefetch"] === "1" &&
+      r.headers().rsc === "1" &&
+      url.searchParams.has("_rsc") &&
+      [...url.searchParams.keys()].every((key) => key === "_rsc");
+    if (pagePrefetch) return;
     if (
       r.isNavigationRequest() ||
       ["fetch", "xhr"].includes(r.resourceType()) ||

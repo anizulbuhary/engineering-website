@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { NavigationScroll } from "@/components/layout/NavigationScroll";
 import { site } from "@/content/site";
 import { DEFAULT_THEME, themeBootstrap } from "@/lib/theme-preference";
 import "./globals.css";
@@ -57,7 +58,10 @@ export default function RootLayout({
           Skip to content
         </a>
         <Header />
-        <main id="main">{children}</main>
+        <NavigationScroll />
+        <main id="main" tabIndex={-1} className="focus:outline-none">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

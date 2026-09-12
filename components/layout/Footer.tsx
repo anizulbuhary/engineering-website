@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/ui/Reveal";
-import Link from "next/link";
+import Link from "@/components/ui/SiteLink";
 import { navigation, site } from "@/content/site";
 import { TextLink } from "@/components/ui/Primitives";
 import { sectionCopy as copy } from "@/content/sections";

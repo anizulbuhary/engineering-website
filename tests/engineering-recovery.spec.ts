@@ -96,3 +96,36 @@ test("late model loading and interrupted rewind keep following normal scroll", a
       .toBeCloseTo(progress, 2);
   }
 });
+
+test("an interrupted resume keeps the static view and can be retried", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await approachStory(page);
+  const section = page.locator("#engineering-story");
+  await expect(
+    page.locator(".engineering-canvas.is-ready canvas"),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Pause motion" }).click();
+  await expect(section).toHaveClass(/is-paused/);
+  await page.evaluate(() => scrollBy({ top: -240, behavior: "instant" }));
+  await page.getByRole("button", { name: "Resume motion" }).click();
+  await expect(section).toHaveAttribute("data-returning", "true");
+  await page.keyboard.press("Escape");
+  await expect(section).not.toHaveAttribute("data-returning");
+  await expect(section).toHaveClass(/is-paused/);
+  await expect(section.locator("canvas")).toHaveCount(0);
+  await expect(section.locator(".story-paused-image img")).toBeVisible();
+  await page.getByRole("button", { name: "Resume motion" }).click();
+  await expect(section).toHaveClass(/is-immersive/);
+  await expect(
+    page.locator(".engineering-canvas.is-ready canvas"),
+  ).toBeVisible();
+  await scrollStory(page, 0.4);
+  await expect
+    .poll(async () =>
+      Number(await section.locator("canvas").getAttribute("data-progress")),
+    )
+    .toBeCloseTo(0.4, 2);
+});

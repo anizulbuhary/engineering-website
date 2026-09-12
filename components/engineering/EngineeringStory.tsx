@@ -168,15 +168,17 @@ export function EngineeringStory() {
       setReady(false);
       setPaused(!paused);
     };
-    if (paused || !section.current) {
+    if (!section.current) {
       activate();
       return;
     }
 
-    // Rewind the visible model and page together, then capture that exact
-    // opening in the same layout before removing the live renderer.
+    // Move the page into place before either layout handoff. While paused the
+    // opening stays still; while playing the model visibly rewinds with the page.
     const from = scrollY;
-    const fromProgress = scene.current?.getProgress() ?? progress.current;
+    const fromProgress = paused
+      ? 0
+      : (scene.current?.getProgress() ?? progress.current);
     const destination = Math.max(
       0,
       section.current.getBoundingClientRect().top + from - headerHeight(),

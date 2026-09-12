@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/ui/SiteLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { containDialogFocus } from "@/lib/dialog";
@@ -40,6 +40,7 @@ export function Header() {
     path === href || (href !== "/" && path.startsWith(`${href}/`));
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
+  const navigating = useRef(false);
   useEffect(() => {
     const media = matchMedia("(min-width: 1024px)");
     const close = () => {
@@ -100,7 +101,11 @@ export function Header() {
         aria-label="Site navigation"
         onKeyDown={containDialogFocus}
         ref={dialog}
-        onClose={() => trigger.current?.focus()}
+        onClose={() => {
+          if (!navigating.current)
+            trigger.current?.focus({ preventScroll: true });
+          navigating.current = false;
+        }}
         className="navigation-dialog fixed inset-0 m-0 ml-auto h-dvh max-h-none w-full max-w-md bg-raised p-7 text-ink"
       >
         <div className="flex justify-between items-center mb-12">
@@ -124,7 +129,10 @@ export function Header() {
             )
             .map((n) => (
               <Link
-                onClick={() => dialog.current?.close()}
+                onNavigate={() => {
+                  navigating.current = true;
+                  dialog.current?.close();
+                }}
                 key={n.href}
                 href={n.href}
                 aria-current={isCurrent(n.href) ? "page" : undefined}

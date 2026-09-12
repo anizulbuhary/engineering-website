@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/ui/SiteLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { TextLink } from "@/components/ui/Primitives";
 import { useEffect, useRef } from "react";

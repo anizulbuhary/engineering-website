@@ -156,8 +156,42 @@ for (const colorScheme of ["light", "dark"] as const) {
         (await new AxeBuilder({ page }).include("#engineering-story").analyze())
           .violations,
       ).toEqual([]);
+      // Resume from a visible static section below the header: the page should
+      // ease into place before the sticky layout and live canvas return.
+      await section.evaluate((el) => {
+        const top = el.getBoundingClientRect().top + scrollY;
+        const header = document.querySelector(".site-header")!.clientHeight;
+        scrollTo({ top: top - header - 220, behavior: "instant" });
+        el.querySelector(".story-motion")!.addEventListener(
+          "click",
+          () => {
+            const positions: number[] = [scrollY];
+            const sample = () => {
+              positions.push(scrollY);
+              document.documentElement.dataset.resumeSamples =
+                JSON.stringify(positions);
+              if (el.classList.contains("is-paused"))
+                requestAnimationFrame(sample);
+            };
+            requestAnimationFrame(sample);
+          },
+          { once: true },
+        );
+      });
       await page.getByRole("button", { name: "Resume motion" }).click();
       await expect(section).toHaveClass(/is-immersive/);
+      const resumePositions: number[] = JSON.parse(
+        (await page.locator("html").getAttribute("data-resume-samples")) ??
+          "[]",
+      );
+      expect(new Set(resumePositions.slice(1, -1)).size).toBeGreaterThan(3);
+      expect(
+        Math.max(
+          ...resumePositions
+            .slice(1)
+            .map((value, i) => Math.abs(value - resumePositions[i])),
+        ),
+      ).toBeLessThan(90);
       await expect(
         page.locator(".engineering-canvas.is-ready canvas"),
       ).toBeVisible();
