@@ -35,7 +35,7 @@ export function StructureDrawing({ stage = 0 }: { stage?: number }) {
         </pattern>
       </defs>
       <rect width="640" height="620" fill={`url(#${gridId})`} />
-      <g stroke="#858d83" strokeWidth="1">
+      <g stroke="var(--text-secondary)" strokeWidth="1">
         <path d="M65 460 325 595 595 445M325 595V565" strokeDasharray="4 5" />
         <path d="M78 445V135M68 445h20M68 135h20" />
         <path d="M110 490 310 590M110 480v20M310 580v20" />
@@ -118,7 +118,12 @@ export function StructureDrawing({ stage = 0 }: { stage?: number }) {
           </g>
         )}
       </g>
-      <g fill="#c7cdbe" fontFamily="monospace" fontSize="10" letterSpacing="1">
+      <g
+        fill="var(--text-secondary)"
+        fontFamily="monospace"
+        fontSize="10"
+        letterSpacing="1"
+      >
         <text x="32" y="40">
           FW / STRUCTURAL STUDY
         </text>

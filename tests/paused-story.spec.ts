@@ -133,7 +133,9 @@ for (const colorScheme of ["light", "dark"] as const) {
       );
       await expect
         .poll(() =>
-          section.evaluate((el) => Math.round(el.getBoundingClientRect().top)),
+          section
+            .locator(".engineering-stage")
+            .evaluate((el) => Math.round(el.getBoundingClientRect().top)),
         )
         .toBe(await headerHeight(page));
       await page.screenshot({
@@ -160,7 +162,9 @@ for (const colorScheme of ["light", "dark"] as const) {
       ).toHaveAttribute("aria-current", "step");
       await expect
         .poll(() =>
-          section.evaluate((el) => Math.round(el.getBoundingClientRect().top)),
+          section
+            .locator(".engineering-stage")
+            .evaluate((el) => Math.round(el.getBoundingClientRect().top)),
         )
         .toBe(await headerHeight(page));
       await expect(canvas).toHaveAttribute("data-progress", "0.0000");

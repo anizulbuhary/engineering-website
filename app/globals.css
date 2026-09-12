@@ -31,6 +31,10 @@
   --focus-color: #9c3e1c;
   --selected-surface: #9c3e1c08;
   --overlay-color: #171918cc;
+  --story-ground: #e8e4db;
+  --story-center: #d8d4ca;
+  --story-middle: #dfdbd1;
+  --story-drawing-ink: #41483f;
   --dark-surface-page: #191b19;
   --dark-surface-section: #232723;
   --dark-surface-raised: #2d322d;
@@ -68,6 +72,10 @@
   --focus-color: var(--dark-focus-color);
   --selected-surface: var(--dark-selected-surface);
   --overlay-color: var(--dark-overlay-color);
+  --story-ground: #191b19;
+  --story-center: #2c2e29;
+  --story-middle: #20231f;
+  --story-drawing-ink: #d8ddd0;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
@@ -85,6 +93,10 @@
     --focus-color: var(--dark-focus-color);
     --selected-surface: var(--dark-selected-surface);
     --overlay-color: var(--dark-overlay-color);
+    --story-ground: #191b19;
+    --story-center: #2c2e29;
+    --story-middle: #20231f;
+    --story-drawing-ink: #d8ddd0;
   }
 }
 * {
@@ -191,15 +203,15 @@ dialog::backdrop {
   display: inline-block;
   width: 5px;
   height: 5px;
-  background: #d5986d;
+  background: var(--text-accent);
   margin-right: 10px;
   vertical-align: 2px;
 }
 .engineering-experience {
   position: relative;
   overflow-anchor: none;
-  background: #141c18;
-  color: #f0eee5;
+  background: var(--story-ground);
+  color: var(--text-primary);
   /* Cancel the extra anchor gap to align exactly with the header. */
   scroll-margin-top: -12px;
 }
@@ -209,9 +221,9 @@ dialog::backdrop {
 .engineering-stage {
   background: radial-gradient(
     ellipse at 72% 43%,
-    #303b30 0%,
-    #1b251e 43%,
-    #121a16 80%
+    var(--story-center) 0%,
+    var(--story-middle) 48%,
+    var(--story-ground) 85%
   );
 }
 .has-model-view .engineering-stage {
@@ -229,8 +241,9 @@ dialog::backdrop {
   margin: 0 4.2vw;
   padding-block: 16px;
   min-height: 70px;
-  border-bottom: 1px solid #ffffff24;
-  color: #c2cabb;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--text-primary) 18%, transparent);
+  color: var(--text-secondary);
 }
 .story-motion {
   display: flex;
@@ -238,10 +251,10 @@ dialog::backdrop {
   align-items: center;
   min-height: 44px;
   padding: 0 12px;
-  border: 1px solid #798270;
+  border: 1px solid var(--control-color);
 }
 .story-motion:hover {
-  background: #ffffff12;
+  background: color-mix(in srgb, var(--text-primary) 6%, transparent);
 }
 .engineering-backword {
   position: absolute;
@@ -251,7 +264,7 @@ dialog::backdrop {
   letter-spacing: -0.075em;
   line-height: 1;
   font-weight: 600;
-  color: #e9eddb07;
+  color: color-mix(in srgb, var(--text-primary) 2%, transparent);
   pointer-events: none;
   white-space: nowrap;
 }
@@ -278,7 +291,6 @@ dialog::backdrop {
   object-fit: contain;
   opacity: 1;
   transition: opacity 0.8s;
-  mix-blend-mode: lighten;
 }
 .story-poster.is-loaded {
   opacity: 0;
@@ -295,7 +307,7 @@ dialog::backdrop {
   pointer-events: none;
 }
 .story-kicker {
-  color: #b8c0ae;
+  color: var(--text-secondary);
   margin-bottom: 22px;
 }
 .story-heading {
@@ -305,7 +317,7 @@ dialog::backdrop {
   letter-spacing: -0.065em;
 }
 .story-heading span {
-  color: #d2a581;
+  color: var(--text-accent);
   font-family: Georgia, "Times New Roman", serif;
   font-style: italic;
 }
@@ -315,7 +327,7 @@ dialog::backdrop {
   animation: story-enter 0.5s ease both;
 }
 .story-chapter-label {
-  color: #e0ad82;
+  color: var(--text-accent);
   margin-bottom: 16px;
 }
 .story-chapter h3,
@@ -327,7 +339,7 @@ dialog::backdrop {
 }
 .story-description {
   font-size: 13px;
-  color: #c2cbbb;
+  color: var(--text-secondary);
   line-height: 1.85;
   margin-top: 16px;
   max-width: 280px;
@@ -339,7 +351,7 @@ dialog::backdrop {
   display: grid;
   gap: 8px;
   text-align: right;
-  color: #b4c0a9;
+  color: var(--text-secondary);
   pointer-events: none;
 }
 .story-bottom {
@@ -350,7 +362,7 @@ dialog::backdrop {
   display: flex;
   gap: 28px;
   align-items: center;
-  border-top: 1px solid #ffffff24;
+  border-top: 1px solid color-mix(in srgb, var(--text-primary) 18%, transparent);
 }
 .story-chapters {
   display: flex;
@@ -361,7 +373,7 @@ dialog::backdrop {
   padding: 23px 8px 5px 0;
   min-height: 64px;
   text-align: left;
-  color: #afbaa5;
+  color: var(--text-secondary);
   display: flex;
   gap: 13px;
   align-items: center;
@@ -373,17 +385,17 @@ dialog::backdrop {
   font-size: 12px;
 }
 .story-chapters .story-step[aria-current] {
-  color: #f2b582;
-  border-color: #d6925e;
+  color: var(--text-accent);
+  border-color: var(--text-accent);
 }
 .story-chapters button.story-step:hover {
-  color: #fff7e7;
+  color: var(--text-primary);
 }
 .story-scroll {
   display: flex;
   gap: 12px;
   align-items: center;
-  color: #bac6b0;
+  color: var(--text-secondary);
   padding-top: 17px;
 }
 .story-progress {
@@ -391,12 +403,12 @@ dialog::backdrop {
   bottom: 0;
   height: 2px;
   width: 100%;
-  background: #ffffff10;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
 }
 .story-progress > div {
   height: 100%;
   width: 100%;
-  background: #d2996c;
+  background: var(--text-accent);
   transform: scaleX(0);
   transform-origin: left;
 }
@@ -413,7 +425,6 @@ dialog::backdrop {
 }
 .story-static-poster img {
   object-fit: contain;
-  mix-blend-mode: lighten;
 }
 .story-static-chapters {
   display: grid;
@@ -421,7 +432,7 @@ dialog::backdrop {
   gap: 50px;
 }
 .story-static-chapters article {
-  border-top: 1px solid #ffffff28;
+  border-top: 1px solid color-mix(in srgb, var(--text-primary) 18%, transparent);
   padding-top: 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -433,7 +444,7 @@ dialog::backdrop {
   height: auto;
 }
 .engineering-experience :focus-visible {
-  outline-color: #edb58a;
+  outline-color: var(--focus-color);
 }
 @keyframes story-enter {
   from {
@@ -489,6 +500,12 @@ dialog::backdrop {
   .story-static-poster {
     height: 420px;
     margin-inline: -22px;
+  }
+  .story-static-poster img,
+  .story-poster {
+    /* Crop the transparent desktop margins, keeping the complete model at a
+       useful scale in the portrait loading and graphics-fallback frames. */
+    object-fit: cover;
   }
   .story-static-chapters {
     grid-template-columns: 1fr;
@@ -1365,15 +1382,16 @@ dialog::backdrop {
   opacity: 0.5;
 }
 .is-paused .story-motion {
-  background: #e3d4bd;
-  color: #17221a;
-  border-color: #e3d4bd;
+  background: var(--text-primary);
+  color: var(--surface-page);
+  border-color: var(--text-primary);
 }
 .is-paused .story-motion:hover {
-  background: #f0e5d4;
+  background: var(--text-accent);
+  border-color: var(--text-accent);
 }
 .is-paused .engineering-topline > p {
-  color: #e3bd98;
+  color: var(--text-accent);
 }
 
 /* The still image occupies the exact opening canvas bounds. Only the scroll

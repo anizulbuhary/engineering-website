@@ -20,7 +20,7 @@ Semantic tokens live in `app/globals.css`. Existing Tailwind utilities map to th
 
 Use `border-control` for input boundaries and `border-line` for decorative divisions. Photography is unchanged. The interactive SVG inherits theme text, accent and page colors; its frame uses a dedicated drawing surface. External sample SVGs, the project plan and PDFs retain their original paper colors. Their surrounding frames adapt to the theme.
 
-The footer and contact invitation use `.permanent-dark` and `--on-dark-*` tokens. The dossier package has a dedicated dark surface. These sections retain their existing appearance in either theme. The engineering story, Three.js lighting/materials and captured paused image are independent of the page theme.
+The footer and contact invitation use `.permanent-dark` and `--on-dark-*` tokens. The dossier package has a dedicated dark surface. These sections retain their existing appearance in either theme. The engineering story uses a limestone or charcoal CSS backdrop with theme-aware labels and technical edge lines; the Three.js model, lighting and captured paused image remain independent of the page theme. See `BLENDER_EXPERIENCE.md` for backdrop and poster reproduction details.
 
 ## Preference behavior
 
@@ -47,6 +47,6 @@ Visual review is separate from the browser assertions. Local captures and compar
 
 Calculated dark contrast across page, section and raised surfaces is at least 11.19:1 for primary text, 6.84:1 for secondary text, 5.80:1 for accents, 3.66:1 for control boundaries and 7.05:1 for focus. The drawing's contextual lines at 60% opacity composite to 3.81:1 against their actual surface. Fainter grids and inactive overlays are supplementary; labels and selected layers remain legible.
 
-Lint, TypeScript and the production build passed. The final full browser run passed 53 of 54 checks; its remaining assertion sampled camera progress before easing finished. After making that test wait for the existing progress-meter target, its focused rerun passed. All 54 checks have passing results, with no application changes required for those test corrections.
+Lint, TypeScript and the production build passed. The expanded 55-test browser suite passed, including theme changes during playback, strict matching of a dark-mode paused capture against a resumed light-mode opening, transparent poster margins, and all four phone/desktop pause comparisons. Seven focused fallback and live-story checks also passed after the last poster-resolution and limestone-contrast refinements.
 
 Run validation with `npm run lint`, `npm run typecheck`, `npm run build` and `npm run test:e2e`.

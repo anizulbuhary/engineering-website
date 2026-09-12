@@ -4,6 +4,7 @@ import { projects } from "../content/projects";
 import { articles } from "../content/insights";
 import { chooseTheme } from "./theme-helpers";
 import { approachStory } from "./story-helpers";
+import sharp from "sharp";
 
 const backgrounds = { light: "rgb(244, 242, 237)", dark: "rgb(25, 27, 25)" };
 const routes = [
@@ -158,6 +159,58 @@ test("appearance panel has keyboard selection, dismissal and stable geometry", a
   await expect(
     page.getByRole("button", { name: "Open navigation" }),
   ).toBeFocused();
+});
+
+test("appearance rows select from their text and blank space", async ({
+  browser,
+}) => {
+  for (const width of [375, 768, 1440]) {
+    const context = await browser.newContext({
+      viewport: { width, height: 900 },
+      hasTouch: true,
+    });
+    const page = await context.newPage();
+    await page.goto("/");
+    await page.getByRole("button", { name: "Appearance", exact: true }).click();
+    await page
+      .locator(".appearance-option span")
+      .getByText("Light", { exact: true })
+      .click();
+    await expect(
+      page.getByRole("radio", { name: "Light", exact: true }),
+    ).toBeChecked();
+    const dark = await page
+      .locator(".appearance-option")
+      .filter({ hasText: "Dark" })
+      .boundingBox();
+    if (!dark) throw new Error("Missing Dark row");
+    await page.mouse.click(dark.x + dark.width - 8, dark.y + dark.height / 2);
+    await expect(
+      page.getByRole("radio", { name: "Dark", exact: true }),
+    ).toBeChecked();
+    const system = await page
+      .locator(".appearance-option")
+      .filter({ hasText: "System" })
+      .boundingBox();
+    if (!system) throw new Error("Missing System row");
+    await page.touchscreen.tap(
+      system.x + system.width - 8,
+      system.y + system.height / 2,
+    );
+    await expect(
+      page.getByRole("radio", { name: "System", exact: true }),
+    ).toBeChecked();
+    await expect(page.locator(".appearance-panel")).toBeVisible();
+    await page.keyboard.press("ArrowUp");
+    await expect(
+      page.getByRole("radio", { name: "Dark", exact: true }),
+    ).toBeChecked();
+    await page.keyboard.press("Escape");
+    await expect(
+      page.getByRole("button", { name: "Appearance", exact: true }),
+    ).toBeFocused();
+    await context.close();
+  }
 });
 
 test("blocked storage and invalid saved values fall back safely", async ({
@@ -331,6 +384,10 @@ test("theme changes preserve the live scene, paused image, scroll and reading st
   const original = await canvas.elementHandle();
   const scroll = await page.evaluate(() => scrollY);
   await chooseTheme(page, "dark");
+  await expect(page.locator(".engineering-stage")).toHaveCSS(
+    "color",
+    "rgb(240, 237, 230)",
+  );
   expect(
     await canvas.evaluate((el, original) => el === original, original),
   ).toBe(true);
@@ -345,7 +402,62 @@ test("theme changes preserve the live scene, paused image, scroll and reading st
   const src = await image.getAttribute("src");
   await chooseTheme(page, "light");
   await expect(image).toHaveAttribute("src", src!);
+  await expect(page.locator(".engineering-stage")).toHaveCSS(
+    "color",
+    "rgb(23, 25, 24)",
+  );
   await expect(page.locator(".story-chapters li")).toHaveCount(6);
+  // A captured dark-mode opening must still match a live light-mode opening:
+  // the backdrop is CSS, while the transparent grid and shadow are theme-neutral.
+  const bounds = await page.locator(".engineering-visual").boundingBox();
+  if (!bounds) throw new Error("Missing model viewport");
+  // Compare the same integer-aligned screen region: element screenshots can
+  // auto-scroll or round the fractional paused/canvas bounds differently.
+  const clip = {
+    x: Math.ceil(Math.max(720, bounds.x)),
+    y: Math.ceil(Math.max(180, bounds.y)),
+    width: 0,
+    height: 0,
+  };
+  clip.width = Math.floor(Math.min(1418, bounds.x + bounds.width) - clip.x);
+  clip.height = Math.floor(Math.min(750, bounds.y + bounds.height) - clip.y);
+  const beforeResume = await page.screenshot({
+    clip,
+    path: "artifacts/backdrop-review/cross-theme-paused.png",
+  });
   await page.getByRole("button", { name: "Resume motion" }).click();
   await expect(canvas).toHaveAttribute("data-progress", "0.0000");
+  await expect(page.locator(".engineering-canvas")).toHaveCSS("opacity", "1");
+  const afterResume = await page.screenshot({
+    clip,
+    path: "artifacts/backdrop-review/cross-theme-resumed.png",
+  });
+  const before = await sharp(beforeResume).removeAlpha().raw().toBuffer();
+  const after = await sharp(afterResume).removeAlpha().raw().toBuffer();
+  expect(after.length).toBe(before.length);
+  expect(
+    after.reduce((sum, value, i) => sum + Math.abs(value - before[i]), 0) /
+      after.length,
+  ).toBeLessThan(1);
+});
+
+test("studio fallback poster has transparent margins and no baked backdrop", async ({
+  request,
+}) => {
+  const response = await request.get("/models/pavilion-studio.webp");
+  expect(response.ok()).toBe(true);
+  const { data, info } = await sharp(await response.body())
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  expect(info.channels).toBe(4);
+  // All four corners should reveal the current CSS background.
+  for (const pixel of [
+    0,
+    info.width - 1,
+    info.width * (info.height - 1),
+    info.width * info.height - 1,
+  ]) {
+    expect(data[pixel * 4 + 3]).toBe(0);
+  }
 });

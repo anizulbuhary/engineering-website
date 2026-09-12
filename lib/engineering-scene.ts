@@ -115,11 +115,8 @@ export function mountEngineeringScene(
   const fill = new THREE.DirectionalLight(0xe3a26d, 1.4);
   fill.position.set(8, 4, -10);
   scene.add(fill);
-  const grid = new THREE.GridHelper(32, 32, 0x667166, 0x3c4942);
+  const grid = createGroundGrid();
   grid.position.y = -1;
-  const gridMaterial = grid.material as THREE.Material;
-  gridMaterial.transparent = true;
-  gridMaterial.opacity = 0.27;
   scene.add(grid);
   const shadow = new THREE.Mesh(
     new THREE.PlaneGeometry(40, 40),
@@ -138,6 +135,27 @@ export function mountEngineeringScene(
   let visible = false,
     disposed = false,
     loaded = false;
+  // Only the technical overlay changes tone. Model materials, lighting and the
+  // reversible camera timeline remain independent of the page appearance.
+  const drawingInk = new THREE.Color();
+  const updateDrawingInk = () => {
+    drawingInk.set(
+      getComputedStyle(host).getPropertyValue("--story-drawing-ink").trim(),
+    );
+    for (const part of parts) {
+      if (part.edges)
+        (part.edges.material as THREE.LineBasicMaterial).color.copy(drawingInk);
+    }
+    if (loaded && !disposed && visible && !document.hidden) renderFrame();
+  };
+  updateDrawingInk();
+  const appearanceObserver = new MutationObserver(updateDrawingInk);
+  appearanceObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  const appearanceMedia = matchMedia("(prefers-color-scheme: dark)");
+  appearanceMedia.addEventListener("change", updateDrawingInk);
   function draw(time: number) {
     frame = 0;
     if (disposed || !visible || document.hidden || !loaded) return;
@@ -190,7 +208,20 @@ export function mountEngineeringScene(
     renderer.render(scene, camera);
     renderer.domElement.dataset.progress = current.toFixed(4);
   }
-  function wake() {
+  function refreshVisibility() {
+    const rect = host.getBoundingClientRect();
+    const next =
+      rect.width > 0 &&
+      rect.height > 0 &&
+      rect.bottom > 0 &&
+      rect.top < innerHeight &&
+      rect.right > 0 &&
+      rect.left < innerWidth;
+    if (next && !visible) lastTime = performance.now();
+    visible = next;
+  }
+  function wake(checkVisibility = false) {
+    if (checkVisibility) refreshVisibility();
     if (!frame && !disposed && visible && !document.hidden)
       frame = requestAnimationFrame(draw);
   }
@@ -201,12 +232,13 @@ export function mountEngineeringScene(
     camera.fov = width / height < 1 ? 44 : 36;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
-    wake();
+    wake(true);
   }
   const resizer = new ResizeObserver(resize);
   resizer.observe(host);
-  const observer = new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
+  const observer = new IntersectionObserver(() => {
+    // Read the current bounds instead of trusting an older queued entry.
+    refreshVisibility();
     if (visible) {
       lastTime = performance.now();
       wake();
@@ -217,9 +249,13 @@ export function mountEngineeringScene(
   });
   observer.observe(host);
   const visibility = () => {
-    if (!document.hidden) wake();
+    cancelAnimationFrame(frame);
+    frame = 0;
+    lastTime = performance.now();
+    if (!document.hidden) wake(true);
   };
   document.addEventListener("visibilitychange", visibility);
+  window.addEventListener("pageshow", visibility);
   const contextLost = (event: Event) => {
     event.preventDefault();
     onFailure();
@@ -266,7 +302,7 @@ export function mountEngineeringScene(
           edges = new THREE.LineSegments(
             new THREE.EdgesGeometry(node.geometry, 30),
             new THREE.LineBasicMaterial({
-              color: 0xd8ddd0,
+              color: drawingInk,
               transparent: true,
               opacity: 0,
             }),
@@ -312,7 +348,11 @@ export function mountEngineeringScene(
         cancelAnimationFrame(frame);
         frame = 0;
         renderFrame();
-      } else wake();
+      } else {
+        // Scrolling must also wake the renderer when visibility notifications
+        // are delayed after a fast return to the sticky section.
+        wake(true);
+      }
     },
     dispose() {
       disposed = true;
@@ -320,7 +360,10 @@ export function mountEngineeringScene(
       cancelAnimationFrame(frame);
       observer.disconnect();
       resizer.disconnect();
+      appearanceObserver.disconnect();
+      appearanceMedia.removeEventListener("change", updateDrawingInk);
       document.removeEventListener("visibilitychange", visibility);
+      window.removeEventListener("pageshow", visibility);
       renderer.domElement.removeEventListener("webglcontextlost", contextLost);
       disposeObject(scene);
       renderer.dispose();
@@ -328,6 +371,43 @@ export function mountEngineeringScene(
       renderer.domElement.remove();
     },
   };
+}
+
+/** Neutral, transparent ground lines work over either theme and in the paused
+ * PNG. Subdivided segments allow their vertex alpha to fade before the perimeter. */
+function createGroundGrid() {
+  const positions: number[] = [];
+  const colors: number[] = [];
+  const ink = new THREE.Color(0x77766f);
+  const vertex = (x: number, z: number) => {
+    const opacity =
+      (1 - THREE.MathUtils.smoothstep(Math.hypot(x, z), 7, 16)) * 0.12;
+    positions.push(x, 0, z);
+    colors.push(ink.r, ink.g, ink.b, opacity);
+  };
+  for (let line = -16; line <= 16; line++) {
+    for (let step = -16; step < 16; step++) {
+      vertex(line, step);
+      vertex(line, step + 1);
+      vertex(step, line);
+      vertex(step + 1, line);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(positions, 3),
+  );
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 4));
+  return new THREE.LineSegments(
+    geometry,
+    new THREE.LineBasicMaterial({
+      vertexColors: true,
+      transparent: true,
+      depthWrite: false,
+      toneMapped: false,
+    }),
+  );
 }
 
 function disposeObject(root: THREE.Object3D) {

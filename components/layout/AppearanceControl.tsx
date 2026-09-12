@@ -61,7 +61,12 @@ export function AppearanceControl() {
       className="appearance-control"
       ref={root}
       onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget as Node | null))
+        // Label activation briefly blurs the radio before forwarding the click
+        // and focus. Outside pointer clicks are handled separately above.
+        if (
+          event.relatedTarget &&
+          !event.currentTarget.contains(event.relatedTarget as Node)
+        )
           setOpen(false);
       }}
     >

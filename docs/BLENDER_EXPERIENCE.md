@@ -37,9 +37,27 @@ Visual review is separate from browser assertions. Current browser coverage is C
 
 The pause suite records intermediate rewind frames from a later chapter and compares the static image pixels with the live opening. It also checks the six static chapter labels, removal of the canvas and scroll controls, a loaded image, a compact section height, ordinary scrolling and resuming at the opening chapter.
 
-The loading poster uses `pavilion-roofline.webp` so optimized-image caches cannot reuse the retired rooftop view. The poster hides immediately once the live canvas is ready, preventing two differently framed models from overlapping during the handoff.
+The loading and fallback poster uses `pavilion-studio.webp`, a transparent lossless WebP captured from the runtime opening. After regenerating the model, build and start the website, then run `node scripts/capture-engineering-poster.mjs` (optionally supply the preview URL). This keeps the poster's model and lighting consistent with the live scene. The Blender script retains its inspection render under `artifacts/blender/`; it no longer publishes an opaque poster. The loading poster hides immediately once the live canvas is ready.
 Verified for the matching still/rewind behavior: build, lint and TypeScript passed; both pause tests and all 22 remaining browser tests passed. The pause tests verify multiple intermediate rewind frames and compare opening/still pixels at 390 and 1440 px. Static compositions were visually reviewed at 390, 768 and 1440 px. Physical devices and Safari remain untested.
 After removing the capabilities link from the experience, lint, TypeScript and the production build passed. The nine engineering browser checks passed, with the 375 px chapter-navigation timeout passing on an isolated rerun. Desktop, tablet and phone still views were visually checked again.
 After retaining the six step labels while paused, build, lint, TypeScript and all six engineering/pause browser checks passed. The static list was visually reviewed on phone, tablet and desktop layouts.
 
 The shared header is now 72 px on tablet/desktop and 64 px on phones. Scene scrolling, sticky sizing, rewind and still alignment read the shared header height; the engineering interaction otherwise retains its existing behavior.
+
+## Theme-aware studio background
+
+The backdrop is now warm limestone in light mode and neutral charcoal in dark mode. Its colors and the surrounding text/control colors use CSS tokens. A subdivided ground grid fades through vertex alpha before its perimeter; its neutral tone and the existing shadow composite over either theme. The paused PNG therefore remains valid when the visitor switches themes.
+
+The technical edge overlay uses dark ink in light mode and pale ink in dark mode. A narrowly scoped appearance observer updates only that overlay, without remounting the scene or changing timeline progress. The model geometry, material colors, lighting, camera shots, floor separation, chapter navigation and rewind behavior are unchanged. Fallback illustration labels inherit the theme text colors.
+
+Local visual captures are in `artifacts/backdrop-review/`. Review the six chapter states and intermediate transitions, particularly the fine lines against limestone, independently of the automated accessibility and pause-image comparisons. Safari and physical devices remain outside local coverage.
+
+Both themes were reviewed at 375, 430, 768, 1024, 1440 and 1920 px; all six stages and five intermediate transitions were captured at desktop width. Reduced-motion and JavaScript-free fallback compositions were checked separately on phone, tablet and desktop. The transparent poster is approximately 220 KB; phone image sizing accounts for its cropped transparent margins to avoid a soft preview.
+
+The visible stage now rounds towards the sticky boundary on resume, removing a fractional-pixel offset between the captured still and live canvas. The animation timeline and rewind duration are unchanged. Tests measure the visible stage's alignment rather than the outer scroll track. The expanded 55-test browser suite passed, including strict image matching within each theme and across a theme switch while paused. Lint, TypeScript and production build passed.
+
+Scroll recovery now checks the canvas's current bounds when progress changes or the viewport resizes, so a stale visibility notification cannot keep a visible model asleep. Visibility callbacks also read current bounds, and returning to a tab or restored page restarts scheduling and refreshes the scroll position. Rendering still stops off-screen and when the page is hidden; the camera timeline and damping are unchanged.
+
+`tests/engineering-recovery.spec.ts` deliberately suppresses renderer visibility notifications to verify this recovery on phone, tablet and desktop. That controlled fault reproduced a frozen opening before the fix; it does not establish which browser condition caused the original intermittent report. The suite also checks loading mid-story and continuing to scroll after cancelling a rewind.
+
+All 19 recovery, engineering, touch-emulation and pause tests passed after this change, including strict opening-image comparisons in both themes. Lint and production build (including TypeScript) passed. Coverage remains Chromium on Windows; Safari and physical devices were not tested.

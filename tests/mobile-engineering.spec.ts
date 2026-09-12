@@ -28,7 +28,7 @@ for (const viewport of [
     );
     await expect(page.locator(".story-poster")).toHaveAttribute(
       "src",
-      /pavilion-roofline/,
+      /pavilion-studio/,
     );
     const start = await page.screenshot();
     for (const index of [1, 2, 3, 4, 5, 3, 0]) {

@@ -51,8 +51,11 @@ export function EngineeringStory() {
     if (!alignAfterToggle.current || !section.current) return;
     alignAfterToggle.current = false;
     window.scrollTo({
-      top:
+      // Round towards the pinned boundary on resume. Rounding down leaves the
+      // canvas fractionally below its captured opening and softens the handoff.
+      top: Math.ceil(
         section.current.getBoundingClientRect().top + scrollY - headerHeight(),
+      ),
       behavior: "instant",
     });
     // Scrolling rounds to whole pixels; preserve the sticky frame's exact
@@ -123,11 +126,15 @@ export function EngineeringStory() {
     };
     addEventListener("scroll", schedule, { passive: true });
     addEventListener("resize", schedule);
+    addEventListener("pageshow", schedule);
+    document.addEventListener("visibilitychange", schedule);
     schedule();
     return () => {
       cancelAnimationFrame(frame);
       removeEventListener("scroll", schedule);
       removeEventListener("resize", schedule);
+      removeEventListener("pageshow", schedule);
+      document.removeEventListener("visibilitychange", schedule);
     };
   }, [immersive]);
 
@@ -291,10 +298,10 @@ export function EngineeringStory() {
               )}
               {!openingImage && (
                 <Image
-                  src="/models/pavilion-roofline.webp"
+                  src={immersiveStory.poster}
                   alt=""
                   fill
-                  sizes="(min-width: 1024px) 75vw, 100vw"
+                  sizes="(max-width: 767px) 900px, (min-width: 1024px) 75vw, 100vw"
                   className={`story-poster ${ready ? "is-loaded" : ""}`}
                 />
               )}
@@ -362,10 +369,10 @@ export function EngineeringStory() {
             <h2 className="story-heading">{immersiveStory.title.join(" ")}</h2>
             <div className="story-static-poster">
               <Image
-                src="/models/pavilion-roofline.webp"
+                src={immersiveStory.poster}
                 alt="Blender-created architectural model of a terraced pavilion with bronze facade fins and pale concrete floors"
                 fill
-                sizes="(min-width: 768px) 70vw, 100vw"
+                sizes="(max-width: 767px) 700px, 70vw"
               />
             </div>
             <div className="story-static-chapters">

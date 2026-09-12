@@ -1,6 +1,73 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
+test("detail draws on entry once and respects live reduced motion", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const drawing = page.locator(".detail-drawing");
+  await expect(drawing).not.toHaveAttribute("data-drawn");
+  await drawing.scrollIntoViewIfNeeded();
+  await expect(drawing).toHaveAttribute("data-drawn", "true");
+  const progress = await drawing.evaluate((svg) => {
+    const animations = svg
+      .getAnimations({ subtree: true })
+      .filter((animation) => animation.id === "detail-draw");
+    // Freeze at an intermediate moment to inspect the actual rendered strokes.
+    animations.forEach((animation) => {
+      animation.pause();
+      animation.currentTime = 600;
+    });
+    const outline = getComputedStyle(
+      svg.querySelector(".detail-interface path")!,
+    );
+    const annotation = getComputedStyle(
+      svg.querySelector(".detail-type text")!,
+    );
+    return {
+      count: animations.length,
+      dash: parseFloat(outline.strokeDashoffset),
+      labelOpacity: annotation.opacity,
+    };
+  });
+  expect(progress.count).toBeGreaterThan(20);
+  expect(progress.dash).toBeGreaterThan(0);
+  expect(progress.labelOpacity).toBe("0");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(drawing.locator(".detail-interface path").first()).toHaveCSS(
+    "stroke-dashoffset",
+    "0px",
+  );
+  await expect(drawing.locator(".detail-type text").first()).toHaveCSS(
+    "opacity",
+    "1",
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await drawing.scrollIntoViewIfNeeded();
+  expect(
+    await drawing.evaluate(
+      (svg) => svg.getAnimations({ subtree: true }).length,
+    ),
+  ).toBe(0);
+});
+
+test("reduced motion starts with a complete drawing", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/samples");
+  const drawing = page.locator(".detail-drawing");
+  await drawing.scrollIntoViewIfNeeded();
+  expect(
+    await drawing.evaluate(
+      (svg) => svg.getAnimations({ subtree: true }).length,
+    ),
+  ).toBe(0);
+  await expect(drawing.locator(".detail-type text").first()).toHaveCSS(
+    "opacity",
+    "1",
+  );
+});
+
 for (const width of [375, 768, 1440]) {
   test(`detail selection stays stable and accessible at ${width}px`, async ({
     page,

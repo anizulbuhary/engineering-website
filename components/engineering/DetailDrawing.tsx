@@ -1,9 +1,121 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { detailStudy as copy } from "@/content/detail-study";
+
+// Keep the drafting sequence coordinated, with about 2.7 seconds to read its build-up.
+const DRAWING_TIME_SCALE = 1.65;
 
 /** Original communication schematic; no design dimensions or construction claims. */
 export function DetailDrawing() {
+  const drawing = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    const svg = drawing.current;
+    if (!svg || !svg.animate || !("IntersectionObserver" in window)) return;
+    const preference = matchMedia("(prefers-reduced-motion: reduce)");
+    const controls = svg.closest("fieldset");
+    const animations: Animation[] = [];
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        svg.dataset.drawn = "true";
+        if (preference.matches || controls?.contains(document.activeElement))
+          return;
+
+        const animate = (
+          target: Element,
+          frames: Keyframe[],
+          delay: number,
+          duration: number,
+        ) => {
+          const animation = target.animate(frames, {
+            delay: delay * DRAWING_TIME_SCALE,
+            duration: duration * DRAWING_TIME_SCALE,
+            easing: "cubic-bezier(.2,.65,.25,1)",
+            fill: "backwards",
+          });
+          animation.id = "detail-draw";
+          animations.push(animation);
+        };
+        const phases = [
+          [".detail-grid", 0, 500],
+          [".detail-context", 100, 700],
+          [".detail-interface", 240, 900],
+          [".detail-reinforcement", 550, 700],
+          [".detail-reference", 800, 550],
+        ] as const;
+        phases.forEach(([selector, delay, duration]) => {
+          svg
+            .querySelectorAll<SVGGeometryElement>(
+              `${selector} path, ${selector} circle`,
+            )
+            .forEach((path, index) => {
+              const offset = delay + Math.min(index * 25, 120);
+              // Preserve dashed drafting conventions and solid symbol fills.
+              if (
+                selector === ".detail-grid" ||
+                path.hasAttribute("stroke-dasharray") ||
+                path.getAttribute("stroke") === "none"
+              ) {
+                animate(path, [{ opacity: 0 }, { opacity: 1 }], offset, 400);
+                return;
+              }
+              const length = path.getTotalLength();
+              animate(
+                path,
+                [
+                  {
+                    strokeDasharray: `${length} ${length}`,
+                    strokeDashoffset: length,
+                  },
+                  {
+                    strokeDasharray: `${length} ${length}`,
+                    strokeDashoffset: 0,
+                  },
+                ],
+                offset,
+                duration,
+              );
+            });
+        });
+        svg.querySelectorAll(".detail-type text").forEach((label, index) => {
+          animate(
+            label,
+            [{ opacity: 0 }, { opacity: 1 }],
+            1100 + index * 30,
+            350,
+          );
+        });
+      },
+      { threshold: 0.15 },
+    );
+    const finish = () => {
+      observer.disconnect();
+      svg.dataset.drawn = "true";
+      animations.forEach((animation) => animation.cancel());
+    };
+    const preferenceChanged = () => {
+      if (preference.matches) finish();
+    };
+    if (preference.matches) finish();
+    else observer.observe(svg);
+    preference.addEventListener("change", preferenceChanged);
+    controls?.addEventListener("focusin", finish);
+    controls?.addEventListener("change", finish);
+    return () => {
+      observer.disconnect();
+      animations.forEach((animation) => animation.cancel());
+      preference.removeEventListener("change", preferenceChanged);
+      controls?.removeEventListener("focusin", finish);
+      controls?.removeEventListener("change", finish);
+    };
+  }, []);
+
   return (
     <svg
+      ref={drawing}
       viewBox="0 0 760 480"
       role="img"
       aria-label={copy.figureAlt}

@@ -16,6 +16,7 @@ export const immersiveStory = {
   pause: "Pause motion",
   resume: "Resume motion",
   pausedLabel: "THE ENGINEERING EXPERIENCE / STILL VIEW",
+  poster: "/models/pavilion-studio.webp",
   posterAlt:
     "Architectural illustration of the completed terraced pavilion, with a finished roof and pale concrete floors",
 };

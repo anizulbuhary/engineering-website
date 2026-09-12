@@ -4,7 +4,6 @@ Creates a compact GLB with independently animated systems, the editable .blend,
 and a studio-lit poster. Geometry is illustrative, not construction documentation.
 """
 import bpy
-import subprocess
 from pathlib import Path
 from mathutils import Vector
 
@@ -204,5 +203,6 @@ for ob in assets:
     if ob.get('system') in ['rebar','services']: ob.hide_render=True
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'assets'/'blender'/'formwork-pavilion.blend'))
 bpy.ops.render.render(write_still=True)
-subprocess.run(['node', '-e', "require('sharp')('artifacts/blender/pavilion-poster.png').webp({quality:86}).toFile('public/models/pavilion-roofline.webp')"], cwd=ROOT, check=True)
+# The website's transparent poster is captured from the runtime scene with
+# scripts/capture-engineering-poster.mjs after rebuilding the frontend.
 print('FORMWORK_MODEL_COMPLETE')

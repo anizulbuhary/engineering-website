@@ -39,9 +39,7 @@ export function Positioning() {
         </div>
       </div>
       <div className="mt-12 md:mt-16">
-        <Reveal variant="image">
-          <DetailExplorer id="home-detail" />
-        </Reveal>
+        <DetailExplorer id="home-detail" />
         <div className="flex justify-end mt-5">
           <TextLink href={detailStudy.link.href}>
             {detailStudy.link.label}
