@@ -1,11 +1,13 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 type Part = {
   mesh: THREE.Mesh;
   system: string;
   level: number;
   materials: THREE.MeshStandardMaterial[];
+  shadowMaterial: THREE.MeshDepthMaterial;
   edges?: THREE.LineSegments;
 };
 // The camera and building systems share one reversible scroll timeline.
@@ -94,25 +96,37 @@ export function mountEngineeringScene(
   renderer.setPixelRatio(Math.min(devicePixelRatio, compact ? 1 : 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.2;
+  renderer.toneMappingExposure = 0.95;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.autoUpdate = false;
   renderer.domElement.setAttribute("aria-hidden", "true");
   host.appendChild(renderer.domElement);
-  scene.add(new THREE.HemisphereLight(0xe4eee7, 0x3b3326, 2.4));
-  const key = new THREE.DirectionalLight(0xffe4be, 4);
-  key.position.set(8, 20, 12);
+  const studio = new RoomEnvironment();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const environment = pmrem.fromScene(studio, 0.05);
+  scene.environment = environment.texture;
+  scene.environmentIntensity = 0.42;
+  studio.dispose();
+  pmrem.dispose();
+  scene.add(new THREE.HemisphereLight(0xe8ece6, 0x52493d, 0.95));
+  const key = new THREE.DirectionalLight(0xffedda, 2.6);
+  key.position.set(10, 24, 14);
+  key.target.position.set(0, 5, 0);
   key.castShadow = true;
-  key.shadow.mapSize.set(compact ? 512 : 1024, compact ? 512 : 1024);
-  key.shadow.camera.left = key.shadow.camera.bottom = -14;
-  key.shadow.camera.right = key.shadow.camera.top = 14;
+  key.shadow.mapSize.set(compact ? 1024 : 2048, compact ? 1024 : 2048);
+  key.shadow.camera.left = key.shadow.camera.bottom = -13;
+  key.shadow.camera.right = key.shadow.camera.top = 13;
+  key.shadow.camera.near = 0.5;
   key.shadow.camera.far = 60;
-  key.shadow.normalBias = 0.035;
-  scene.add(key);
-  const rim = new THREE.DirectionalLight(0xb1c9c2, 3);
+  key.shadow.normalBias = 0.018;
+  key.shadow.bias = -0.00008;
+  key.shadow.radius = 2.2;
+  scene.add(key, key.target);
+  const rim = new THREE.DirectionalLight(0xd8e2e1, 0.65);
   rim.position.set(-10, 12, -8);
   scene.add(rim);
-  const fill = new THREE.DirectionalLight(0xe3a26d, 1.4);
+  const fill = new THREE.DirectionalLight(0xe9d3bb, 0.3);
   fill.position.set(8, 4, -10);
   scene.add(fill);
   const grid = createGroundGrid();
@@ -120,10 +134,10 @@ export function mountEngineeringScene(
   scene.add(grid);
   const shadow = new THREE.Mesh(
     new THREE.PlaneGeometry(40, 40),
-    new THREE.ShadowMaterial({ opacity: 0.3 }),
+    new THREE.ShadowMaterial({ opacity: 0.25 }),
   );
   shadow.rotation.x = -Math.PI / 2;
-  shadow.position.y = -0.99;
+  shadow.position.y = -1;
   shadow.receiveShadow = true;
   scene.add(shadow);
   const parts: Part[] = [];
@@ -135,6 +149,7 @@ export function mountEngineeringScene(
   let visible = false,
     disposed = false,
     loaded = false;
+  let previousShadowState = "";
   // Only the technical overlay changes tone. Model materials, lighting and the
   // reversible camera timeline remain independent of the page appearance.
   const drawingInk = new THREE.Color();
@@ -174,6 +189,15 @@ export function mountEngineeringScene(
     const a = shots[index],
       b = shots[index + 1];
     const at = (k: keyof typeof a) => THREE.MathUtils.lerp(a[k], b[k], blend);
+    // Camera-only movement reuses the same world-space shadow map. Geometry
+    // separation and material fades invalidate it, in either scroll direction.
+    const shadowState = [at("spread"), at("facade"), at("solid")]
+      .map((value) => value.toFixed(5))
+      .join("/");
+    if (shadowState !== previousShadowState) {
+      renderer.shadowMap.needsUpdate = true;
+      previousShadowState = shadowState;
+    }
     const centerHeight = 5.4 + 3.5 * at("spread");
     const distance = at("distance") * Math.max(1, 0.75 / camera.aspect);
     target.set(0, centerHeight, 0);
@@ -183,7 +207,14 @@ export function mountEngineeringScene(
       Math.cos(at("angle")) * distance,
     );
     camera.lookAt(target);
-    for (const { mesh, system, level, materials, edges } of parts) {
+    for (const {
+      mesh,
+      system,
+      level,
+      materials,
+      shadowMaterial,
+      edges,
+    } of parts) {
       mesh.position.y = level >= 0 ? level * at("spread") : 0;
       let opacity = 1;
       if (system === "facade") {
@@ -193,7 +224,17 @@ export function mountEngineeringScene(
       if (system === "rebar") opacity = at("rebar");
       if (system === "services") opacity = at("services");
       mesh.visible = opacity > 0.015;
-      mesh.castShadow = opacity > 0.95;
+      // Alpha-hashed depth fades shadows with their source geometry instead
+      // of abruptly switching off the entire facade at 95% opacity.
+      mesh.castShadow = system !== "rebar" && system !== "services";
+      // Ghosted explanatory layers should not accumulate a dense, stippled
+      // shadow through many overlapping floors. Keep the assembled shadow full.
+      shadowMaterial.opacity = opacity ** 3;
+      const fadingShadow = shadowMaterial.opacity < 1;
+      if (shadowMaterial.alphaHash !== fadingShadow) {
+        shadowMaterial.alphaHash = fadingShadow;
+        shadowMaterial.needsUpdate = true;
+      }
       for (const mat of materials) {
         mat.opacity = opacity;
         mat.depthWrite = opacity > 0.95;
@@ -296,6 +337,8 @@ export function mountEngineeringScene(
           return clone;
         });
         node.material = Array.isArray(node.material) ? materials : materials[0];
+        const shadowMaterial = new THREE.MeshDepthMaterial();
+        node.customDepthMaterial = shadowMaterial;
         node.receiveShadow = true;
         let edges: THREE.LineSegments | undefined;
         if (system === "structure")
@@ -312,6 +355,7 @@ export function mountEngineeringScene(
           system,
           level: metadata?.level ?? -1,
           materials,
+          shadowMaterial,
           edges,
         });
       });
@@ -357,6 +401,7 @@ export function mountEngineeringScene(
     dispose() {
       disposed = true;
       controller.abort();
+      environment.dispose();
       cancelAnimationFrame(frame);
       observer.disconnect();
       resizer.disconnect();
@@ -418,6 +463,7 @@ function disposeObject(root: THREE.Object3D) {
         ? node.material
         : [node.material];
       materials.forEach((mat) => mat.dispose());
+      if (node instanceof THREE.Mesh) node.customDepthMaterial?.dispose();
     }
   });
 }

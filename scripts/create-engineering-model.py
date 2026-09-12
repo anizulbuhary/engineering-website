@@ -4,6 +4,7 @@ Creates a compact GLB with independently animated systems, the editable .blend,
 and a studio-lit poster. Geometry is illustrative, not construction documentation.
 """
 import bpy
+import sys
 from pathlib import Path
 from mathutils import Vector
 
@@ -25,13 +26,15 @@ def material(name, color, metal=0, rough=.5):
     bsdf.inputs['Roughness'].default_value = rough
     return m
 
-concrete = material('Warm limestone', (.60, .55, .44), .05, .66)
-edge = material('Pale cut edges', (.82, .77, .65), .08, .4)
-copper = material('Anodised bronze', (.47, .22, .09), .65, .32)
-glass = material('Smoked glazing', (.055, .105, .10), .5, .22)
+concrete = material('Honed limestone', (.49, .465, .40), 0, .78)
+edge = material('Cut limestone edges', (.68, .655, .59), 0, .62)
+copper = material('Brushed architectural bronze', (.32, .205, .115), .72, .38)
+glass = material('Recessed smoked glazing', (.055, .082, .075), .18, .2)
 steel = material('Reinforcement', (.65, .24, .075), .5, .35)
 duct = material('Mechanical sage', (.24, .43, .37), .45, .4)
 dark = material('Basalt plinth', (.10, .12, .105), .15, .6)
+paving = material('Terrace stone', (.40, .39, .345), 0, .86)
+joint = material('Recessed stone joints', (.19, .185, .16), 0, .9)
 
 buckets = {}
 def box(name, loc, dims, mat, kind, level=-1):
@@ -41,6 +44,11 @@ def box(name, loc, dims, mat, kind, level=-1):
     ob.dimensions = dims
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
     ob.data.materials.append(mat)
+    # Reserve additional geometry for edges that remain visible at site scale.
+    # Thin joints, pavers and fins do not need hundreds of bevel vertices each.
+    if (kind in ['structure','base'] and min(dims) >= .08) or name=='Corner frame':
+        group=ob.vertex_groups.new(name='Architectural edges')
+        group.add(list(range(len(ob.data.vertices))),1,'REPLACE')
     buckets.setdefault((kind, level), []).append(ob)
     return ob
 
@@ -58,12 +66,28 @@ def rod(a, b, radius, mat, kind, level):
 def envelope(level):
     return (8.6 if level < 5 else 7.1, 6.4 if level < 6 else 5.3, 0 if level < 5 else -.55)
 
+def terrace_finish(cx, width, depth, z, level):
+    """A continuous bedding layer and fitted pavers within the parapet line."""
+    w, d = width-.48, depth-.48
+    box('Stone bedding', (cx,0,z+.119), (w,d,.018), joint, 'structure', level)
+    nx, ny = max(1,round(w/.82)), max(1,round(d/.82))
+    for ix in range(nx):
+        for iy in range(ny):
+            x=cx-w/2+(ix+.5)*w/nx
+            y=-d/2+(iy+.5)*d/ny
+            box('Fitted terrace paver',(x,y,z+.14),(w/nx-.014,d/ny-.014,.025),paving,'structure',level)
+
 for level in range(8):
     z = level * 1.55
     width, depth, cx = envelope(level)
     slab_width, slab_depth, slab_cx = envelope(max(0, level-1))
     box('Floor plate', (slab_cx, 0, z), (slab_width, slab_depth, .22), edge, 'structure', level)
     box('Soffit', (slab_cx, 0, z-.15), (slab_width-.2, slab_depth-.2, .13), concrete, 'structure', level)
+    # A slim recessed fascia line gives the slab a manufactured edge rather
+    # than the appearance of a stack of featureless white blocks.
+    for side in [-1,1]:
+        box('Fascia joint',(slab_cx,side*(slab_depth/2+.001),z-.067),(slab_width-.08,.008,.012),joint,'structure',level)
+        box('Fascia joint',(slab_cx+side*(slab_width/2+.001),0,z-.067),(.008,slab_depth-.08,.012),joint,'structure',level)
     if level < 7:
         for x in [-3.1, 0, 2.5]:
             for y in [-2.25, 2.15]:
@@ -74,25 +98,34 @@ for level in range(8):
         for side in [-1, 1]:
             x=slab_cx+side*(slab_width/2-.09)
             y=side*(slab_depth/2-.09)
-            box('Parapet',(x,0,z+.27),(.18,slab_depth,.34),concrete,'structure',level)
-            box('Parapet',(slab_cx,y,z+.27),(slab_width-.36,.18,.34),concrete,'structure',level)
-            box('Coping',(x,0,z+.455),(.21,slab_depth,.04),edge,'structure',level)
-            box('Coping',(slab_cx,y,z+.455),(slab_width-.42,.21,.04),edge,'structure',level)
+            box('Parapet',(x,0,z+.33),(.18,slab_depth,.46),concrete,'structure',level)
+            box('Parapet',(slab_cx,y,z+.33),(slab_width-.36,.18,.46),concrete,'structure',level)
+            box('Coping',(x,0,z+.575),(.22,slab_depth,.05),edge,'structure',level)
+            box('Coping',(slab_cx,y,z+.575),(slab_width-.44,.22,.05),edge,'structure',level)
+        terrace_finish(slab_cx,slab_width,slab_depth,z,level)
     if level < 7:
         for y in [-depth/2+.38, depth/2-.38]:
             box('Ribbon window', (cx, y, z+.72), (width-.72, .10, 1.22), glass, 'facade', level)
             for h in [.13,1.31]:
                 box('Window rail',(cx,y,z+h),(width-.62,.17,.065),copper,'facade',level)
-            for i in range(int(width/.42)):
-                x = cx-width/2+.4+i*.42
+            count=round((width-.82)/.55)
+            for i in range(count+1):
+                x = cx-width/2+.41+i*(width-.82)/count
                 if level==0 and y<0 and abs(x)<1.25: continue
-                box('Bronze fin', (x, y, z+.72), (.065, .36, 1.22), copper, 'facade', level)
+                box('Bronze fin', (x, y, z+.72), (.055, .32, 1.22), copper, 'facade', level)
+                box('Window mullion',(x,y,z+.72),(.035,.12,1.22),dark,'facade',level)
         for x in [cx-width/2+.38, cx+width/2-.38]:
             box('Side window', (x, 0, z+.72), (.10, depth-.66, 1.22), glass, 'facade', level)
             for h in [.13,1.31]:
                 box('Side rail',(x,0,z+h),(.17,depth-.62,.065),copper,'facade',level)
-            for i in range(int(depth/.42)):
-                box('Side fin', (x, -depth/2+.4+i*.42, z+.72), (.36, .065, 1.22), copper, 'facade', level)
+            count=round((depth-.82)/.55)
+            for i in range(count+1):
+                y=-depth/2+.41+i*(depth-.82)/count
+                box('Side fin', (x,y,z+.72), (.32, .055, 1.22), copper, 'facade', level)
+        # Continuous corner frames close the four glass joints at every storey.
+        for x in [cx-width/2+.38,cx+width/2-.38]:
+            for y in [-depth/2+.38,depth/2-.38]:
+                box('Corner frame',(x,y,z+.72),(.12,.12,1.22),copper,'facade',level)
     # Selected reinforcement zones, with longitudinal bars and closed stirrups.
     if level in [2, 3, 4]:
         for x in [2.4, 2.6]:
@@ -121,8 +154,13 @@ for x in [-1.24,0,1.24]:
     box('Entrance jamb',(x,-2.94,.72),(.05,.08,1.24),copper,'facade',0)
 for x in [-.13,.13]:
     rod((x,-3.01,.48),(x,-3.01,.85),.025,copper,'facade',0)
+box('Entrance canopy',(0,-3.18,1.42),(3.15,1.18,.18),edge,'structure',1)
+box('Canopy bronze soffit',(0,-3.27,1.323),(2.96,.94,.018),copper,'structure',1)
+box('Entrance threshold',(0,-3.04,.122),(2.58,.44,.024),dark,'structure',0)
 box('Podium', (0,0,-.64),(10.6,8.3,.72),dark,'base')
 box('Podium cap',(0,0,-.235),(10.8,8.5,.1),concrete,'base')
+for x in [-4.35,-3.3,-2.25,-1.2,1.2,2.25,3.3,4.35]:
+    box('Podium stone joint',(x,-4.257,-.235),(.012,.016,.08),joint,'base')
 for i in range(4):
     top=-.185-(i+1)*.163
     box('Solid approach step',(0,-4.4-i*.32,(top+GROUND)/2),(5.8,.64,top-GROUND),concrete,'base')
@@ -130,6 +168,7 @@ roof_z=7*1.55
 box('Enclosed roof core',(-1.15,1.15,roof_z+.55),(1.3,1.7,.9),concrete,'structure',7)
 box('Core roof cap',(-1.15,1.15,roof_z+1.03),(1.42,1.82,.09),edge,'structure',7)
 box('Roof access door',(-1.15,.291,roof_z+.48),(.52,.035,.72),dark,'structure',7)
+box('Roof door threshold',(-1.15,.23,roof_z+.16),(.62,.2,.05),edge,'structure',7)
 
 # Contact checks run before merging, while semantic parts are still available.
 bpy.context.view_layer.update()
@@ -150,10 +189,12 @@ for (kind,level), objects in buckets.items():
     bpy.ops.object.origin_set(type='ORIGIN_CURSOR')
     ob['system']=kind
     ob['level']=level
-    if kind in ['structure','base']:
+    if kind in ['structure','base','facade']:
         bevel=ob.modifiers.new('Small manufactured edges','BEVEL')
-        bevel.width=.012
+        bevel.width=.006 if kind=='facade' else .014
         bevel.segments=2
+        bevel.limit_method='VGROUP'
+        bevel.vertex_group='Architectural edges'
         bpy.ops.object.modifier_apply(modifier=bevel.name)
     assets.append(ob)
 
@@ -167,6 +208,14 @@ scene=bpy.context.scene
 scene.render.engine='CYCLES'
 scene.cycles.samples=32
 scene.cycles.use_denoising=True
+try:
+    prefs=bpy.context.preferences.addons['cycles'].preferences
+    prefs.compute_device_type='OPTIX'
+    prefs.get_devices()
+    for device in prefs.devices: device.use=device.type=='OPTIX'
+    if any(device.use for device in prefs.devices): scene.cycles.device='GPU'
+except Exception:
+    pass
 scene.world.color=(.15,.15,.15)
 scene.world.use_nodes=True
 scene.world.node_tree.nodes['Background'].inputs[0].default_value=(.075,.095,.09,1)
@@ -202,7 +251,8 @@ scene.render.filepath=str(render_dir/'pavilion-poster.png')
 for ob in assets:
     if ob.get('system') in ['rebar','services']: ob.hide_render=True
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'assets'/'blender'/'formwork-pavilion.blend'))
-bpy.ops.render.render(write_still=True)
+if '--no-render' not in sys.argv:
+    bpy.ops.render.render(write_still=True)
 # The website's transparent poster is captured from the runtime scene with
 # scripts/capture-engineering-poster.mjs after rebuilding the frontend.
 print('FORMWORK_MODEL_COMPLETE')

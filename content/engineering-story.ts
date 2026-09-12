@@ -20,9 +20,9 @@ export const immersiveStory = {
   pause: "Pause motion",
   resume: "Resume motion",
   pausedLabel: "THE ENGINEERING EXPERIENCE / STILL VIEW",
-  poster: "/models/pavilion-studio.webp",
+  poster: "/models/pavilion-studio-refined.webp",
   posterAlt:
-    "Architectural illustration of the completed terraced pavilion, with a finished roof and pale concrete floors",
+    "Architectural illustration of the completed terraced pavilion, with honed stone floors, bronze facade frames, a sheltered entrance and paved roof terraces",
 };
 export const editorialHero = {
   label: "PRECISION. FROM THE INSIDE OUT.",

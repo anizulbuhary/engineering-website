@@ -30,7 +30,7 @@ try {
     throw new Error("No opening capture available");
   const result = await sharp(Buffer.from(source.split(",")[1], "base64"))
     .webp({ lossless: true })
-    .toFile("public/models/pavilion-studio.webp");
+    .toFile("public/models/pavilion-studio-refined.webp");
   console.log(
     `Transparent opening: ${result.width} × ${result.height}, ${result.size} bytes`,
   );

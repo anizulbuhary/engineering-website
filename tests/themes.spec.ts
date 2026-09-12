@@ -370,6 +370,7 @@ test("theme changes preserve the live scene, paused image, scroll and reading st
   await page.locator(".detail-selector").nth(2).click();
   await approachStory(page);
   const canvas = page.locator(".engineering-canvas.is-ready canvas");
+  await expect(canvas).toBeVisible({ timeout: 30000 });
   await expect(canvas).toHaveAttribute("data-progress", "0.0000");
   await page.locator("#engineering-story").evaluate((el) => {
     const stage = el.querySelector(".engineering-stage") as HTMLElement;
@@ -456,7 +457,7 @@ test("theme changes preserve the live scene, paused image, scroll and reading st
 test("studio fallback poster has transparent margins and no baked backdrop", async ({
   request,
 }) => {
-  const response = await request.get("/models/pavilion-studio.webp");
+  const response = await request.get("/models/pavilion-studio-refined.webp");
   expect(response.ok()).toBe(true);
   const { data, info } = await sharp(await response.body())
     .ensureAlpha()
