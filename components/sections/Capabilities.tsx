@@ -6,7 +6,12 @@ import { CapabilityExample } from "./CapabilityExample";
 export function Capabilities({ full = false }: { full?: boolean }) {
   const Heading = full ? "h2" : "h3";
   return (
-    <section className="shell section-space border-t border-line">
+    <section
+      id="services"
+      tabIndex={-1}
+      aria-label="Services"
+      className="shell section-space border-t border-line"
+    >
       {!full && (
         <Reveal stagger className="grid md:grid-cols-2 gap-8 mb-16">
           <p className="eyebrow text-accent">{copy.capabilities.label}</p>
@@ -37,16 +42,30 @@ export function Capabilities({ full = false }: { full?: boolean }) {
                 {s.description}
               </p>
               {full && (
-                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
-                  {s.outputs.map((o) => (
-                    <li key={o} className="eyebrow">
-                      {o}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-6">
+                  <p className="eyebrow text-accent mb-3">
+                    {copy.capabilities.outputsLabel}
+                  </p>
+                  <ul className="list-disc pl-4 space-y-2">
+                    {s.outputs.map((o) => (
+                      <li key={o} className="text-sm">
+                        {o}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
-              <CapabilityExample service={s.id} />
             </div>
+            <CapabilityExample service={s.id} />
+            {full && (
+              <TextLink
+                href="/contact"
+                className="capability-contact col-start-2 md:col-start-3 mt-5 text-sm w-fit"
+              >
+                {copy.capabilities.contactLink}
+                <span className="sr-only">: {s.title}</span>
+              </TextLink>
+            )}
           </Reveal>
         ))}
       </div>

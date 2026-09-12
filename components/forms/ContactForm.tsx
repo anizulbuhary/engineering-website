@@ -39,8 +39,11 @@ export function ContactForm() {
         ))}
       </div>
       <Reveal>
-        <fieldset>
-          <legend className="eyebrow mb-5">Services of interest</legend>
+        <fieldset aria-describedby="services-hint">
+          <legend className="eyebrow mb-3">{contact.servicesLabel}</legend>
+          <p id="services-hint" className="text-sm text-muted mb-5">
+            {contact.servicesHint}
+          </p>
           <div className="grid sm:grid-cols-2 gap-3">
             {services.map((s) => (
               <label
@@ -61,11 +64,18 @@ export function ContactForm() {
       </Reveal>
       <Reveal>
         <label className="eyebrow block mb-4" htmlFor="message">
-          Tell us about your project
+          {contact.messageLabel}
         </label>
+        <p
+          id="message-hint"
+          className="text-sm text-muted leading-relaxed mb-4"
+        >
+          {contact.messageHint}
+        </p>
         <textarea
           id="message"
           name="message"
+          aria-describedby="message-hint"
           rows={5}
           className="w-full border border-control bg-transparent p-4 resize-y"
         />

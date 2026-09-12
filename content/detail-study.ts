@@ -164,7 +164,7 @@ export const capabilityExamples: Record<
   },
 };
 export const capabilityExampleCopy = {
-  open: "Explore a sample output",
+  open: "See an example",
   note: "ILLUSTRATIVE / NOT FOR CONSTRUCTION",
-  link: "View documentation samples",
+  link: "Browse drawing samples",
 };

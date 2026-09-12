@@ -5,19 +5,15 @@ export const services: Service[] = [
     title: "Structural coordination",
     stage: "COORDINATE",
     description:
-      "Bring models, interfaces and design information into alignment. Identify the questions that need answers before work reaches the site.",
-    outputs: [
-      "Model reviews",
-      "Coordination issue registers",
-      "Interface drawings",
-    ],
+      "Check how slabs, columns, openings and building services fit together. Record clashes and questions that need resolving before construction.",
+    outputs: ["Model reviews", "Clash and issue lists", "Interface drawings"],
   },
   {
     id: "reinforcement",
-    title: "Reinforcement BIM detailing",
+    title: "Steel reinforcement detailing",
     stage: "DETAIL",
     description:
-      "Translate structural intent into clear reinforcement arrangements, with attention to congestion, continuity and practical installation.",
+      "Show where reinforcing steel sits inside the concrete. Prepare 3D models and details that help teams review spacing, connections and installation.",
     outputs: [
       "Reinforcement models",
       "Bar arrangement details",
@@ -29,15 +25,15 @@ export const services: Service[] = [
     title: "Structural shop drawings",
     stage: "DOCUMENT",
     description:
-      "Make complex information legible. Prepare coordinated plans, sections and details that communicate the work clearly.",
+      "Turn the structural design into detailed plans, sections and instructions for construction teams. Keep each drawing linked to the current design.",
     outputs: ["Drawing packages", "Annotated sections", "Revision registers"],
   },
   {
     id: "schedules",
-    title: "BBS & quantity outputs",
+    title: "Bar schedules & quantities",
     stage: "SCHEDULE",
     description:
-      "Connect the model to organized schedules. Keep bar marks, quantities and revisions traceable throughout the package.",
+      "Prepare bar bending schedules (BBS): lists of reinforcing steel shapes, sizes and quantities. Link each bar reference back to its drawing.",
     outputs: [
       "Illustrative bar schedules",
       "Quantity summaries",
@@ -49,7 +45,7 @@ export const services: Service[] = [
     title: "Fabrication & site support",
     stage: "EXECUTE",
     description:
-      "Support the transition from a drawing package to the workface, with focused clarification and documentation of project decisions.",
+      "Help fabrication and site teams understand the drawings. Explain specific details, illustrate work sequences and record agreed changes.",
     outputs: ["Technical clarification", "Sequence diagrams", "Detail updates"],
   },
   {
@@ -57,7 +53,7 @@ export const services: Service[] = [
     title: "As-built documentation",
     stage: "HAND OVER",
     description:
-      "Consolidate verified project changes into a clear final record, organized for handover and future reference.",
+      "Update models and drawings to reflect verified changes made during construction. Organize a clear record of what was built for handover.",
     outputs: ["Record models", "Updated drawing sets", "Handover indexes"],
   },
 ];

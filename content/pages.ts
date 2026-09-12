@@ -1,38 +1,38 @@
 export const home = {
-  eyebrow: "STRUCTURAL BIM & TECHNICAL DELIVERY",
+  eyebrow: "STRUCTURAL MODELS & CONSTRUCTION DRAWINGS",
   heading: ["Detailed for", "construction."],
   intro:
-    "Structural BIM, reinforcement detailing and coordinated drawing packages for contractors and consultants.",
+    "We help contractors and consultants turn structural designs into coordinated 3D models, reinforcement details and clear construction drawings.",
   positioning: "Good engineering is in the details.",
   positioningBody:
-    "We are a structural BIM and detailing studio built around one idea: information should be as well constructed as the buildings it makes possible.",
+    "We connect the model, the steel reinforcement details and the drawings so project teams can check how the parts fit together before work reaches the site.",
   positioningFoot:
-    "A considered approach to coordination, reinforcement and construction documentation.",
+    "Building Information Modelling (BIM) brings building geometry and project information into one coordinated model. Our work turns that information into drawings and schedules people can use.",
 };
 export const pages = {
   about: {
     label: "THE STUDIO",
     title: "A clear line from\nintent to execution.",
     intro:
-      "FORMWORK is a concept for a specialist structural BIM and technical delivery studio. A place where engineering understanding meets the discipline of good documentation.",
+      "FORMWORK is a demonstration of a specialist engineering studio for contractors and consultants. The focus is coordinated 3D models, reinforcement details and clear construction drawings.",
   },
   capabilities: {
     label: "WHAT WE DO",
-    title: "Complex structures.\nClear deliverables.",
+    title: "Engineering services.\nClear results.",
     intro:
-      "Connected capabilities that take a project from coordinated design information to a considered final package.",
+      "Find the support your project needs. Each service explains the work involved, what you receive and a sample of the output.",
   },
   projects: {
     label: "SELECTED STUDIES",
-    title: "Structure,\nin context.",
+    title: "Projects,\nexplained.",
     intro:
       "Four concept studies exploring the relationship between structural logic, architectural ambition and clear documentation. These are demonstrations, not completed client projects.",
   },
   samples: {
     label: "THE WORK, UP CLOSE",
-    title: "Precision you\ncan read.",
+    title: "Drawing samples.\nSee what you receive.",
     intro:
-      "Explore illustrative drawing sheets, model views and schedule layouts. Each sample is an original demonstration, not a construction document.",
+      "Open a drawing to look closer, filter by type, or download a PDF. These sample drawings, model views and schedules are demonstrations, not construction documents.",
   },
   why: {
     label: "OUR APPROACH",
@@ -48,9 +48,9 @@ export const pages = {
   },
   contact: {
     label: "START A CONVERSATION",
-    title: "Every structure starts\nwith a conversation.",
+    title: "Tell us about\nyour project.",
     intro:
-      "Define the scope. Share the ambition. Bring the details into focus.",
+      "The service you need, your project location and its current stage are a useful starting point. This demo shows how an enquiry would work.",
   },
 };
 export const principles = [
@@ -74,19 +74,19 @@ export const principles = [
 export const process = [
   {
     title: "Understand",
-    text: "Review the brief, source information and required outputs. Establish the questions before developing the answers.",
+    text: "Tell us what you are building and what you need. Review the available drawings and agree the scope of work.",
   },
   {
     title: "Coordinate",
-    text: "Bring geometry and interfaces together. Record decisions and keep unresolved items visible.",
+    text: "Check how the structure and building services fit together. List clashes and questions for the project team to resolve.",
   },
   {
     title: "Develop",
-    text: "Build the details, drawing views and schedules as one connected information package.",
+    text: "Prepare the 3D model, reinforcement details, drawings and schedules needed for the agreed scope.",
   },
   {
     title: "Review & issue",
-    text: "Check references, consistency and completeness. Organize the package for a clear handover.",
+    text: "Check that the drawings and schedules agree, record revisions and organize the final files for handover.",
   },
 ];
 export const contact = {
@@ -95,14 +95,26 @@ export const contact = {
   notice:
     "Enquiries are not open yet. This form is a preview; nothing entered here is sent or saved.",
   button: "Submissions opening soon",
-  asideTitle: "A useful starting point.",
+  asideTitle: "What to include",
   asideText:
-    "A project brief, the current design stage and an outline of the required deliverables help define a meaningful scope.",
+    "A short outline is enough. You do not need to prepare a full technical brief.",
+  checklist: [
+    "What you are building and where",
+    "Your current project stage and target dates",
+    "The drawings or modelling support you need",
+  ],
+  sampleEmail: "hello@formwork.example",
+  sampleEmailLabel: "Example email — not monitored",
+  servicesLabel: "What do you need help with?",
+  servicesHint: "Choose any that apply. Leave this blank if you are not sure.",
+  messageLabel: "Tell us about your project",
+  messageHint:
+    "For example: a residential building in Dubai, at design stage, needing reinforcement drawings.",
   fields: [
     { name: "name", label: "Full name", type: "text", autoComplete: "name" },
     {
       name: "company",
-      label: "Company",
+      label: "Company (optional)",
       type: "text",
       autoComplete: "organization",
     },
@@ -113,20 +125,8 @@ export const contact = {
       autoComplete: "email",
     },
     {
-      name: "phone",
-      label: "Phone / WhatsApp",
-      type: "tel",
-      autoComplete: "tel",
-    },
-    {
-      name: "project",
-      label: "Project name",
-      type: "text",
-      autoComplete: "off",
-    },
-    {
       name: "location",
-      label: "Project location",
+      label: "Project location (optional)",
       type: "text",
       autoComplete: "off",
     },

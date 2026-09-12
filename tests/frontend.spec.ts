@@ -125,7 +125,9 @@ test("Mobile navigation traps focus, closes and restores focus", async ({
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
   await trigger.click();
-  await dialog.getByRole("link", { name: "Samples", exact: false }).click();
+  await dialog
+    .getByRole("link", { name: "Drawing samples", exact: true })
+    .click();
   await expect(page).toHaveURL("/samples");
   await expect(dialog).not.toBeVisible();
 });

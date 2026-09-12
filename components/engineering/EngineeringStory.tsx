@@ -251,149 +251,175 @@ export function EngineeringStory() {
   };
 
   return (
-    <section
-      id="engineering-story"
-      ref={section}
-      data-returning={returning || undefined}
-      className={`engineering-experience ${modelView ? "has-model-view" : ""} ${immersive ? "is-immersive" : "is-static"} ${paused && capable && !failed ? "is-paused" : ""}`}
-      aria-label="Anatomy of a building"
-    >
-      <div className="engineering-stage">
-        <div className="engineering-topline">
-          <p className="eyebrow">
-            <span className="story-dot" />{" "}
-            {paused && capable && !failed
-              ? immersiveStory.pausedLabel
-              : immersiveStory.label}
-          </p>
-          {capable && !failed && (
-            <button
-              className="story-motion eyebrow"
-              onClick={toggle}
-              aria-pressed={paused}
-              disabled={returning || (!ready && !paused)}
-            >
-              {paused ? <Play size={12} /> : <Pause size={12} />}{" "}
-              {paused ? immersiveStory.resume : immersiveStory.pause}
-            </button>
-          )}
-        </div>
-        {modelView ? (
-          <>
-            <div className="engineering-backword" aria-hidden="true">
-              {immersiveStory.words[active]}
-            </div>
-            <div className="engineering-visual" aria-hidden="true">
-              {openingImage && (
-                <div
-                  className={`story-paused-image ${immersive && ready ? "is-hidden" : ""}`}
-                >
+    <>
+      <div className="story-introduction shell py-8 md:py-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <p className="text-sm text-muted leading-relaxed max-w-2xl">
+          {immersiveStory.intro}
+        </p>
+        <a
+          className="text-link shrink-0 w-fit min-h-11"
+          href={immersiveStory.skipHref}
+          onClick={(event) => {
+            const destination = document.getElementById(
+              immersiveStory.skipHref.slice(1),
+            );
+            if (!destination) return;
+            event.preventDefault();
+            cancelReturn.current?.();
+            destination.focus({ preventScroll: true });
+            destination.scrollIntoView({ behavior: "instant", block: "start" });
+          }}
+        >
+          {immersiveStory.skipLabel}
+          <ArrowDown size={16} aria-hidden />
+        </a>
+      </div>
+      <section
+        id="engineering-story"
+        ref={section}
+        data-returning={returning || undefined}
+        className={`engineering-experience ${modelView ? "has-model-view" : ""} ${immersive ? "is-immersive" : "is-static"} ${paused && capable && !failed ? "is-paused" : ""}`}
+        aria-label="Anatomy of a building"
+      >
+        <div className="engineering-stage">
+          <div className="engineering-topline">
+            <p className="eyebrow">
+              <span className="story-dot" />{" "}
+              {paused && capable && !failed
+                ? immersiveStory.pausedLabel
+                : immersiveStory.label}
+            </p>
+            {capable && !failed && (
+              <button
+                className="story-motion eyebrow"
+                onClick={toggle}
+                aria-pressed={paused}
+                disabled={returning || (!ready && !paused)}
+              >
+                {paused ? <Play size={12} /> : <Pause size={12} />}{" "}
+                {paused ? immersiveStory.resume : immersiveStory.pause}
+              </button>
+            )}
+          </div>
+          {modelView ? (
+            <>
+              <div className="engineering-backword" aria-hidden="true">
+                {immersiveStory.words[active]}
+              </div>
+              <div className="engineering-visual" aria-hidden="true">
+                {openingImage && (
+                  <div
+                    className={`story-paused-image ${immersive && ready ? "is-hidden" : ""}`}
+                  >
+                    <Image
+                      src={openingImage}
+                      alt={immersiveStory.posterAlt}
+                      fill
+                      unoptimized
+                    />
+                  </div>
+                )}
+                {!openingImage && (
                   <Image
-                    src={openingImage}
-                    alt={immersiveStory.posterAlt}
+                    src={immersiveStory.poster}
+                    alt=""
                     fill
-                    unoptimized
+                    sizes="(max-width: 767px) 900px, (min-width: 1024px) 75vw, 100vw"
+                    className={`story-poster ${ready ? "is-loaded" : ""}`}
                   />
+                )}
+                {immersive && (
+                  <div
+                    ref={host}
+                    className={`engineering-canvas ${ready ? "is-ready" : ""} ${openingImage ? "has-opening" : ""}`}
+                  />
+                )}
+              </div>
+              <div className="engineering-narrative">
+                <p className="eyebrow story-kicker">{immersiveStory.kicker}</p>
+                <h2 className="story-heading">
+                  {immersiveStory.title[0]}
+                  <br />
+                  <span>{immersiveStory.title[1]}</span>
+                </h2>
+                <div className="story-chapter" key={active}>
+                  <p className="eyebrow story-chapter-label">
+                    0{active + 1} / {engineeringStages[active].label}
+                  </p>
+                  <h3>{engineeringStages[active].title}</h3>
+                  <p className="story-description">
+                    {engineeringStages[active].description}
+                  </p>
+                </div>
+              </div>
+              <div className="story-model-note eyebrow" aria-hidden="true">
+                <span>FW—01 / CONCEPT PAVILION</span>
+                <span>{immersiveStory.views[active]}</span>
+              </div>
+              <div className="story-bottom">
+                <ChapterList
+                  className="story-chapters"
+                  aria-label="Building story chapters"
+                >
+                  {engineeringStages.map((stage, i) => (
+                    <Chapter
+                      key={stage.id}
+                      className="story-step"
+                      onClick={paused ? undefined : () => goTo(i)}
+                      aria-current={active === i ? "step" : undefined}
+                      aria-label={`Chapter ${i + 1}: ${stage.label}`}
+                    >
+                      <span className="eyebrow">0{i + 1}</span>
+                      <span>{immersiveStory.nav[i]}</span>
+                    </Chapter>
+                  ))}
+                </ChapterList>
+                {immersive && (
+                  <div className="story-scroll eyebrow">
+                    <ArrowDown size={14} /> {immersiveStory.scroll}
+                  </div>
+                )}
+              </div>
+              {immersive && (
+                <div className="story-progress" aria-hidden="true">
+                  <div ref={meter} />
                 </div>
               )}
-              {!openingImage && (
-                <Image
-                  src={immersiveStory.poster}
-                  alt=""
-                  fill
-                  sizes="(max-width: 767px) 900px, (min-width: 1024px) 75vw, 100vw"
-                  className={`story-poster ${ready ? "is-loaded" : ""}`}
-                />
-              )}
-              {immersive && (
-                <div
-                  ref={host}
-                  className={`engineering-canvas ${ready ? "is-ready" : ""} ${openingImage ? "has-opening" : ""}`}
-                />
-              )}
-            </div>
-            <div className="engineering-narrative">
+            </>
+          ) : (
+            <div className="story-static-content">
               <p className="eyebrow story-kicker">{immersiveStory.kicker}</p>
               <h2 className="story-heading">
-                {immersiveStory.title[0]}
-                <br />
-                <span>{immersiveStory.title[1]}</span>
+                {immersiveStory.title.join(" ")}
               </h2>
-              <div className="story-chapter" key={active}>
-                <p className="eyebrow story-chapter-label">
-                  0{active + 1} / {engineeringStages[active].label}
-                </p>
-                <h3>{engineeringStages[active].title}</h3>
-                <p className="story-description">
-                  {engineeringStages[active].description}
-                </p>
+              <div className="story-static-poster">
+                <Image
+                  src={immersiveStory.poster}
+                  alt="Blender-created architectural model of a terraced pavilion with bronze facade fins and pale concrete floors"
+                  fill
+                  sizes="(max-width: 767px) 700px, 70vw"
+                />
               </div>
-            </div>
-            <div className="story-model-note eyebrow" aria-hidden="true">
-              <span>FW—01 / CONCEPT PAVILION</span>
-              <span>{immersiveStory.views[active]}</span>
-            </div>
-            <div className="story-bottom">
-              <ChapterList
-                className="story-chapters"
-                aria-label="Building story chapters"
-              >
+              <div className="story-static-chapters">
                 {engineeringStages.map((stage, i) => (
-                  <Chapter
-                    key={stage.id}
-                    className="story-step"
-                    onClick={paused ? undefined : () => goTo(i)}
-                    aria-current={active === i ? "step" : undefined}
-                    aria-label={`Chapter ${i + 1}: ${stage.label}`}
-                  >
-                    <span className="eyebrow">0{i + 1}</span>
-                    <span>{immersiveStory.nav[i]}</span>
-                  </Chapter>
+                  <article key={stage.id}>
+                    <div className="story-static-drawing">
+                      <StructureDrawing stage={i} />
+                    </div>
+                    <div>
+                      <p className="eyebrow story-chapter-label">
+                        0{i + 1} / {stage.label}
+                      </p>
+                      <h3>{stage.title}</h3>
+                      <p className="story-description">{stage.description}</p>
+                    </div>
+                  </article>
                 ))}
-              </ChapterList>
-              {immersive && (
-                <div className="story-scroll eyebrow">
-                  <ArrowDown size={14} /> {immersiveStory.scroll}
-                </div>
-              )}
-            </div>
-            {immersive && (
-              <div className="story-progress" aria-hidden="true">
-                <div ref={meter} />
               </div>
-            )}
-          </>
-        ) : (
-          <div className="story-static-content">
-            <p className="eyebrow story-kicker">{immersiveStory.kicker}</p>
-            <h2 className="story-heading">{immersiveStory.title.join(" ")}</h2>
-            <div className="story-static-poster">
-              <Image
-                src={immersiveStory.poster}
-                alt="Blender-created architectural model of a terraced pavilion with bronze facade fins and pale concrete floors"
-                fill
-                sizes="(max-width: 767px) 700px, 70vw"
-              />
             </div>
-            <div className="story-static-chapters">
-              {engineeringStages.map((stage, i) => (
-                <article key={stage.id}>
-                  <div className="story-static-drawing">
-                    <StructureDrawing stage={i} />
-                  </div>
-                  <div>
-                    <p className="eyebrow story-chapter-label">
-                      0{i + 1} / {stage.label}
-                    </p>
-                    <h3>{stage.title}</h3>
-                    <p className="story-description">{stage.description}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </section>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

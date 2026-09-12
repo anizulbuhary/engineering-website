@@ -67,6 +67,15 @@ export function ContactSection() {
         <p className="text-muted text-sm leading-relaxed mt-5 max-w-xs">
           {contact.asideText}
         </p>
+        <ul className="list-disc pl-4 mt-5 space-y-3 text-sm text-muted leading-relaxed">
+          {contact.checklist.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <div className="mt-8">
+          <p className="eyebrow text-accent">{contact.sampleEmailLabel}</p>
+          <p className="text-sm mt-2 break-all">{contact.sampleEmail}</p>
+        </div>
         <p className="text-xs text-muted leading-relaxed mt-10 max-w-xs">
           {contact.identityNote}
         </p>

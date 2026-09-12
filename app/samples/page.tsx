@@ -5,10 +5,7 @@ import { SampleGallery } from "@/components/samples/SampleGallery";
 import { SampleReading } from "@/components/samples/SampleReading";
 import { ContactCTA } from "@/components/layout/Footer";
 import { pageMetadata } from "@/lib/metadata";
-export const metadata = pageMetadata(
-  "Documentation samples",
-  pages.samples.intro,
-);
+export const metadata = pageMetadata("Drawing samples", pages.samples.intro);
 export default function Page() {
   return (
     <>

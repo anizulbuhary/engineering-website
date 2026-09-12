@@ -13,16 +13,18 @@ export const site = {
 export const navigation = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Capabilities", href: "/capabilities" },
+  { label: "Services", href: "/capabilities" },
   { label: "Projects", href: "/projects" },
-  { label: "Samples", href: "/samples" },
+  { label: "Drawing samples", href: "/samples" },
   { label: "Why Us", href: "/why-us" },
   { label: "Insights", href: "/insights" },
   { label: "Contact", href: "/contact" },
 ];
 export const primaryNavigation = [
+  "Services",
   "Projects",
-  "Capabilities",
+  "Drawing samples",
   "About",
-  "Insights",
 ];
+export const mobileNavigation = ["Home", ...primaryNavigation, "Contact"];
+export const navigationCopy = { contact: "Contact" };

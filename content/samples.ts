@@ -1,4 +1,5 @@
 import type { Sample } from "@/types/content";
+export const sampleGalleryCopy = { preview: "Open preview" };
 export const samples: Sample[] = [
   {
     id: "slab-plan",

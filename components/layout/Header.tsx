@@ -4,7 +4,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { containDialogFocus } from "@/lib/dialog";
 import { ArrowUpRight, Menu, X } from "lucide-react";
-import { navigation, primaryNavigation, site } from "@/content/site";
+import {
+  mobileNavigation,
+  navigation,
+  navigationCopy,
+  primaryNavigation,
+  site,
+} from "@/content/site";
 import { AppearanceControl } from "./AppearanceControl";
 export function Brand() {
   return (
@@ -30,6 +36,8 @@ export function Brand() {
 }
 export function Header() {
   const path = usePathname();
+  const isCurrent = (href: string) =>
+    path === href || (href !== "/" && path.startsWith(`${href}/`));
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   useEffect(() => {
@@ -43,13 +51,13 @@ export function Header() {
   return (
     <header className="site-header sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur-sm">
       <div className="shell h-full flex items-center justify-between gap-3 lg:gap-8">
-        <Link href="/">
+        <Link href="/" className="inline-flex min-h-11 items-center">
           <Brand />
           <span className="sr-only"> home</span>
         </Link>
         <nav
           aria-label="Main navigation"
-          className="hidden lg:flex gap-9 text-xs"
+          className="hidden lg:flex gap-6 xl:gap-9 text-xs"
         >
           {navigation
             .filter((n) => primaryNavigation.includes(n.label))
@@ -62,8 +70,8 @@ export function Header() {
               <Link
                 key={n.href}
                 href={n.href}
-                aria-current={path.startsWith(n.href) ? "page" : undefined}
-                className="navigation-link py-3 hover:text-accent aria-[current=page]:text-accent"
+                aria-current={isCurrent(n.href) ? "page" : undefined}
+                className="navigation-link inline-flex min-h-11 items-center py-3 hover:text-accent aria-[current=page]:text-accent"
               >
                 {n.label}
               </Link>
@@ -72,9 +80,10 @@ export function Header() {
         <div className="flex items-center gap-1 lg:gap-4">
           <Link
             href="/contact"
-            className="hidden lg:inline-flex items-center gap-8 border border-ink px-5 py-3 text-xs hover:bg-ink hover:text-paper transition-colors"
+            aria-current={isCurrent("/contact") ? "page" : undefined}
+            className="hidden lg:inline-flex min-h-11 items-center gap-8 border border-ink px-5 py-3 text-xs hover:bg-ink hover:text-paper aria-[current=page]:border-accent transition-colors"
           >
-            Start a project <ArrowUpRight size={15} aria-hidden />
+            {navigationCopy.contact} <ArrowUpRight size={15} aria-hidden />
           </Link>
           <AppearanceControl />
           <button
@@ -106,18 +115,24 @@ export function Header() {
           </button>
         </div>
         <nav aria-label="Mobile navigation" className="flex flex-col">
-          {navigation.map((n, i) => (
-            <Link
-              onClick={() => dialog.current?.close()}
-              key={n.href}
-              href={n.href}
-              aria-current={path === n.href ? "page" : undefined}
-              className="flex items-center gap-6 border-b border-line py-3 text-2xl aria-[current=page]:text-accent"
-            >
-              <span className="eyebrow text-muted">0{i + 1}</span>
-              {n.label}
-            </Link>
-          ))}
+          {navigation
+            .filter((n) => mobileNavigation.includes(n.label))
+            .sort(
+              (a, b) =>
+                mobileNavigation.indexOf(a.label) -
+                mobileNavigation.indexOf(b.label),
+            )
+            .map((n) => (
+              <Link
+                onClick={() => dialog.current?.close()}
+                key={n.href}
+                href={n.href}
+                aria-current={isCurrent(n.href) ? "page" : undefined}
+                className="flex items-center gap-6 border-b border-line py-3 text-2xl aria-[current=page]:text-accent"
+              >
+                {n.label}
+              </Link>
+            ))}
         </nav>
         <p className="eyebrow text-muted mt-10">
           STRUCTURE. CLARITY. PRECISION.

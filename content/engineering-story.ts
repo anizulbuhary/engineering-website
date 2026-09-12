@@ -1,4 +1,8 @@
 export const immersiveStory = {
+  intro:
+    "See how a building goes from its overall shape to structural details and drawings. Scroll through six steps, or go straight to our services.",
+  skipLabel: "Skip to services",
+  skipHref: "#services",
   label: "THE ENGINEERING EXPERIENCE",
   kicker: "ONE BUILDING. EVERY DISCIPLINE.",
   title: ["Beyond", "the surface."],
@@ -46,40 +50,41 @@ export const engineeringStages = [
     title: "Begin with the whole",
     label: "INITIAL FORM",
     description:
-      "Understand the building, its geometry and the intent behind the design.",
+      "Start with the whole building: its shape, layout and the design it needs to deliver.",
   },
   {
     id: "structure",
     title: "Reveal the structure",
     label: "STRUCTURAL FRAME",
-    description: "Make slabs, columns and load-bearing relationships visible.",
+    description:
+      "See the slabs and columns that support the building, with the outer facade removed.",
   },
   {
     id: "rebar",
     title: "Resolve the details",
     label: "REINFORCEMENT",
     description:
-      "Explore continuity and reinforcement zones in the context of the frame.",
+      "Look inside the concrete to see where reinforcing steel is needed and how the details connect.",
   },
   {
     id: "coordination",
     title: "Connect the disciplines",
     label: "COORDINATION",
     description:
-      "Bring interfaces into view and identify the questions between systems.",
+      "Check where pipes and other building services meet the structure, so clashes can be identified.",
   },
   {
     id: "documentation",
     title: "Make information usable",
     label: "DOCUMENTATION",
     description:
-      "Translate model information into legible plans, sections and schedules.",
+      "Turn the model into plans, cross-sections and schedules that the project team can read and check.",
   },
   {
     id: "final",
     title: "Deliver with clarity",
     label: "FINAL PACKAGE",
     description:
-      "Assemble a consistent, indexed package with a clear revision trail.",
+      "Bring the model, drawings and schedules together, with a clear list of files and revisions.",
   },
 ];

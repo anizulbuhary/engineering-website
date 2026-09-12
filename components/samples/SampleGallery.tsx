@@ -10,6 +10,7 @@ import {
   X,
 } from "lucide-react";
 import type { Sample } from "@/types/content";
+import { sampleGalleryCopy } from "@/content/samples";
 import { containDialogFocus } from "@/lib/dialog";
 export function SampleGallery({ samples }: { samples: Sample[] }) {
   const [category, setCategory] = useState("All");
@@ -70,7 +71,8 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
                 height={640}
                 className="w-full h-auto"
               />
-              <span className="absolute right-4 bottom-4 p-3 bg-paper group-hover:bg-ink group-hover:text-paper transition-colors">
+              <span className="absolute right-4 bottom-4 px-3 py-3 inline-flex items-center gap-2 text-xs bg-paper group-hover:bg-ink group-hover:text-paper transition-colors">
+                {sampleGalleryCopy.preview}
                 <Expand size={17} aria-hidden />
               </span>
             </button>

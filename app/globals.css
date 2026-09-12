@@ -111,6 +111,10 @@ html {
 html:has(dialog[open]) {
   overflow: hidden;
 }
+/* A bypass should jump past the long story, including without JavaScript. */
+html:has(#services:target) {
+  scroll-behavior: auto;
+}
 body {
   margin: 0;
   background: var(--color-paper);
@@ -850,6 +854,20 @@ dialog::backdrop {
 }
 .capability-example-body {
   padding-top: 24px;
+}
+@media (min-width: 768px) {
+  .capability-example summary {
+    margin-left: calc(50% + 16px);
+  }
+  .capability-example-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+  }
+  .capability-example-copy > p:first-child {
+    margin-top: 0;
+  }
 }
 @media (prefers-reduced-motion: no-preference) {
   .capability-example[open] .capability-example-body {
