@@ -1,6 +1,6 @@
 export const immersiveStory = {
   intro:
-    "See how a building goes from its overall shape to structural details and drawings. Scroll through six steps, or go straight to our services.",
+    "Follow the building from architectural form to coordinated details and construction drawings. Explore six stages, or go straight to our services.",
   skipLabel: "Skip to services",
   skipHref: "#services",
   label: "THE ENGINEERING EXPERIENCE",
@@ -47,44 +47,44 @@ export const editorialHero = {
 export const engineeringStages = [
   {
     id: "form",
-    title: "Begin with the whole",
+    title: "Understand the building",
     label: "INITIAL FORM",
     description:
-      "Start with the whole building: its shape, layout and the design it needs to deliver.",
+      "Establish the building’s form, layout and structural requirements before developing the details.",
   },
   {
     id: "structure",
-    title: "Reveal the structure",
+    title: "Reveal the structural frame",
     label: "STRUCTURAL FRAME",
     description:
-      "See the slabs and columns that support the building, with the outer facade removed.",
+      "Examine how slabs, beams and columns connect to form the supporting structure.",
   },
   {
     id: "rebar",
-    title: "Resolve the details",
+    title: "Detail the reinforcement",
     label: "REINFORCEMENT",
     description:
-      "Look inside the concrete to see where reinforcing steel is needed and how the details connect.",
+      "Develop reinforcement arrangements around connections, openings and the sequence of construction.",
   },
   {
     id: "coordination",
-    title: "Connect the disciplines",
+    title: "Coordinate the building systems",
     label: "COORDINATION",
     description:
-      "Check where pipes and other building services meet the structure, so clashes can be identified.",
+      "Review where services meet the structure and identify clashes before they reach the site.",
   },
   {
     id: "documentation",
-    title: "Make information usable",
+    title: "Develop the construction drawings",
     label: "DOCUMENTATION",
     description:
-      "Turn the model into plans, cross-sections and schedules that the project team can read and check.",
+      "Translate the coordinated model into clear plans, sections and schedules for project review.",
   },
   {
     id: "final",
-    title: "Deliver with clarity",
+    title: "Bring the package together",
     label: "FINAL PACKAGE",
     description:
-      "Bring the model, drawings and schedules together, with a clear list of files and revisions.",
+      "Align models, drawings and schedules in a consistent package, with revisions clearly recorded.",
   },
 ];

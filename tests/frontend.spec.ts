@@ -243,7 +243,7 @@ test("Reduced motion and JavaScript-free content remain usable", async ({
     ),
   ).toBe("auto");
   await expect(
-    page.getByRole("heading", { name: "Deliver with clarity" }),
+    page.getByRole("heading", { name: "Bring the package together" }),
   ).toBeAttached();
   const context = await browser.newContext({ javaScriptEnabled: false });
   const staticPage = await context.newPage();
