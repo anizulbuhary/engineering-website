@@ -6,7 +6,7 @@ export const detailStudy = {
   controls: "Explore the drawing",
   figureLabel: "Slab-edge communication study",
   figureAlt:
-    "Schematic section through a slab and its supporting column, with indicative reinforcement and a reference linking the section to a plan.",
+    "Detailed slab-edge section with concrete cut lines, indicative reinforcement returns and support links, a cage cross-section, dimension witnesses and a plan reference.",
   sheet: "FW–01 / SECTION A–A",
   status: "SCHEMATIC / NOT TO SCALE",
   note: "An illustration of how information connects. Geometry and reinforcement are indicative, not a construction design.",
@@ -17,6 +17,11 @@ export const detailStudy = {
     reference: "PLAN → SECTION",
     plan: "LOCATE IN PLAN",
     axis: "A",
+    cageSection: "SUPPORT / CAGE SECTION",
+    supportBars: "SUPPORT BARS",
+    edgeReturn: "EDGE RETURN",
+    slabDepth: "t",
+    supportWidth: "b",
   },
   options: [
     {

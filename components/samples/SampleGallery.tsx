@@ -152,9 +152,25 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
               <ArrowRight size={18} />
             </button>
           </div>
-          <a href={sample.pdf} download className="text-link text-xs">
-            Download PDF <ArrowDownToLine size={16} aria-hidden />
-          </a>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a
+              href={sample.image}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-link text-xs min-h-11"
+            >
+              {sampleGalleryCopy.fullSize}
+              <span className="sr-only"> ({sampleGalleryCopy.newTab})</span>
+              <Expand size={16} aria-hidden />
+            </a>
+            <a
+              href={sample.pdf}
+              download
+              className="text-link text-xs min-h-11"
+            >
+              Download PDF <ArrowDownToLine size={16} aria-hidden />
+            </a>
+          </div>
         </div>
       </dialog>
     </section>

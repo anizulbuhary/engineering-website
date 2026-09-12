@@ -1,1 +1,158 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640"><rect width="900" height="640" fill="#f4f2ed"/><text x="42" y="47" font-family="monospace" font-size="14" fill="#343b32">FORMWORK / ENGINEERING</text><text x="42" y="73" font-family="monospace" font-size="10" fill="#343b32">ILLUSTRATIVE SAMPLE - NOT FOR CONSTRUCTION</text><line x1="40" y1="90" x2="860" y2="90" stroke="#63685f" stroke-width="1"/><text x="42" y="585" font-family="monospace" font-size="17" fill="#343b32">HANDOVER PACKAGE INDEX</text><text x="42" y="613" font-family="monospace" font-size="10" fill="#343b32">SCHEDULES / SCHEMATIC / NOT TO SCALE</text><text x="717" y="613" font-family="monospace" font-size="10" fill="#343b32">FW-S06 / REV 00</text><line x1="40" y1="560" x2="860" y2="560" stroke="#63685f" stroke-width="1"/><line x1="85" y1="140" x2="815" y2="140" stroke="#63685f" stroke-width="1"/><line x1="815" y1="140" x2="815" y2="490" stroke="#63685f" stroke-width="1"/><line x1="815" y1="490" x2="85" y2="490" stroke="#63685f" stroke-width="1"/><line x1="85" y1="490" x2="85" y2="140" stroke="#63685f" stroke-width="1"/><line x1="85" y1="185" x2="815" y2="185" stroke="#63685f" stroke-width="1"/><line x1="85" y1="228" x2="815" y2="228" stroke="#63685f" stroke-width="1"/><line x1="85" y1="271" x2="815" y2="271" stroke="#63685f" stroke-width="1"/><line x1="85" y1="314" x2="815" y2="314" stroke="#63685f" stroke-width="1"/><line x1="85" y1="357" x2="815" y2="357" stroke="#63685f" stroke-width="1"/><line x1="85" y1="400" x2="815" y2="400" stroke="#63685f" stroke-width="1"/><line x1="85" y1="443" x2="815" y2="443" stroke="#63685f" stroke-width="1"/><line x1="85" y1="486" x2="815" y2="486" stroke="#63685f" stroke-width="1"/><line x1="235" y1="140" x2="235" y2="490" stroke="#63685f" stroke-width="1"/><line x1="515" y1="140" x2="515" y2="490" stroke="#63685f" stroke-width="1"/><line x1="670" y1="140" x2="670" y2="490" stroke="#63685f" stroke-width="1"/><text x="95" y="168" font-family="monospace" font-size="11" fill="#343b32">DOCUMENT</text><text x="250" y="168" font-family="monospace" font-size="11" fill="#343b32">DESCRIPTION</text><text x="530" y="168" font-family="monospace" font-size="11" fill="#343b32">REVISION</text><text x="685" y="168" font-family="monospace" font-size="11" fill="#343b32">STATUS</text><text x="95" y="212" font-family="monospace" font-size="11" fill="#343b32">FW-01</text><text x="250" y="212" font-family="monospace" font-size="11" fill="#343b32">MODEL RECORD</text><text x="530" y="212" font-family="monospace" font-size="11" fill="#343b32">S-01</text><text x="685" y="212" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="255" font-family="monospace" font-size="11" fill="#343b32">FW-02</text><text x="250" y="255" font-family="monospace" font-size="11" fill="#343b32">DRAWING SET</text><text x="530" y="255" font-family="monospace" font-size="11" fill="#343b32">S-02</text><text x="685" y="255" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="298" font-family="monospace" font-size="11" fill="#343b32">FW-03</text><text x="250" y="298" font-family="monospace" font-size="11" fill="#343b32">PACKAGE INDEX</text><text x="530" y="298" font-family="monospace" font-size="11" fill="#343b32">S-03</text><text x="685" y="298" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="341" font-family="monospace" font-size="11" fill="#343b32">FW-04</text><text x="250" y="341" font-family="monospace" font-size="11" fill="#343b32">MODEL RECORD</text><text x="530" y="341" font-family="monospace" font-size="11" fill="#343b32">S-04</text><text x="685" y="341" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="384" font-family="monospace" font-size="11" fill="#343b32">FW-05</text><text x="250" y="384" font-family="monospace" font-size="11" fill="#343b32">DRAWING SET</text><text x="530" y="384" font-family="monospace" font-size="11" fill="#343b32">S-05</text><text x="685" y="384" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="427" font-family="monospace" font-size="11" fill="#343b32">FW-06</text><text x="250" y="427" font-family="monospace" font-size="11" fill="#343b32">PACKAGE INDEX</text><text x="530" y="427" font-family="monospace" font-size="11" fill="#343b32">S-06</text><text x="685" y="427" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="470" font-family="monospace" font-size="11" fill="#343b32">FW-07</text><text x="250" y="470" font-family="monospace" font-size="11" fill="#343b32">MODEL RECORD</text><text x="530" y="470" font-family="monospace" font-size="11" fill="#343b32">S-07</text><text x="685" y="470" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 896" role="img"><title>Handover package index</title><desc>A sample drawing register with linked model, drawing and schedule records, revision fields, review stages and a document-reference diagram.</desc>
+<rect x="0" y="0" width="1260" height="896" fill="#f4f2ed" stroke="#f4f2ed" stroke-width="0"/>
+<rect x="28" y="28" width="1204" height="840" fill="none" stroke="#63685f" stroke-width="0.8"/>
+<text x="52" y="62" font-family="Helvetica,Arial,sans-serif" font-size="19" text-anchor="start" fill="#343b32">FORMWORK / ENGINEERING</text>
+<text x="52" y="83" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#63685f">CONCEPT PAVILION / TECHNICAL COMMUNICATION STUDIES</text>
+<text x="1208" y="60" font-family="Courier New,monospace" font-size="19" text-anchor="end" fill="#a64b27">FW-S06</text>
+<text x="1208" y="81" font-family="Courier New,monospace" font-size="10" text-anchor="end" fill="#a64b27">ILLUSTRATIVE / NOT FOR CONSTRUCTION</text>
+<line x1="28" y1="104" x2="1232" y2="104" stroke="#63685f" stroke-width="1"/>
+<line x1="874" y1="104" x2="874" y2="790" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="60" y="136" font-family="Courier New,monospace" font-size="14" text-anchor="start" fill="#343b32">01 / DOCUMENT REGISTER</text>
+<rect x="60" y="170" width="782" height="476" fill="none" stroke="#63685f" stroke-width="0.8"/>
+<line x1="160" y1="170" x2="160" y2="646" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="474" y1="170" x2="474" y2="646" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="568" y1="170" x2="568" y2="646" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="644" y1="170" x2="644" y2="646" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="711" y1="170" x2="711" y2="646" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="196" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">REFERENCE</text>
+<text x="168" y="196" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">DOCUMENT / DRAWING</text>
+<text x="482" y="196" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">GROUP</text>
+<text x="576" y="196" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FORMAT</text>
+<text x="652" y="196" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">REV</text>
+<text x="719" y="196" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">STATUS</text>
+<line x1="60" y1="214" x2="842" y2="214" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="237" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-M01</text>
+<text x="168" y="237" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Structural reference model</text>
+<text x="482" y="237" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">MODEL</text>
+<text x="576" y="237" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">IFC</text>
+<text x="652" y="237" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="719" y="237" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="250" x2="842" y2="250" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="273" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-S01</text>
+<text x="168" y="273" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Typical slab arrangement</text>
+<text x="482" y="273" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">STUDY</text>
+<text x="576" y="273" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="273" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="719" y="273" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="286" x2="842" y2="286" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="309" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-S02</text>
+<text x="168" y="309" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Beam reinforcement study</text>
+<text x="482" y="309" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">STUDY</text>
+<text x="576" y="309" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="309" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="719" y="309" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="322" x2="842" y2="322" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="345" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-S03</text>
+<text x="168" y="345" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Bar schedule layout</text>
+<text x="482" y="345" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">STUDY</text>
+<text x="576" y="345" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="345" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="719" y="345" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="358" x2="842" y2="358" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="381" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-S04</text>
+<text x="168" y="381" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Structural interface view</text>
+<text x="482" y="381" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">STUDY</text>
+<text x="576" y="381" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="381" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="719" y="381" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="394" x2="842" y2="394" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="417" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-S05</text>
+<text x="168" y="417" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Column section study</text>
+<text x="482" y="417" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">STUDY</text>
+<text x="576" y="417" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="417" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="719" y="417" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="430" x2="842" y2="430" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="453" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-S06</text>
+<text x="168" y="453" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Handover package index</text>
+<text x="482" y="453" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">STUDY</text>
+<text x="576" y="453" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="453" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="719" y="453" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="466" x2="842" y2="466" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="489" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-R01</text>
+<text x="168" y="489" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Coordination issue register</text>
+<text x="482" y="489" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">REVIEW</text>
+<text x="576" y="489" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">XLSX</text>
+<text x="652" y="489" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">00</text>
+<text x="719" y="489" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="502" x2="842" y2="502" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="525" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-R02</text>
+<text x="168" y="525" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Drawing revision record</text>
+<text x="482" y="525" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">REVIEW</text>
+<text x="576" y="525" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">XLSX</text>
+<text x="652" y="525" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">00</text>
+<text x="719" y="525" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="538" x2="842" y2="538" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="561" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-D01</text>
+<text x="168" y="561" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Drawing reference map</text>
+<text x="482" y="561" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">INDEX</text>
+<text x="576" y="561" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="561" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">00</text>
+<text x="719" y="561" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="574" x2="842" y2="574" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="597" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-Q01</text>
+<text x="168" y="597" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Quantity reconciliation</text>
+<text x="482" y="597" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">REVIEW</text>
+<text x="576" y="597" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">XLSX</text>
+<text x="652" y="597" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">00</text>
+<text x="719" y="597" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<line x1="60" y1="610" x2="842" y2="610" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="633" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">FW-I01</text>
+<text x="168" y="633" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Package issue record</text>
+<text x="482" y="633" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">INDEX</text>
+<text x="576" y="633" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">PDF</text>
+<text x="652" y="633" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">00</text>
+<text x="719" y="633" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EXAMPLE</text>
+<text x="60" y="691" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#a64b27">REFERENCE CHAIN / ONE SOURCE, CONNECTED RECORDS</text>
+<rect x="60" y="715" width="164" height="40" fill="none" stroke="#63685f" stroke-width="1"/>
+<text x="142" y="740" font-family="Courier New,monospace" font-size="11" text-anchor="middle" fill="#343b32">MODEL</text>
+<line x1="224" y1="735" x2="266" y2="735" stroke="#a64b27" stroke-width="1"/>
+<line x1="258" y1="730" x2="266" y2="735" stroke="#a64b27" stroke-width="1"/>
+<line x1="266" y1="735" x2="258" y2="740" stroke="#a64b27" stroke-width="1"/>
+<rect x="266" y="715" width="164" height="40" fill="none" stroke="#63685f" stroke-width="1"/>
+<text x="348" y="740" font-family="Courier New,monospace" font-size="11" text-anchor="middle" fill="#343b32">DRAWING</text>
+<line x1="430" y1="735" x2="472" y2="735" stroke="#a64b27" stroke-width="1"/>
+<line x1="464" y1="730" x2="472" y2="735" stroke="#a64b27" stroke-width="1"/>
+<line x1="472" y1="735" x2="464" y2="740" stroke="#a64b27" stroke-width="1"/>
+<rect x="472" y="715" width="164" height="40" fill="none" stroke="#63685f" stroke-width="1"/>
+<text x="554" y="740" font-family="Courier New,monospace" font-size="11" text-anchor="middle" fill="#343b32">SCHEDULE</text>
+<line x1="636" y1="735" x2="678" y2="735" stroke="#a64b27" stroke-width="1"/>
+<line x1="670" y1="730" x2="678" y2="735" stroke="#a64b27" stroke-width="1"/>
+<line x1="678" y1="735" x2="670" y2="740" stroke="#a64b27" stroke-width="1"/>
+<rect x="678" y="715" width="164" height="40" fill="none" stroke="#63685f" stroke-width="1"/>
+<text x="760" y="740" font-family="Courier New,monospace" font-size="11" text-anchor="middle" fill="#343b32">REGISTER</text>
+<line x1="902" y1="122" x2="1216" y2="122" stroke="#63685f" stroke-width="0.8"/>
+<text x="902" y="145" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">PACKAGE REVIEW STAGES</text>
+<text x="902" y="175" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">01  Collect source information</text>
+<text x="902" y="209" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">02  Check drawing references</text>
+<text x="902" y="243" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">03  Reconcile revisions</text>
+<text x="902" y="277" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">04  Record outstanding questions</text>
+<text x="902" y="311" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">05  Prepare the issue index</text>
+<line x1="902" y1="373" x2="1216" y2="373" stroke="#63685f" stroke-width="0.8"/>
+<text x="902" y="396" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">RELATED RECORDS</text>
+<text x="902" y="420" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">FW-S01 locates the structural bays.</text>
+<text x="902" y="440" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">FW-S02 identifies beam sections and bars.</text>
+<text x="902" y="460" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">FW-S03 links bar marks to references.</text>
+<text x="902" y="480" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">FW-S04 records coordination interfaces.</text>
+<text x="902" y="500" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">FW-S05 shows column reinforcement.</text>
+<text x="902" y="520" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">FW-S06 organizes the sample package.</text>
+<text x="902" y="592" font-family="Courier New,monospace" font-size="13" text-anchor="start" fill="#a64b27">STATUS: EXAMPLE</text>
+<text x="902" y="617" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Not issued, checked or approved for use.</text>
+<line x1="902" y1="665" x2="1216" y2="665" stroke="#63685f" stroke-width="0.8"/>
+<text x="902" y="688" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">DRAWING NOTES</text>
+<text x="902" y="710" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">This is a sample register, not a delivery.</text>
+<text x="902" y="730" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Only FW-S01 to FW-S06 are sample downloads.</text>
+<text x="902" y="750" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Other rows illustrate a larger package.</text>
+<text x="902" y="770" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">No issue or approval status is claimed.</text>
+<line x1="28" y1="790" x2="1232" y2="790" stroke="#63685f" stroke-width="1"/>
+<text x="52" y="820" font-family="Helvetica,Arial,sans-serif" font-size="20" text-anchor="start" fill="#343b32">HANDOVER PACKAGE INDEX</text>
+<text x="52" y="848" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#63685f">SCHEDULES / SCHEMATIC / NOT TO SCALE</text>
+<line x1="840" y1="790" x2="840" y2="868" stroke="#63685f" stroke-width="1"/>
+<line x1="1010" y1="790" x2="1010" y2="868" stroke="#63685f" stroke-width="1"/>
+<text x="860" y="811" font-family="Courier New,monospace" font-size="9" text-anchor="start" fill="#63685f">PURPOSE</text>
+<text x="860" y="835" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">COMMUNICATION</text>
+<text x="860" y="852" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">STUDY ONLY</text>
+<text x="1030" y="811" font-family="Courier New,monospace" font-size="9" text-anchor="start" fill="#63685f">SHEET / REVISION</text>
+<text x="1030" y="838" font-family="Courier New,monospace" font-size="16" text-anchor="start" fill="#343b32">FW-S06 / 01</text>
+</svg>

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "slab-plan",
+    "title": "Typical slab arrangement",
+    "category": "Shop drawings",
+    "reference": "FW-S01",
+    "description": "A detailed structural floor study with setting-out grids, slab zones, beam references, a stair core and a referenced edge section.",
+    "notes": [
+      "Grid dimensions are illustrative only.",
+      "Coordinate openings with service routes.",
+      "Read the edge section with its plan marker.",
+      "Geometry is not a structural design."
+    ]
+  },
+  {
+    "id": "beam-detail",
+    "title": "Beam reinforcement study",
+    "category": "Reinforcement",
+    "reference": "FW-S02",
+    "description": "A two-span beam study combining reinforcement elevations, support zones, bar marks, cross-sections and an anchorage diagram.",
+    "notes": [
+      "Bar marks demonstrate drawing hierarchy.",
+      "Reinforcement is not a designed arrangement.",
+      "Anchorage and laps require project design.",
+      "Read sections with the marked elevation."
+    ]
+  },
+  {
+    "id": "bar-schedule",
+    "title": "Bar schedule layout",
+    "category": "Schedules",
+    "reference": "FW-S03",
+    "description": "A coordinated sample bar schedule with twelve marked entries, bending-shape diagrams, example quantities and drawing references.",
+    "notes": [
+      "Dimensions and quantities are examples.",
+      "Bending allowances are not calculated.",
+      "Shape sketches are not fabrication details.",
+      "No steel order may be based on this sheet."
+    ]
+  },
+  {
+    "id": "coordination-view",
+    "title": "Structural interface view",
+    "category": "Model views",
+    "reference": "FW-S04",
+    "description": "An axonometric frame study with multiple floor levels, beams, columns, service branches, highlighted interfaces and a review log.",
+    "notes": [
+      "Routes illustrate coordination interfaces.",
+      "Highlighted items require project review.",
+      "No clearances or openings are approved.",
+      "Read the local section with issue 02."
+    ]
+  },
+  {
+    "id": "column-section",
+    "title": "Column section study",
+    "category": "Reinforcement",
+    "reference": "FW-S05",
+    "description": "A column reinforcement study showing a detailed cross-section, perimeter bars, internal ties, a cage elevation and link-form sketches.",
+    "notes": [
+      "Section dimensions are illustrative only.",
+      "Bar counts do not represent a design.",
+      "Cover and tie spacing require verification.",
+      "Read the cage elevation with section A-A."
+    ]
+  },
+  {
+    "id": "handover-index",
+    "title": "Handover package index",
+    "category": "Schedules",
+    "reference": "FW-S06",
+    "description": "A sample drawing register with linked model, drawing and schedule records, revision fields, review stages and a document-reference diagram.",
+    "notes": [
+      "This is a sample register, not a delivery.",
+      "Only FW-S01 to FW-S06 are sample downloads.",
+      "Other rows illustrate a larger package.",
+      "No issue or approval status is claimed."
+    ]
+  }
+]

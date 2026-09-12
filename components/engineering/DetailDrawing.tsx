@@ -84,7 +84,7 @@ export function DetailDrawing() {
           animate(
             label,
             [{ opacity: 0 }, { opacity: 1 }],
-            1100 + index * 30,
+            1100 + Math.min(index * 30, 180),
             350,
           );
         });
@@ -152,6 +152,28 @@ export function DetailDrawing() {
         <path d="M291 374l13-8 12 16 13-16 12 16 13-16 12 16 13-8" />
         <path d="M536 158V226" strokeWidth="3" />
         <path d="M536 226l36 36h78M378 303h56l25 25h75" />
+        {/* Material cut lines and dimension witnesses retain their drafting hierarchy. */}
+        {Array.from({ length: 24 }, (_, i) => 212 + i * 13).map((x) => (
+          <path
+            key={x}
+            d={`M${x} 159l-7 8${x < 296 || x > 379 ? `M${x} 225l7-8` : ""}`}
+            strokeWidth=".6"
+          />
+        ))}
+        <path
+          d="M543 158h34M543 226h34M565 154v76M561 162l8-8M561 230l8-8M303 385v25M379 385v25M299 401h84M299 405l8-8M375 405l8-8"
+          strokeWidth=".7"
+        />
+        <path
+          d="M85 304h120v86H85ZM90 309h110v76H90Z"
+          fill="var(--color-paper)"
+        />
+        <path
+          d="M75 347h140M145 293v108"
+          strokeDasharray="5 5"
+          strokeWidth=".6"
+        />
+        <path d="M203 116h100l18 42M432 209l25-86h36" strokeWidth=".7" />
       </g>
       <g
         className="detail-layer detail-interface"
@@ -179,12 +201,44 @@ export function DetailDrawing() {
         strokeLinecap="round"
       >
         <path d="M219 176H510q8 0 8 8v17q0 8-8 8H219M321 347V188h42v159" />
-        {[252, 282, 405, 436, 468].map((x) => (
+        {[239, 260, 281, 405, 426, 447, 468, 489].map((x) => (
           <path key={x} d={`M${x} 181v23`} strokeWidth="1.5" />
         ))}
-        {[239, 271, 302, 333].map((y) => (
-          <path key={y} d={`M316 ${y}h52`} strokeWidth="1.5" />
+        {[231, 247, 263, 286, 309, 332].map((y) => (
+          <path key={y} d={`M316 ${y + 4}v-4h52v4`} strokeWidth="1.5" />
         ))}
+        <path
+          d="M334 347V198h-12M350 347V198h12M219 193h83m78 0h120"
+          strokeWidth="1.6"
+        />
+        <path
+          d="M99 318h92v58H99Z M130 318v58M160 318v58M99 337h92M99 357h92"
+          strokeWidth="1.2"
+        />
+        {[104, 130, 160, 186].flatMap((x) =>
+          [323, 371].map((y) => (
+            <circle
+              key={`${x}-${y}`}
+              cx={x}
+              cy={y}
+              r="2.3"
+              fill="currentColor"
+              stroke="none"
+            />
+          )),
+        )}
+        {[341, 354].flatMap((y) =>
+          [104, 186].map((x) => (
+            <circle
+              key={`${x}-${y}`}
+              cx={x}
+              cy={y}
+              r="2.3"
+              fill="currentColor"
+              stroke="none"
+            />
+          )),
+        )}
       </g>
       <g
         className="detail-layer detail-reference"
@@ -194,6 +248,20 @@ export function DetailDrawing() {
       >
         <path d="M515 129V102H607V66H714V135H607V102" />
         <path d="M636 66v69M682 66v69M607 100h107" />
+        <path
+          d="M610 70h101v61H610ZM657 71v59M610 84h101M610 116h101M644 90h26v23h-26Z"
+          strokeWidth=".7"
+        />
+        {[636, 682].flatMap((x) =>
+          [84, 116].map((y) => (
+            <path
+              key={`${x}-${y}`}
+              d={`M${x - 2} ${y - 2}h4v4h-4Z`}
+              fill="currentColor"
+              stroke="none"
+            />
+          )),
+        )}
         <path
           d="M673 100h62M673 92v8m-5-5 5 5 5-5M735 92v8m-5-5 5 5 5-5"
           strokeWidth="2"
@@ -216,6 +284,21 @@ export function DetailDrawing() {
         </text>
         <text x="511" y="134" className="detail-axis">
           {copy.labels.axis}
+        </text>
+        <text x="85" y="287" fontSize="9">
+          {copy.labels.cageSection}
+        </text>
+        <text x="203" y="106" fontSize="9">
+          {copy.labels.supportBars}
+        </text>
+        <text x="457" y="114" fontSize="9">
+          {copy.labels.edgeReturn}
+        </text>
+        <text x="578" y="197" fontSize="9">
+          {copy.labels.slabDepth}
+        </text>
+        <text x="341" y="395" fontSize="9" textAnchor="middle">
+          {copy.labels.supportWidth}
         </text>
         <text x="48" y="440">
           {copy.sheet}

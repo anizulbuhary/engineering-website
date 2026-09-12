@@ -1,1 +1,203 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640"><rect width="900" height="640" fill="#f4f2ed"/><text x="42" y="47" font-family="monospace" font-size="14" fill="#343b32">FORMWORK / ENGINEERING</text><text x="42" y="73" font-family="monospace" font-size="10" fill="#343b32">ILLUSTRATIVE SAMPLE - NOT FOR CONSTRUCTION</text><line x1="40" y1="90" x2="860" y2="90" stroke="#63685f" stroke-width="1"/><text x="42" y="585" font-family="monospace" font-size="17" fill="#343b32">BAR SCHEDULE LAYOUT</text><text x="42" y="613" font-family="monospace" font-size="10" fill="#343b32">SCHEDULES / SCHEMATIC / NOT TO SCALE</text><text x="717" y="613" font-family="monospace" font-size="10" fill="#343b32">FW-S03 / REV 00</text><line x1="40" y1="560" x2="860" y2="560" stroke="#63685f" stroke-width="1"/><line x1="85" y1="140" x2="815" y2="140" stroke="#63685f" stroke-width="1"/><line x1="815" y1="140" x2="815" y2="490" stroke="#63685f" stroke-width="1"/><line x1="815" y1="490" x2="85" y2="490" stroke="#63685f" stroke-width="1"/><line x1="85" y1="490" x2="85" y2="140" stroke="#63685f" stroke-width="1"/><line x1="85" y1="185" x2="815" y2="185" stroke="#63685f" stroke-width="1"/><line x1="85" y1="228" x2="815" y2="228" stroke="#63685f" stroke-width="1"/><line x1="85" y1="271" x2="815" y2="271" stroke="#63685f" stroke-width="1"/><line x1="85" y1="314" x2="815" y2="314" stroke="#63685f" stroke-width="1"/><line x1="85" y1="357" x2="815" y2="357" stroke="#63685f" stroke-width="1"/><line x1="85" y1="400" x2="815" y2="400" stroke="#63685f" stroke-width="1"/><line x1="85" y1="443" x2="815" y2="443" stroke="#63685f" stroke-width="1"/><line x1="85" y1="486" x2="815" y2="486" stroke="#63685f" stroke-width="1"/><line x1="235" y1="140" x2="235" y2="490" stroke="#63685f" stroke-width="1"/><line x1="515" y1="140" x2="515" y2="490" stroke="#63685f" stroke-width="1"/><line x1="670" y1="140" x2="670" y2="490" stroke="#63685f" stroke-width="1"/><text x="95" y="168" font-family="monospace" font-size="11" fill="#343b32">MARK</text><text x="250" y="168" font-family="monospace" font-size="11" fill="#343b32">SHAPE</text><text x="530" y="168" font-family="monospace" font-size="11" fill="#343b32">REFERENCE</text><text x="685" y="168" font-family="monospace" font-size="11" fill="#343b32">STATUS</text><text x="95" y="212" font-family="monospace" font-size="11" fill="#343b32">B-01</text><text x="250" y="212" font-family="monospace" font-size="11" fill="#343b32">L-BAR STUDY</text><text x="530" y="212" font-family="monospace" font-size="11" fill="#343b32">S-01</text><text x="685" y="212" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="255" font-family="monospace" font-size="11" fill="#343b32">B-02</text><text x="250" y="255" font-family="monospace" font-size="11" fill="#343b32">STRAIGHT BAR</text><text x="530" y="255" font-family="monospace" font-size="11" fill="#343b32">S-02</text><text x="685" y="255" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="298" font-family="monospace" font-size="11" fill="#343b32">B-03</text><text x="250" y="298" font-family="monospace" font-size="11" fill="#343b32">LINK STUDY</text><text x="530" y="298" font-family="monospace" font-size="11" fill="#343b32">S-03</text><text x="685" y="298" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="341" font-family="monospace" font-size="11" fill="#343b32">B-04</text><text x="250" y="341" font-family="monospace" font-size="11" fill="#343b32">L-BAR STUDY</text><text x="530" y="341" font-family="monospace" font-size="11" fill="#343b32">S-04</text><text x="685" y="341" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="384" font-family="monospace" font-size="11" fill="#343b32">B-05</text><text x="250" y="384" font-family="monospace" font-size="11" fill="#343b32">STRAIGHT BAR</text><text x="530" y="384" font-family="monospace" font-size="11" fill="#343b32">S-05</text><text x="685" y="384" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="427" font-family="monospace" font-size="11" fill="#343b32">B-06</text><text x="250" y="427" font-family="monospace" font-size="11" fill="#343b32">LINK STUDY</text><text x="530" y="427" font-family="monospace" font-size="11" fill="#343b32">S-06</text><text x="685" y="427" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text><text x="95" y="470" font-family="monospace" font-size="11" fill="#343b32">B-07</text><text x="250" y="470" font-family="monospace" font-size="11" fill="#343b32">L-BAR STUDY</text><text x="530" y="470" font-family="monospace" font-size="11" fill="#343b32">S-07</text><text x="685" y="470" font-family="monospace" font-size="11" fill="#343b32">CONCEPT</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 896" role="img"><title>Bar schedule layout</title><desc>A coordinated sample bar schedule with twelve marked entries, bending-shape diagrams, example quantities and drawing references.</desc>
+<rect x="0" y="0" width="1260" height="896" fill="#f4f2ed" stroke="#f4f2ed" stroke-width="0"/>
+<rect x="28" y="28" width="1204" height="840" fill="none" stroke="#63685f" stroke-width="0.8"/>
+<text x="52" y="62" font-family="Helvetica,Arial,sans-serif" font-size="19" text-anchor="start" fill="#343b32">FORMWORK / ENGINEERING</text>
+<text x="52" y="83" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#63685f">CONCEPT PAVILION / TECHNICAL COMMUNICATION STUDIES</text>
+<text x="1208" y="60" font-family="Courier New,monospace" font-size="19" text-anchor="end" fill="#a64b27">FW-S03</text>
+<text x="1208" y="81" font-family="Courier New,monospace" font-size="10" text-anchor="end" fill="#a64b27">ILLUSTRATIVE / NOT FOR CONSTRUCTION</text>
+<line x1="28" y1="104" x2="1232" y2="104" stroke="#63685f" stroke-width="1"/>
+<line x1="874" y1="104" x2="874" y2="790" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="60" y="136" font-family="Courier New,monospace" font-size="14" text-anchor="start" fill="#343b32">01 / REINFORCEMENT SCHEDULE</text>
+<rect x="60" y="168" width="782" height="510" fill="none" stroke="#63685f" stroke-width="0.8"/>
+<line x1="125" y1="168" x2="125" y2="678" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="271" y1="168" x2="271" y2="678" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="342" y1="168" x2="342" y2="678" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="405" y1="168" x2="405" y2="678" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="502" y1="168" x2="502" y2="678" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="599" y1="168" x2="599" y2="678" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="732" y1="168" x2="732" y2="678" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">MARK</text>
+<text x="133" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">SHAPE</text>
+<text x="279" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">DIA.</text>
+<text x="350" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">QTY</text>
+<text x="413" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">A / mm</text>
+<text x="510" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B / mm</text>
+<text x="607" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">REFERENCE</text>
+<text x="740" y="194" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">REV</text>
+<line x1="60" y1="210" x2="842" y2="210" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="235" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R01</text>
+<line x1="153" y1="239" x2="227" y2="239" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="235" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">20</text>
+<text x="350" y="235" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">8</text>
+<text x="413" y="235" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">6400</text>
+<text x="510" y="235" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">-</text>
+<text x="607" y="235" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B01 / TOP</text>
+<text x="740" y="235" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="249" x2="842" y2="249" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="274" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R02</text>
+<line x1="153" y1="262" x2="153" y2="280" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="280" x2="227" y2="280" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="274" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">20</text>
+<text x="350" y="274" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">8</text>
+<text x="413" y="274" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">6100</text>
+<text x="510" y="274" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">420</text>
+<text x="607" y="274" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B01 / BOT</text>
+<text x="740" y="274" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="288" x2="842" y2="288" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="313" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R03</text>
+<line x1="153" y1="300" x2="153" y2="319" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="319" x2="227" y2="319" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="227" y1="319" x2="227" y2="300" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="313" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">16</text>
+<text x="350" y="313" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">12</text>
+<text x="413" y="313" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">1800</text>
+<text x="510" y="313" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">360</text>
+<text x="607" y="313" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B01 / SUP</text>
+<text x="740" y="313" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="327" x2="842" y2="327" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="352" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R04</text>
+<line x1="153" y1="337" x2="153" y2="360" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="360" x2="223" y2="360" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="223" y1="360" x2="223" y2="337" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="223" y1="337" x2="153" y2="337" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="337" x2="161" y2="345" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="352" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">10</text>
+<text x="350" y="352" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">48</text>
+<text x="413" y="352" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">250</text>
+<text x="510" y="352" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">500</text>
+<text x="607" y="352" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B01 / A-A</text>
+<text x="740" y="352" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="366" x2="842" y2="366" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="391" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R05</text>
+<line x1="153" y1="379" x2="153" y2="397" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="397" x2="227" y2="397" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="391" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">16</text>
+<text x="350" y="391" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">16</text>
+<text x="413" y="391" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">1200</text>
+<text x="510" y="391" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">480</text>
+<text x="607" y="391" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B01 / END</text>
+<text x="740" y="391" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="405" x2="842" y2="405" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="430" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R06</text>
+<line x1="153" y1="434" x2="227" y2="434" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="430" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">20</text>
+<text x="350" y="430" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">8</text>
+<text x="413" y="430" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">6800</text>
+<text x="510" y="430" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">-</text>
+<text x="607" y="430" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B02 / TOP</text>
+<text x="740" y="430" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="444" x2="842" y2="444" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="469" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R07</text>
+<line x1="153" y1="457" x2="153" y2="475" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="475" x2="227" y2="475" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="469" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">20</text>
+<text x="350" y="469" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">8</text>
+<text x="413" y="469" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">6500</text>
+<text x="510" y="469" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">420</text>
+<text x="607" y="469" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B02 / BOT</text>
+<text x="740" y="469" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="483" x2="842" y2="483" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="508" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R08</text>
+<line x1="153" y1="493" x2="153" y2="516" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="516" x2="223" y2="516" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="223" y1="516" x2="223" y2="493" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="223" y1="493" x2="153" y2="493" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="493" x2="161" y2="501" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="508" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">10</text>
+<text x="350" y="508" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">52</text>
+<text x="413" y="508" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">250</text>
+<text x="510" y="508" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">500</text>
+<text x="607" y="508" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">B02 / B-B</text>
+<text x="740" y="508" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="522" x2="842" y2="522" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="547" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R09</text>
+<line x1="153" y1="551" x2="227" y2="551" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="547" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">25</text>
+<text x="350" y="547" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">16</text>
+<text x="413" y="547" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">3200</text>
+<text x="510" y="547" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">-</text>
+<text x="607" y="547" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">C01 / VERT</text>
+<text x="740" y="547" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="561" x2="842" y2="561" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="586" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R10</text>
+<line x1="153" y1="571" x2="153" y2="594" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="594" x2="223" y2="594" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="223" y1="594" x2="223" y2="571" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="223" y1="571" x2="153" y2="571" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="571" x2="161" y2="579" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="586" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">10</text>
+<text x="350" y="586" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">32</text>
+<text x="413" y="586" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">520</text>
+<text x="510" y="586" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">520</text>
+<text x="607" y="586" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">C01 / A-A</text>
+<text x="740" y="586" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="600" x2="842" y2="600" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="625" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R11</text>
+<line x1="153" y1="612" x2="153" y2="631" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="631" x2="227" y2="631" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="227" y1="631" x2="227" y2="612" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="625" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">12</text>
+<text x="350" y="625" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">24</text>
+<text x="413" y="625" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">900</text>
+<text x="510" y="625" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">260</text>
+<text x="607" y="625" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EDGE / A-A</text>
+<text x="740" y="625" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<line x1="60" y1="639" x2="842" y2="639" stroke="#a5a99f" stroke-width="0.7"/>
+<text x="68" y="664" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#343b32">R12</text>
+<line x1="153" y1="652" x2="153" y2="670" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="153" y1="670" x2="227" y2="670" stroke="#a64b27" stroke-width="1.5"/>
+<text x="279" y="664" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">12</text>
+<text x="350" y="664" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">24</text>
+<text x="413" y="664" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">1200</text>
+<text x="510" y="664" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">300</text>
+<text x="607" y="664" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">EDGE / A-A</text>
+<text x="740" y="664" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#343b32">01</text>
+<text x="60" y="712" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#a64b27">EXAMPLE QUANTITIES / DIMENSIONS BEFORE BENDING ADJUSTMENTS</text>
+<text x="60" y="739" font-family="Helvetica,Arial,sans-serif" font-size="12" text-anchor="start" fill="#63685f">Refer to beam and column studies for drawing-reference context.</text>
+<line x1="902" y1="122" x2="1216" y2="122" stroke="#63685f" stroke-width="0.8"/>
+<text x="902" y="145" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">SHAPE DIMENSION CONVENTION</text>
+<line x1="950" y1="211" x2="950" y2="247" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="950" y1="247" x2="1098" y2="247" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="950" y1="274" x2="1098" y2="274" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="950" y1="253" x2="950" y2="281" stroke="#a5a99f" stroke-width="0.6"/>
+<line x1="946" y1="278" x2="954" y2="270" stroke="#343b32" stroke-width="1"/>
+<line x1="1098" y1="253" x2="1098" y2="281" stroke="#a5a99f" stroke-width="0.6"/>
+<line x1="1094" y1="278" x2="1102" y2="270" stroke="#343b32" stroke-width="1"/>
+<text x="1024" y="267" font-family="Courier New,monospace" font-size="11" text-anchor="middle" fill="#343b32">A</text>
+<text x="925" y="232" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">B</text>
+<line x1="950" y1="343" x2="950" y2="389" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="950" y1="389" x2="1090" y2="389" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="1090" y1="389" x2="1090" y2="343" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="1090" y1="343" x2="950" y2="343" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="950" y1="343" x2="966" y2="359" stroke="#a64b27" stroke-width="1.5"/>
+<line x1="950" y1="419" x2="1090" y2="419" stroke="#a5a99f" stroke-width="0.7"/>
+<line x1="950" y1="389" x2="950" y2="426" stroke="#a5a99f" stroke-width="0.6"/>
+<line x1="946" y1="423" x2="954" y2="415" stroke="#343b32" stroke-width="1"/>
+<line x1="1090" y1="389" x2="1090" y2="426" stroke="#a5a99f" stroke-width="0.6"/>
+<line x1="1086" y1="423" x2="1094" y2="415" stroke="#343b32" stroke-width="1"/>
+<text x="1020" y="412" font-family="Courier New,monospace" font-size="11" text-anchor="middle" fill="#343b32">A</text>
+<text x="925" y="371" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">B</text>
+<line x1="902" y1="463" x2="1216" y2="463" stroke="#63685f" stroke-width="0.8"/>
+<text x="902" y="486" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">READ THE SCHEDULE</text>
+<text x="902" y="508" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">MARK links the bar to a drawing.</text>
+<text x="902" y="528" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">DIA. is the example bar diameter in mm.</text>
+<text x="902" y="548" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">QTY is an illustrative count.</text>
+<text x="902" y="568" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">A and B describe the sketch dimensions.</text>
+<text x="902" y="588" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">REV identifies the example revision.</text>
+<line x1="902" y1="665" x2="1216" y2="665" stroke="#63685f" stroke-width="0.8"/>
+<text x="902" y="688" font-family="Courier New,monospace" font-size="12" text-anchor="start" fill="#a64b27">DRAWING NOTES</text>
+<text x="902" y="710" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Dimensions and quantities are examples.</text>
+<text x="902" y="730" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Bending allowances are not calculated.</text>
+<text x="902" y="750" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">Shape sketches are not fabrication details.</text>
+<text x="902" y="770" font-family="Helvetica,Arial,sans-serif" font-size="11" text-anchor="start" fill="#343b32">No steel order may be based on this sheet.</text>
+<line x1="28" y1="790" x2="1232" y2="790" stroke="#63685f" stroke-width="1"/>
+<text x="52" y="820" font-family="Helvetica,Arial,sans-serif" font-size="20" text-anchor="start" fill="#343b32">BAR SCHEDULE LAYOUT</text>
+<text x="52" y="848" font-family="Courier New,monospace" font-size="10" text-anchor="start" fill="#63685f">SCHEDULES / SCHEMATIC / NOT TO SCALE</text>
+<line x1="840" y1="790" x2="840" y2="868" stroke="#63685f" stroke-width="1"/>
+<line x1="1010" y1="790" x2="1010" y2="868" stroke="#63685f" stroke-width="1"/>
+<text x="860" y="811" font-family="Courier New,monospace" font-size="9" text-anchor="start" fill="#63685f">PURPOSE</text>
+<text x="860" y="835" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">COMMUNICATION</text>
+<text x="860" y="852" font-family="Courier New,monospace" font-size="11" text-anchor="start" fill="#343b32">STUDY ONLY</text>
+<text x="1030" y="811" font-family="Courier New,monospace" font-size="9" text-anchor="start" fill="#63685f">SHEET / REVISION</text>
+<text x="1030" y="838" font-family="Courier New,monospace" font-size="16" text-anchor="start" fill="#343b32">FW-S03 / 01</text>
+</svg>

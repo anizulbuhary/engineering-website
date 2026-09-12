@@ -92,8 +92,18 @@ test("Sample preview supports keyboard, focus restoration and real PDFs", async 
   await expect(dialog.getByRole("heading")).toHaveText(
     "Beam reinforcement study",
   );
+  const fullSize = dialog.getByRole("link", { name: /Open full-size drawing/ });
+  await expect(fullSize).toHaveAttribute(
+    "href",
+    "/graphics/samples/beam-detail.svg",
+  );
+  await expect(fullSize).toHaveAttribute("target", "_blank");
   await page.keyboard.press("ArrowRight");
   await expect(dialog.getByRole("heading")).toHaveText("Bar schedule layout");
+  await expect(fullSize).toHaveAttribute(
+    "href",
+    "/graphics/samples/bar-schedule.svg",
+  );
   await page.keyboard.press("ArrowLeft");
   await expect(dialog.getByRole("heading")).toHaveText(
     "Beam reinforcement study",
