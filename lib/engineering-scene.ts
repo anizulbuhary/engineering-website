@@ -85,6 +85,8 @@ export function mountEngineeringScene(
     disposed = false,
     loaded = false;
   let previousShadowState = "";
+  let viewportWidth = 0,
+    viewportHeight = 0;
   // Only the technical overlay changes tone. Model materials, lighting and the
   // reversible camera timeline remain independent of the page appearance.
   const drawingInk = new THREE.Color();
@@ -116,7 +118,7 @@ export function mountEngineeringScene(
     renderFrame();
     if (current !== desired) wake();
   }
-  function renderFrame() {
+  function renderFrame(paint = true) {
     const state = sampleEngineeringTimeline(current);
     const at = (key: keyof typeof state) => state[key];
     // Camera-only movement reuses the same world-space shadow map. Geometry
@@ -187,8 +189,10 @@ export function mountEngineeringScene(
         edges.visible = at("drawing") > 0.02;
       }
     }
-    renderer.render(scene, camera);
-    renderer.domElement.dataset.progress = current.toFixed(4);
+    if (paint) {
+      renderer.render(scene, camera);
+      renderer.domElement.dataset.progress = current.toFixed(4);
+    }
   }
   function refreshVisibility() {
     const rect = host.getBoundingClientRect();
@@ -210,10 +214,16 @@ export function mountEngineeringScene(
   function resize() {
     const { width, height } = host.getBoundingClientRect();
     if (!width || !height) return;
+    if (width === viewportWidth && height === viewportHeight) return;
+    viewportWidth = width;
+    viewportHeight = height;
     camera.aspect = width / height;
     camera.fov = width / height < 1 ? 44 : 36;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
+    // setSize clears the drawing buffer. ResizeObserver runs before paint, so
+    // replace it now; deferring to the next RAF exposes one empty frame.
+    if (loaded && !disposed) renderFrame();
     wake(true);
   }
   const resizer = new ResizeObserver(resize);
@@ -252,7 +262,7 @@ export function mountEngineeringScene(
       return response.arrayBuffer();
     })
     .then((buffer) => loader.parseAsync(buffer, "/models/"))
-    .then((gltf) => {
+    .then(async (gltf) => {
       if (disposed) {
         disposeObject(gltf.scene);
         return;
@@ -311,9 +321,19 @@ export function mountEngineeringScene(
       for (const part of parts)
         if (part.edges) part.mesh.parent?.add(part.edges);
       scene.add(gltf.scene);
-      loaded = true;
-      current = desired;
       resize();
+      // Prepare opaque and fading material/shadow variants behind the poster.
+      // Their first use must not interrupt the user's first scroll gesture.
+      for (const sample of [0.12, 0.3, desired]) {
+        current = sample;
+        renderFrame(false);
+        await renderer.compileAsync(scene, camera);
+        if (disposed) return;
+        renderFrame();
+      }
+      loaded = true;
+      // Scroll can advance while shader preparation is pending.
+      current = desired;
       renderFrame();
       onReady();
       wake();

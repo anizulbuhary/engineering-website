@@ -1,5 +1,31 @@
 import { test, expect } from "@playwright/test";
 
+test("phone image expansion keeps the engineering section anchored in the document", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 900 });
+  await page.goto("/");
+  await page.locator("#engineering-story.is-immersive").waitFor();
+  await page.evaluate(() => document.fonts.ready);
+  const positions = () =>
+    page.evaluate(() => ({
+      imageHeight: document
+        .querySelector(".editorial-image")!
+        .getBoundingClientRect().height,
+      storyTop:
+        document.querySelector("#engineering-story")!.getBoundingClientRect()
+          .top + scrollY,
+    }));
+  const initial = await positions();
+  await page.evaluate(() => scrollTo({ top: 700, behavior: "instant" }));
+  await expect(page.locator(".editorial-hero")).toHaveCSS("--hero-reveal", "1");
+  expect((await positions()).imageHeight).toBeCloseTo(initial.imageHeight, 0);
+  expect((await positions()).storyTop).toBeCloseTo(initial.storyTop, 0);
+  await page.evaluate(() => scrollTo({ top: 0, behavior: "instant" }));
+  await expect(page.locator(".editorial-hero")).toHaveCSS("--hero-reveal", "0");
+  expect((await positions()).storyTop).toBeCloseTo(initial.storyTop, 0);
+});
+
 test("editorial hero reveals on scroll without loading a Blender image sequence", async ({
   page,
 }) => {

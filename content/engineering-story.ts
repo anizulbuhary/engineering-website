@@ -21,6 +21,7 @@ export const immersiveStory = {
     "06 / ASSEMBLED MODEL",
   ],
   scroll: "SCROLL TO REVEAL",
+  loading: "PREPARING MODEL…",
   pause: "Pause motion",
   resume: "Resume motion",
   pausedLabel: "THE ENGINEERING EXPERIENCE / STILL VIEW",

@@ -79,8 +79,12 @@ export function EngineeringStory() {
             if (cancelled) return;
             scene.current = mountEngineeringScene(
               element,
-              () => setReady(true),
-              () => setFailed(true),
+              () => {
+                if (!cancelled) setReady(true);
+              },
+              () => {
+                if (!cancelled) setFailed(true);
+              },
             );
             scene.current.setProgress(progress.current);
           })
@@ -88,7 +92,7 @@ export function EngineeringStory() {
             if (!cancelled) setFailed(true);
           });
       },
-      { rootMargin: "100px" },
+      { rootMargin: "900px 0px" },
     );
     observer.observe(section.current);
     return () => {
@@ -96,6 +100,7 @@ export function EngineeringStory() {
       observer.disconnect();
       scene.current?.dispose();
       scene.current = null;
+      setReady(false);
     };
   }, [immersive]);
 
@@ -333,7 +338,7 @@ export function EngineeringStory() {
                 {immersive && (
                   <div
                     ref={host}
-                    className={`engineering-canvas ${ready ? "is-ready" : ""} ${openingImage ? "has-opening" : ""}`}
+                    className={`engineering-canvas ${ready ? "is-ready" : ""}`}
                   />
                 )}
               </div>
@@ -377,8 +382,9 @@ export function EngineeringStory() {
                   ))}
                 </ChapterList>
                 {immersive && (
-                  <div className="story-scroll eyebrow">
-                    <ArrowDown size={14} /> {immersiveStory.scroll}
+                  <div className="story-scroll eyebrow" role="status">
+                    {ready && <ArrowDown size={14} aria-hidden />}
+                    {ready ? immersiveStory.scroll : immersiveStory.loading}
                   </div>
                 )}
               </div>

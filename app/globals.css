@@ -278,7 +278,7 @@ dialog::backdrop {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.8s;
+  /* Swap the complete first frame with its poster in the same paint. */
 }
 .engineering-canvas.is-ready {
   opacity: 1;
@@ -291,7 +291,6 @@ dialog::backdrop {
 .story-poster {
   object-fit: contain;
   opacity: 1;
-  transition: opacity 0.8s;
 }
 .story-poster.is-loaded {
   opacity: 0;
@@ -1121,8 +1120,8 @@ dialog::backdrop {
     max-width: 260px;
   }
   .editorial-image {
-    height: auto;
-    aspect-ratio: 10 / 11;
+    /* Animated side margins must not change document height above the story. */
+    height: calc((100vw - 44px) * 1.1);
     margin-inline: calc(22px * (1 - var(--hero-reveal)));
   }
   .editorial-image img {
@@ -1470,9 +1469,6 @@ dialog::backdrop {
 }
 .story-paused-image.is-hidden {
   visibility: hidden;
-}
-.engineering-canvas.has-opening {
-  transition: none;
 }
 
 /* Shared header geometry and progressive editorial details. */
