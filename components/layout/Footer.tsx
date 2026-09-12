@@ -5,13 +5,13 @@ import { TextLink } from "@/components/ui/Primitives";
 import { sectionCopy as copy } from "@/content/sections";
 export function ContactCTA() {
   return (
-    <section className="bg-ink text-paper">
+    <section className="permanent-dark">
       <Reveal
         stagger
         className="shell section-space grid md:grid-cols-[1fr_auto] gap-12 items-end"
       >
         <div>
-          <p className="eyebrow text-concrete mb-7">{copy.cta.label}</p>
+          <p className="eyebrow text-on-dark-muted mb-7">{copy.cta.label}</p>
           <h2 className="heading whitespace-pre-line">{copy.cta.title}</h2>
         </div>
         <TextLink href="/contact" className="w-fit">
@@ -23,17 +23,17 @@ export function ContactCTA() {
 }
 export function Footer() {
   return (
-    <footer className="bg-ink text-paper border-t border-white/20">
+    <footer className="permanent-dark border-t border-on-dark-line">
       <div className="shell py-14">
         <Reveal stagger className="grid md:grid-cols-2 gap-10">
           <div>
             <Link href="/" className="text-3xl tracking-[-.05em] font-medium">
               {site.name}
-              <span className="text-rust" aria-hidden>
+              <span className="text-on-dark-accent" aria-hidden>
                 .
               </span>
             </Link>
-            <p className="mt-4 text-sm text-concrete max-w-xs whitespace-pre-line">
+            <p className="mt-4 text-sm text-on-dark-muted max-w-xs whitespace-pre-line">
               {site.tagline}
             </p>
           </div>
@@ -54,7 +54,7 @@ export function Footer() {
         </Reveal>
         <Reveal
           rule
-          className="footer-legal mt-16 pt-6 border-t border-white/20 flex flex-col md:flex-row justify-between gap-4 text-[10px] text-concrete"
+          className="footer-legal mt-16 pt-6 border-t border-on-dark-line flex flex-col md:flex-row justify-between gap-4 text-[10px] text-on-dark-muted"
         >
           <p>{site.copyright}</p>
           <p>{site.demoNote}</p>

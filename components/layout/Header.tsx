@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { containDialogFocus } from "@/lib/dialog";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navigation, primaryNavigation, site } from "@/content/site";
+import { AppearanceControl } from "./AppearanceControl";
 export function Brand() {
   return (
     <span className="inline-flex items-center gap-3">
@@ -41,7 +42,7 @@ export function Header() {
   }, []);
   return (
     <header className="site-header sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur-sm">
-      <div className="shell h-full flex items-center justify-between gap-8">
+      <div className="shell h-full flex items-center justify-between gap-3 lg:gap-8">
         <Link href="/">
           <Brand />
           <span className="sr-only"> home</span>
@@ -68,27 +69,30 @@ export function Header() {
               </Link>
             ))}
         </nav>
-        <Link
-          href="/contact"
-          className="hidden lg:inline-flex items-center gap-8 border border-ink px-5 py-3 text-xs hover:bg-ink hover:text-paper transition-colors"
-        >
-          Start a project <ArrowUpRight size={15} aria-hidden />
-        </Link>
-        <button
-          ref={trigger}
-          onClick={() => dialog.current?.showModal()}
-          className="lg:hidden min-h-11 min-w-11 grid place-items-center"
-          aria-label="Open navigation"
-        >
-          <Menu size={25} />
-        </button>
+        <div className="flex items-center gap-1 lg:gap-4">
+          <Link
+            href="/contact"
+            className="hidden lg:inline-flex items-center gap-8 border border-ink px-5 py-3 text-xs hover:bg-ink hover:text-paper transition-colors"
+          >
+            Start a project <ArrowUpRight size={15} aria-hidden />
+          </Link>
+          <AppearanceControl />
+          <button
+            ref={trigger}
+            onClick={() => dialog.current?.showModal()}
+            className="lg:hidden min-h-11 min-w-11 grid place-items-center"
+            aria-label="Open navigation"
+          >
+            <Menu size={25} />
+          </button>
+        </div>
       </div>
       <dialog
         aria-label="Site navigation"
         onKeyDown={containDialogFocus}
         ref={dialog}
         onClose={() => trigger.current?.focus()}
-        className="navigation-dialog fixed inset-0 m-0 ml-auto h-dvh max-h-none w-full max-w-md bg-paper p-7 text-ink"
+        className="navigation-dialog fixed inset-0 m-0 ml-auto h-dvh max-h-none w-full max-w-md bg-raised p-7 text-ink"
       >
         <div className="flex justify-between items-center mb-12">
           <Brand />

@@ -103,7 +103,7 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
             move(-1);
           }
         }}
-        className="sample-dialog m-auto w-[calc(100%-32px)] max-w-5xl max-h-[90dvh] bg-paper text-ink p-5 md:p-8"
+        className="sample-dialog m-auto w-[calc(100%-32px)] max-w-5xl max-h-[90dvh] bg-raised text-ink p-5 md:p-8"
       >
         <div className="flex justify-between gap-5 items-center mb-5">
           <div>

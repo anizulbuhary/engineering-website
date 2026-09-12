@@ -130,6 +130,9 @@ test("Mobile navigation traps focus, closes and restores focus", async ({
   await expect(dialog).not.toBeVisible();
 });
 test("Contact preview sends and stores nothing", async ({ page }) => {
+  await page.addInitScript(() =>
+    localStorage.setItem("formwork-theme", "dark"),
+  );
   await page.goto("/contact");
   await page.waitForLoadState("networkidle");
   const requests: string[] = [];
@@ -157,10 +160,15 @@ test("Contact preview sends and stores nothing", async ({ page }) => {
   expect(requests).toEqual([]);
   expect(
     await page.evaluate(() => ({
-      local: localStorage.length,
+      local: Object.fromEntries(
+        Object.keys(localStorage).map((key) => [
+          key,
+          localStorage.getItem(key),
+        ]),
+      ),
       session: sessionStorage.length,
     })),
-  ).toEqual({ local: 0, session: 0 });
+  ).toEqual({ local: { "formwork-theme": "dark" }, session: 0 });
   await page.screenshot({
     path: "artifacts/contact-desktop.png",
     fullPage: true,

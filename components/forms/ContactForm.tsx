@@ -33,7 +33,7 @@ export function ContactForm() {
               name={f.name}
               type={f.type}
               autoComplete={f.autoComplete}
-              className="w-full border-b border-muted bg-transparent py-3 rounded-none outline-offset-4"
+              className="w-full border-b border-control bg-transparent py-3 rounded-none outline-offset-4"
             />
           </Reveal>
         ))}
@@ -67,7 +67,7 @@ export function ContactForm() {
           id="message"
           name="message"
           rows={5}
-          className="w-full border border-muted bg-transparent p-4 resize-y"
+          className="w-full border border-control bg-transparent p-4 resize-y"
         />
       </Reveal>
       <button
