@@ -2,6 +2,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { services } from "@/content/services";
 import { TextLink } from "@/components/ui/Primitives";
 import { sectionCopy as copy } from "@/content/sections";
+import { CapabilityExample } from "./CapabilityExample";
 export function Capabilities({ full = false }: { full?: boolean }) {
   const Heading = full ? "h2" : "h3";
   return (
@@ -44,6 +45,7 @@ export function Capabilities({ full = false }: { full?: boolean }) {
                   ))}
                 </ul>
               )}
+              <CapabilityExample service={s.id} />
             </div>
           </Reveal>
         ))}

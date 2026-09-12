@@ -17,6 +17,7 @@ export type Project = {
   approach: string;
   deliverables: string[];
   featured: boolean;
+  study?: "slab-edge";
 };
 export type Sample = {
   id: string;

@@ -24,11 +24,20 @@ export const editorialHero = {
   title: ["Engineering", "what", "endures."],
   action: "Contact",
   actionHref: "/contact",
-  scroll: "DISCOVER WHAT HOLDS IT ALL TOGETHER",
   image: "/images/projects/frame.webp",
   imageAlt:
     "Concept image of an exposed concrete structure with repeating floor slabs, columns and reinforcement",
   caption: "01 / THE FRAME / CONCEPT STUDY",
+  companion: {
+    label: "FIG. 01 / A CLOSER LOOK",
+    title: "The whole, in every detail.",
+    description:
+      "Slab, column and edge. A closer crop of the same frame reveals the relationships behind the larger structure.",
+    imageAlt:
+      "Close crop of the same concept photograph, showing a concrete slab meeting its column",
+    link: "Read the study",
+    href: "/projects/the-frame#study",
+  },
 };
 export const engineeringStages = [
   {

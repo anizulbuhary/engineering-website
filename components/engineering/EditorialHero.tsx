@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
+import { TextLink } from "@/components/ui/Primitives";
 import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { home } from "@/content/pages";
@@ -85,12 +86,32 @@ export function EditorialHero() {
             <ArrowDown size={26} />
           </div>
         </div>
-        <figcaption className="editorial-caption shell eyebrow">
-          <span>{copy.caption}</span>
-          <span>
-            {copy.scroll}
-            <ArrowDown size={12} />
-          </span>
+        <figcaption className="hero-companion shell">
+          <Reveal rule className="hero-companion-inner">
+            <div className="hero-companion-caption">
+              <p className="eyebrow text-accent">{copy.caption}</p>
+              <p className="hero-companion-title">{copy.companion.title}</p>
+              <p className="text-sm text-muted leading-relaxed max-w-md">
+                {copy.companion.description}
+              </p>
+            </div>
+            <div className="hero-companion-detail">
+              <div className="hero-detail-crop">
+                <Image
+                  src={copy.image}
+                  alt={copy.companion.imageAlt}
+                  fill
+                  sizes="(max-width: 767px) 240px, 400px"
+                />
+              </div>
+              <div>
+                <p className="eyebrow text-muted">{copy.companion.label}</p>
+                <TextLink href={copy.companion.href}>
+                  {copy.companion.link}
+                </TextLink>
+              </div>
+            </div>
+          </Reveal>
         </figcaption>
       </figure>
     </section>

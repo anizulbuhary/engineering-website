@@ -2,6 +2,7 @@ import { PageHero } from "@/components/ui/Primitives";
 import { pages } from "@/content/pages";
 import { samples } from "@/content/samples";
 import { SampleGallery } from "@/components/samples/SampleGallery";
+import { SampleReading } from "@/components/samples/SampleReading";
 import { ContactCTA } from "@/components/layout/Footer";
 import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata(
@@ -13,6 +14,7 @@ export default function Page() {
     <>
       <PageHero {...pages.samples} />
       <SampleGallery samples={samples} />
+      <SampleReading />
       <ContactCTA />
     </>
   );

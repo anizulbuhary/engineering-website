@@ -2,7 +2,7 @@ export const home = {
   eyebrow: "STRUCTURAL BIM & TECHNICAL DELIVERY",
   heading: ["Detailed for", "construction."],
   intro:
-    "From the first model to the final drawing. We bring clarity, coordination and precision to the structures that shape our world.",
+    "Structural BIM, reinforcement detailing and coordinated drawing packages for contractors and consultants.",
   positioning: "Good engineering is in the details.",
   positioningBody:
     "We are a structural BIM and detailing studio built around one idea: information should be as well constructed as the buildings it makes possible.",

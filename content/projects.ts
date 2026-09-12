@@ -2,6 +2,7 @@ import type { Project } from "@/types/content";
 export const projects: Project[] = [
   {
     slug: "the-frame",
+    study: "slab-edge",
     title: "The Frame",
     sector: "Mixed-use",
     image: "/images/projects/frame.webp",

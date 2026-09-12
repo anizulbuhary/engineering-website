@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" fill="none">
+<rect width="900" height="640" fill="#eeece5"/>
+<g stroke="#d1d0c8" stroke-width="1">
+<path d="M160 106V542M300 106V542M440 106V542M580 106V542M720 106V542M115 155H775M115 275H775M115 395H775M115 515H775" stroke-dasharray="6 7"/>
+</g>
+<g stroke="#545a55" stroke-width="1.5">
+<path d="M150 145H730V525H150Z" fill="#f4f2ed" fill-opacity=".7"/><path d="M160 155H720V515H160Z"/>
+<path d="M160 275H720M160 395H720M300 155V515M440 155V515M580 155V515" stroke="#b6b7ae"/>
+<path d="M395 265H484V401H395Z"/><path d="M412 282H467V383H412Z"/>
+</g>
+<g fill="#545a55">
+<path d="M154 149h12v12h-12zm140 0h12v12h-12zm140 0h12v12h-12zm140 0h12v12h-12zm140 0h12v12h-12zM154 269h12v12h-12zm140 0h12v12h-12zm280 0h12v12h-12zm140 0h12v12h-12zM154 389h12v12h-12zm140 0h12v12h-12zm280 0h12v12h-12zm140 0h12v12h-12zM154 509h12v12h-12zm140 0h12v12h-12zm140 0h12v12h-12zm140 0h12v12h-12zm140 0h12v12h-12z"/>
+</g>
+<g stroke="#9c3e1c" stroke-width="2">
+<path d="M653 275H780M653 275v-17M780 275v-17"/><circle cx="653" cy="243" r="15" fill="#eeece5"/><circle cx="780" cy="243" r="15" fill="#eeece5"/>
+<path d="M642 261l11 10 11-10M769 261l11 10 11-10" fill="#9c3e1c" stroke="none"/>
+<path d="M705 155H730V275H705Z" fill="#9c3e1c" fill-opacity=".09" stroke="none"/>
+<path d="M752 278h34v60" stroke-width="1"/>
+</g>
+<g fill="#545a55" font-family="monospace" font-size="12" letter-spacing="1">
+<text x="48" y="50">THE FRAME / PLAN STUDY</text><text x="852" y="50" text-anchor="end">A–A → FW–01</text>
+<text x="156" y="101">1</text><text x="296" y="101">2</text><text x="436" y="101">3</text><text x="576" y="101">4</text><text x="716" y="101">5</text>
+<text x="420" y="338">CORE</text><text x="48" y="592">SCHEMATIC / NOT FOR CONSTRUCTION</text><text x="852" y="592" text-anchor="end">NOT TO SCALE</text>
+</g>
+<g fill="#9c3e1c" font-family="monospace" font-size="13"><text x="649" y="248">A</text><text x="776" y="248">A</text><text x="767" y="358">EDGE</text><text x="767" y="378">STUDY</text></g>
+</svg>

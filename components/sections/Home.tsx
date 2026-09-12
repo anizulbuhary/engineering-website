@@ -7,35 +7,46 @@ import { samples } from "@/content/samples";
 import { TextLink } from "@/components/ui/Primitives";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { sectionCopy as copy } from "@/content/sections";
+import { DetailExplorer } from "@/components/engineering/DetailExplorer";
+import { detailStudy } from "@/content/detail-study";
 export function Hero() {
   return <EditorialHero />;
 }
 export function Positioning() {
   return (
-    <section
-      id="positioning"
-      className="shell section-space grid md:grid-cols-[1fr_2fr] gap-10"
-    >
-      <Reveal>
-        <p className="eyebrow text-accent">{copy.positioning.label}</p>
-      </Reveal>
-      <div>
-        <Reveal rule className="border-t border-line pt-6">
-          <h2 className="heading max-w-3xl">{home.positioning}</h2>
+    <section id="positioning" className="shell section-space">
+      <div className="grid md:grid-cols-[1fr_2fr] gap-10">
+        <Reveal>
+          <p className="eyebrow text-accent">{copy.positioning.label}</p>
         </Reveal>
-        <Reveal stagger delay={70} className="grid lg:grid-cols-2 gap-8 mt-9">
-          <p className="text-lg leading-relaxed max-w-lg">
-            {home.positioningBody}
-          </p>
-          <div>
-            <p className="text-sm text-muted leading-relaxed">
-              {home.positioningFoot}
+        <div>
+          <Reveal rule className="border-t border-line pt-6">
+            <h2 className="heading max-w-3xl">{home.positioning}</h2>
+          </Reveal>
+          <Reveal stagger delay={70} className="grid lg:grid-cols-2 gap-8 mt-9">
+            <p className="text-lg leading-relaxed max-w-lg">
+              {home.positioningBody}
             </p>
-            <TextLink href="/about" className="mt-5">
-              {copy.positioning.link}
-            </TextLink>
-          </div>
+            <div>
+              <p className="text-sm text-muted leading-relaxed">
+                {home.positioningFoot}
+              </p>
+              <TextLink href="/about" className="mt-5">
+                {copy.positioning.link}
+              </TextLink>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+      <div className="mt-12 md:mt-16">
+        <Reveal variant="image">
+          <DetailExplorer id="home-detail" />
         </Reveal>
+        <div className="flex justify-end mt-5">
+          <TextLink href={detailStudy.link.href}>
+            {detailStudy.link.label}
+          </TextLink>
+        </div>
       </div>
     </section>
   );
