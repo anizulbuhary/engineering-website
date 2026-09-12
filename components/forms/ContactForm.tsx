@@ -1,4 +1,5 @@
 "use client";
+import { Reveal } from "@/components/ui/Reveal";
 import { contact } from "@/content/pages";
 import { services } from "@/content/services";
 export function ContactForm() {
@@ -13,15 +14,17 @@ export function ContactForm() {
       }}
       className="space-y-10"
     >
-      <p
-        id="form-notice"
-        className="border-l-2 border-accent bg-concrete/45 px-5 py-4 text-sm leading-relaxed"
-      >
-        {contact.notice}
-      </p>
+      <Reveal>
+        <p
+          id="form-notice"
+          className="border-l-2 border-accent bg-concrete/45 px-5 py-4 text-sm leading-relaxed"
+        >
+          {contact.notice}
+        </p>
+      </Reveal>
       <div className="grid sm:grid-cols-2 gap-x-8 gap-y-8">
-        {contact.fields.map((f) => (
-          <div key={f.name}>
+        {contact.fields.map((f, i) => (
+          <Reveal key={f.name} delay={(i % 2) * 70}>
             <label htmlFor={f.name} className="eyebrow block mb-3">
               {f.label}
             </label>
@@ -32,29 +35,31 @@ export function ContactForm() {
               autoComplete={f.autoComplete}
               className="w-full border-b border-muted bg-transparent py-3 rounded-none outline-offset-4"
             />
-          </div>
+          </Reveal>
         ))}
       </div>
-      <fieldset>
-        <legend className="eyebrow mb-5">Services of interest</legend>
-        <div className="grid sm:grid-cols-2 gap-3">
-          {services.map((s) => (
-            <label
-              key={s.id}
-              className="flex items-center gap-3 min-h-11 text-sm"
-            >
-              <input
-                type="checkbox"
-                name="services"
-                value={s.id}
-                className="size-4 accent-accent"
-              />
-              {s.title}
-            </label>
-          ))}
-        </div>
-      </fieldset>
-      <div>
+      <Reveal>
+        <fieldset>
+          <legend className="eyebrow mb-5">Services of interest</legend>
+          <div className="grid sm:grid-cols-2 gap-3">
+            {services.map((s) => (
+              <label
+                key={s.id}
+                className="flex items-center gap-3 min-h-11 text-sm"
+              >
+                <input
+                  type="checkbox"
+                  name="services"
+                  value={s.id}
+                  className="size-4 accent-accent"
+                />
+                {s.title}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </Reveal>
+      <Reveal>
         <label className="eyebrow block mb-4" htmlFor="message">
           Tell us about your project
         </label>
@@ -64,7 +69,7 @@ export function ContactForm() {
           rows={5}
           className="w-full border border-muted bg-transparent p-4 resize-y"
         />
-      </div>
+      </Reveal>
       <button
         type="button"
         disabled

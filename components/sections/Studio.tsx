@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
+import { ScrollImage } from "@/components/ui/ScrollImage";
 import { principles, contact } from "@/content/pages";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { sectionCopy as copy } from "@/content/sections";
@@ -10,13 +11,15 @@ export function StudioImage() {
         variant="image"
         className="relative aspect-[4/3] md:aspect-[2.4/1]"
       >
-        <Image
-          src="/images/projects/courtyard.webp"
-          alt="Illustrative concrete courtyard and colonnade"
-          fill
-          sizes="100vw"
-          className="object-cover"
-        />
+        <ScrollImage>
+          <Image
+            src="/images/projects/courtyard.webp"
+            alt="Illustrative concrete courtyard and colonnade"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </ScrollImage>
       </Reveal>
       <figcaption className="eyebrow text-muted mt-4">
         {copy.studio.imageCaption}
@@ -27,18 +30,20 @@ export function StudioImage() {
 export function Principles({ about = false }: { about?: boolean }) {
   return (
     <section className="shell section-space grid md:grid-cols-[1fr_2fr] gap-12">
-      <div>
+      <Reveal stagger>
         <p className="eyebrow text-accent">
           {about ? copy.studio.aboutLabel : copy.studio.whyLabel}
         </p>
         <h2 className="text-3xl tracking-tight mt-7">
           {about ? copy.studio.aboutTitle : copy.studio.whyTitle}
         </h2>
-      </div>
+      </Reveal>
       <div>
         {principles.map((p, i) => (
           <Reveal
             as="article"
+            rule
+            stagger
             key={p.title}
             className="border-t border-line pt-7 pb-10"
           >
@@ -56,7 +61,7 @@ export function Principles({ about = false }: { about?: boolean }) {
 export function ContactSection() {
   return (
     <section className="shell pb-24 grid lg:grid-cols-[1fr_2fr] gap-14 lg:gap-24">
-      <aside className="border-t border-line pt-7">
+      <Reveal as="aside" rule stagger className="border-t border-line pt-7">
         <p className="eyebrow text-accent">PROJECT ENQUIRIES</p>
         <h2 className="text-2xl tracking-tight mt-6">{contact.asideTitle}</h2>
         <p className="text-muted text-sm leading-relaxed mt-5 max-w-xs">
@@ -65,7 +70,7 @@ export function ContactSection() {
         <p className="text-xs text-muted leading-relaxed mt-10 max-w-xs">
           {contact.identityNote}
         </p>
-      </aside>
+      </Reveal>
       <ContactForm />
     </section>
   );

@@ -7,7 +7,7 @@ export function Capabilities({ full = false }: { full?: boolean }) {
   return (
     <section className="shell section-space border-t border-line">
       {!full && (
-        <Reveal className="grid md:grid-cols-2 gap-8 mb-16">
+        <Reveal stagger className="grid md:grid-cols-2 gap-8 mb-16">
           <p className="eyebrow text-accent">{copy.capabilities.label}</p>
           <div>
             <h2 className="heading whitespace-pre-line">
@@ -22,6 +22,7 @@ export function Capabilities({ full = false }: { full?: boolean }) {
       <div>
         {(full ? services : services.slice(0, 4)).map((s, i) => (
           <Reveal
+            rule
             key={s.id}
             id={s.id}
             className="capability-row group grid grid-cols-[30px_1fr] md:grid-cols-[60px_1fr_1fr] gap-x-4 md:gap-x-8 py-8 md:py-10 border-t border-line"

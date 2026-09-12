@@ -1,7 +1,8 @@
+import { Reveal } from "@/components/ui/Reveal";
 import { TextLink } from "@/components/ui/Primitives";
 export default function NotFound() {
   return (
-    <section className="shell section-space min-h-[65vh]">
+    <Reveal as="section" stagger className="shell section-space min-h-[65vh]">
       <p className="eyebrow text-accent mb-8">404 / OUTSIDE THE DRAWING</p>
       <h1 className="heading">
         This page isn’t
@@ -14,6 +15,6 @@ export default function NotFound() {
       <TextLink href="/" className="mt-8">
         Return to the studio
       </TextLink>
-    </section>
+    </Reveal>
   );
 }

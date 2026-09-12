@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import Image from "next/image";
+import { headerHeight } from "@/lib/header-height";
 import {
   useEffect,
   useLayoutEffect,
@@ -50,14 +51,15 @@ export function EngineeringStory() {
     if (!alignAfterToggle.current || !section.current) return;
     alignAfterToggle.current = false;
     window.scrollTo({
-      top: section.current.getBoundingClientRect().top + scrollY - 88,
+      top:
+        section.current.getBoundingClientRect().top + scrollY - headerHeight(),
       behavior: "instant",
     });
     // Scrolling rounds to whole pixels; preserve the sticky frame's exact
     // position when its replacement enters normal document flow.
     section.current.style.setProperty(
       "--story-alignment",
-      `${paused ? 88 - section.current.getBoundingClientRect().top : 0}px`,
+      `${paused ? headerHeight() - section.current.getBoundingClientRect().top : 0}px`,
     );
   }, [paused]);
 
@@ -109,7 +111,7 @@ export function EngineeringStory() {
         section.current.offsetHeight - stage.offsetHeight,
       );
       // Browser scroll positions round to pixels; keep the opening exact.
-      const offset = 88 - rect.top;
+      const offset = headerHeight() - rect.top;
       const value = offset <= 1 ? 0 : Math.max(0, Math.min(1, offset / travel));
       progress.current = value;
       scene.current?.setProgress(value);
@@ -131,7 +133,8 @@ export function EngineeringStory() {
 
   const goTo = (index: number) => {
     if (!section.current) return;
-    const top = section.current.getBoundingClientRect().top + scrollY - 88;
+    const top =
+      section.current.getBoundingClientRect().top + scrollY - headerHeight();
     const stage = section.current.querySelector(
       ".engineering-stage",
     ) as HTMLElement;
@@ -169,7 +172,7 @@ export function EngineeringStory() {
     const fromProgress = scene.current?.getProgress() ?? progress.current;
     const destination = Math.max(
       0,
-      section.current.getBoundingClientRect().top + from - 88,
+      section.current.getBoundingClientRect().top + from - headerHeight(),
     );
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
     if (

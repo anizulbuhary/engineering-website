@@ -7,7 +7,13 @@ export function ArticleList({ articles }: { articles: Article[] }) {
   return (
     <section className="shell pb-24">
       {articles.map((a, i) => (
-        <Reveal as="article" key={a.slug} className="border-t border-line py-9">
+        <Reveal
+          as="article"
+          rule
+          delay={(i % 3) * 70}
+          key={a.slug}
+          className="border-t border-line py-9"
+        >
           <Link
             href={`/insights/${a.slug}`}
             className="article-link group grid md:grid-cols-[1fr_2fr_40px] gap-7 md:gap-12"
@@ -18,7 +24,7 @@ export function ArticleList({ articles }: { articles: Article[] }) {
                 alt="Architectural concept illustrating the article"
                 fill
                 sizes="(max-width: 767px) 100vw, 30vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                className="object-cover transition-transform duration-200"
               />
             </div>
             <div className="self-center">

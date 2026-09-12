@@ -16,12 +16,14 @@ export function Positioning() {
       id="positioning"
       className="shell section-space grid md:grid-cols-[1fr_2fr] gap-10"
     >
-      <p className="eyebrow text-accent">{copy.positioning.label}</p>
+      <Reveal>
+        <p className="eyebrow text-accent">{copy.positioning.label}</p>
+      </Reveal>
       <div>
-        <Reveal>
+        <Reveal rule className="border-t border-line pt-6">
           <h2 className="heading max-w-3xl">{home.positioning}</h2>
         </Reveal>
-        <Reveal delay={100} className="grid lg:grid-cols-2 gap-8 mt-9">
+        <Reveal stagger delay={70} className="grid lg:grid-cols-2 gap-8 mt-9">
           <p className="text-lg leading-relaxed max-w-lg">
             {home.positioningBody}
           </p>
@@ -41,7 +43,10 @@ export function Positioning() {
 export function SelectedProjects() {
   return (
     <section className="shell section-space border-t border-line">
-      <Reveal className="flex flex-wrap gap-8 justify-between items-end mb-14">
+      <Reveal
+        stagger
+        className="flex flex-wrap gap-8 justify-between items-end mb-14"
+      >
         <div>
           <p className="eyebrow text-accent mb-6">{copy.projects.label}</p>
           <h2 className="heading">{copy.projects.title}</h2>
@@ -65,7 +70,7 @@ export function ProcessSection() {
   return (
     <section className="bg-concrete">
       <div className="shell section-space">
-        <Reveal className="grid md:grid-cols-2 gap-10 mb-16">
+        <Reveal stagger className="grid md:grid-cols-2 gap-10 mb-16">
           <p className="eyebrow text-accent">{copy.process.label}</p>
           <h2 className="heading whitespace-pre-line">{copy.process.title}</h2>
         </Reveal>
@@ -73,7 +78,8 @@ export function ProcessSection() {
           {process.map((p, i) => (
             <Reveal
               key={p.title}
-              delay={i * 60}
+              rule
+              delay={i * 70}
               className="process-step border-t border-ink/30 pt-6"
             >
               <span className="eyebrow">0{i + 1}</span>
@@ -101,7 +107,7 @@ export function SamplesPreview() {
           className="w-full h-auto"
         />
       </Reveal>
-      <Reveal delay={100}>
+      <Reveal stagger delay={70}>
         <p className="eyebrow text-accent mb-7">{copy.samples.label}</p>
         <h2 className="heading whitespace-pre-line">{copy.samples.title}</h2>
         <p className="text-muted text-sm leading-relaxed max-w-md mt-7">

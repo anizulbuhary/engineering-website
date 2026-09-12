@@ -22,7 +22,8 @@ export const immersiveStory = {
 export const editorialHero = {
   label: "PRECISION. FROM THE INSIDE OUT.",
   title: ["Engineering", "what", "endures."],
-  action: "Enter the experience",
+  action: "Contact",
+  actionHref: "/contact",
   scroll: "DISCOVER WHAT HOLDS IT ALL TOGETHER",
   image: "/images/projects/frame.webp",
   imageAlt:

@@ -4,6 +4,7 @@ import type { Project } from "@/types/content";
 import { ProjectCard } from "./ProjectCard";
 export function ProjectFilter({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState("All");
+  const [hasFiltered, setHasFiltered] = useState(false);
   const filtered = projects.filter(
     (p) => active === "All" || p.sector === active,
   );
@@ -17,7 +18,10 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
           <button
             key={v}
             aria-pressed={active === v}
-            onClick={() => setActive(v)}
+            onClick={() => {
+              setHasFiltered(true);
+              setActive(v);
+            }}
             className="text-xs py-3 border-b border-transparent aria-pressed:border-accent aria-pressed:text-accent"
           >
             {v}
@@ -35,7 +39,8 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
       <div className="grid md:grid-cols-2 gap-x-8 gap-y-14">
         {filtered.map((p) => (
           <ProjectCard
-            key={p.slug}
+            key={`${active}-${p.slug}`}
+            entrance={hasFiltered ? "fade" : "rise"}
             project={p}
             index={projects.indexOf(p)}
             headingLevel="h2"

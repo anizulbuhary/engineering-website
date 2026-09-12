@@ -40,8 +40,8 @@ export function Header() {
     return () => media.removeEventListener("change", close);
   }, []);
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur-sm">
-      <div className="shell h-22 flex items-center justify-between gap-8">
+    <header className="site-header sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur-sm">
+      <div className="shell h-full flex items-center justify-between gap-8">
         <Link href="/">
           <Brand />
           <span className="sr-only"> home</span>

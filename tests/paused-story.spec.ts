@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { approachStory, headerHeight } from "./story-helpers";
 import sharp from "sharp";
 import AxeBuilder from "@axe-core/playwright";
 
@@ -8,7 +9,7 @@ for (const width of [390, 1440]) {
   }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
-    await page.getByRole("link", { name: "Enter the experience" }).click();
+    await approachStory(page);
     const section = page.locator("#engineering-story");
     const canvas = section.locator("canvas");
     await expect(
@@ -45,7 +46,8 @@ for (const width of [390, 1440]) {
         top:
           el.getBoundingClientRect().top +
           scrollY -
-          88 +
+          document.querySelector(".site-header")!.getBoundingClientRect()
+            .height +
           (el.clientHeight - stage.clientHeight) * 0.8,
         behavior: "instant",
       });
@@ -129,7 +131,7 @@ for (const width of [390, 1440]) {
       .poll(() =>
         section.evaluate((el) => Math.round(el.getBoundingClientRect().top)),
       )
-      .toBe(88);
+      .toBe(await headerHeight(page));
     await page.screenshot({ path: `artifacts/static-pause-${width}.png` });
     const top = await section.evaluate((el) => el.getBoundingClientRect().top);
     await page.evaluate(() => scrollBy({ top: 300, behavior: "instant" }));
@@ -152,7 +154,7 @@ for (const width of [390, 1440]) {
       .poll(() =>
         section.evaluate((el) => Math.round(el.getBoundingClientRect().top)),
       )
-      .toBe(88);
+      .toBe(await headerHeight(page));
     await expect(canvas).toHaveAttribute("data-progress", "0.0000");
     await page.waitForTimeout(500);
     await expect(canvas).toHaveAttribute("data-progress", "0.0000");

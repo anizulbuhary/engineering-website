@@ -17,7 +17,7 @@ export function TextLink({
       <ArrowUpRight
         size={17}
         aria-hidden
-        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        className="transition-transform duration-200"
       />
     </Link>
   );
@@ -32,15 +32,18 @@ export function PageHero({
   intro: string;
 }) {
   return (
-    <section className="shell pt-18 pb-18 md:pt-28 md:pb-24">
+    <Reveal
+      as="section"
+      stagger
+      key={title}
+      className="shell pt-18 pb-18 md:pt-28 md:pb-24"
+    >
       <p className="eyebrow text-accent mb-9">{label}</p>
-      <Reveal>
-        <h1 className="display whitespace-pre-line max-w-6xl">{title}</h1>
-      </Reveal>
+      <h1 className="display whitespace-pre-line max-w-6xl">{title}</h1>
       <p className="mt-10 max-w-xl text-base md:text-lg leading-relaxed text-muted md:ml-auto">
         {intro}
       </p>
-    </section>
+    </Reveal>
   );
 }
 export function Breadcrumbs({

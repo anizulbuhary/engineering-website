@@ -7,14 +7,16 @@ export function ProjectCard({
   project,
   index = 0,
   headingLevel = "h3",
+  entrance = "rise",
 }: {
   project: Project;
   index?: number;
   headingLevel?: "h2" | "h3";
+  entrance?: "rise" | "fade";
 }) {
   const Heading = headingLevel;
   return (
-    <Reveal as="article" delay={(index % 2) * 90}>
+    <Reveal as="article" variant={entrance} delay={(index % 2) * 70}>
       <Link
         href={`/projects/${project.slug}`}
         className="project-link group block"
@@ -25,7 +27,7 @@ export function ProjectCard({
             alt={project.alt}
             fill
             sizes="(max-width: 767px) 100vw, 50vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.025]"
+            className="object-cover transition-transform duration-200"
           />
           <span className="absolute left-4 top-4 bg-paper px-3 py-1.5 eyebrow">
             CONCEPT STUDY / 0{index + 1}

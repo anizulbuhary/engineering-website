@@ -1,4 +1,5 @@
 ﻿import { test, expect } from "@playwright/test";
+import { approachStory, headerHeight } from "./story-helpers";
 import AxeBuilder from "@axe-core/playwright";
 
 test("3D story loads on approach, follows chapters in both directions, and can be paused", async ({
@@ -14,14 +15,14 @@ test("3D story loads on approach, follows chapters in both directions, and can b
   await page.goto("/");
   await expect(page.locator(".is-immersive")).toBeVisible();
   expect(models).toHaveLength(0);
-  await page.getByRole("link", { name: "Enter the experience" }).click();
+  await approachStory(page);
   await expect
     .poll(async () =>
       page
         .locator(".engineering-stage")
         .evaluate((el) => Math.round(el.getBoundingClientRect().top)),
     )
-    .toBe(88);
+    .toBe(await headerHeight(page));
   await expect(page.locator(".engineering-canvas.is-ready canvas")).toBeVisible(
     { timeout: 30000 },
   );
@@ -63,7 +64,7 @@ for (const mode of ["reduced motion"] as const) {
       if (req.url().endsWith(".glb")) models.push(req.url());
     });
     await page.goto("/");
-    await page.getByRole("link", { name: "Enter the experience" }).click();
+    await approachStory(page);
     await expect(page.locator(".story-static-chapters article")).toHaveCount(6);
     await expect(page.locator("#engineering-story canvas")).toHaveCount(0);
     expect(models).toHaveLength(0);
@@ -81,7 +82,7 @@ test("failed model download falls back to the complete illustrated narrative", a
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.route("**/models/formwork-pavilion.glb", (route) => route.abort());
   await page.goto("/");
-  await page.getByRole("link", { name: "Enter the experience" }).click();
+  await approachStory(page);
   await expect(page.locator(".story-static-chapters article")).toHaveCount(6);
   await expect(page.locator("#engineering-story canvas")).toHaveCount(0);
 });
@@ -91,7 +92,7 @@ test("loss of graphics context recovers to a usable static story", async ({
 }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  await page.getByRole("link", { name: "Enter the experience" }).click();
+  await approachStory(page);
   await expect(
     page.locator(".engineering-canvas.is-ready canvas"),
   ).toBeVisible();

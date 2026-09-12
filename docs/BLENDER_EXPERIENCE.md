@@ -1,6 +1,6 @@
 # Architectural experience
 
-The homepage uses an editorial hero: oversized HTML typography, a structural concept image and a subtle scroll-linked image reveal. It has no Blender scene, image sequence, canvas or extra dependencies. Reduced motion and disabled JavaScript preserve a complete static composition.
+The homepage uses an editorial hero with a Contact link: oversized HTML typography, a structural concept image and a subtle scroll-linked image reveal. It has no Blender scene, image sequence, canvas or extra dependencies. Reduced motion and disabled JavaScript preserve a complete static composition.
 
 ## Building assets and reproduction
 
@@ -41,3 +41,5 @@ The loading poster uses `pavilion-roofline.webp` so optimized-image caches canno
 Verified for the matching still/rewind behavior: build, lint and TypeScript passed; both pause tests and all 22 remaining browser tests passed. The pause tests verify multiple intermediate rewind frames and compare opening/still pixels at 390 and 1440 px. Static compositions were visually reviewed at 390, 768 and 1440 px. Physical devices and Safari remain untested.
 After removing the capabilities link from the experience, lint, TypeScript and the production build passed. The nine engineering browser checks passed, with the 375 px chapter-navigation timeout passing on an isolated rerun. Desktop, tablet and phone still views were visually checked again.
 After retaining the six step labels while paused, build, lint, TypeScript and all six engineering/pause browser checks passed. The static list was visually reviewed on phone, tablet and desktop layouts.
+
+The shared header is now 72 px on tablet/desktop and 64 px on phones. Scene scrolling, sticky sizing, rewind and still alignment read the shared header height; the engineering interaction otherwise retains its existing behavior.

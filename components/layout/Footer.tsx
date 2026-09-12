@@ -6,7 +6,10 @@ import { sectionCopy as copy } from "@/content/sections";
 export function ContactCTA() {
   return (
     <section className="bg-ink text-paper">
-      <Reveal className="shell section-space grid md:grid-cols-[1fr_auto] gap-12 items-end">
+      <Reveal
+        stagger
+        className="shell section-space grid md:grid-cols-[1fr_auto] gap-12 items-end"
+      >
         <div>
           <p className="eyebrow text-concrete mb-7">{copy.cta.label}</p>
           <h2 className="heading whitespace-pre-line">{copy.cta.title}</h2>
@@ -22,7 +25,7 @@ export function Footer() {
   return (
     <footer className="bg-ink text-paper border-t border-white/20">
       <div className="shell py-14">
-        <div className="grid md:grid-cols-2 gap-10">
+        <Reveal stagger className="grid md:grid-cols-2 gap-10">
           <div>
             <Link href="/" className="text-3xl tracking-[-.05em] font-medium">
               {site.name}
@@ -42,20 +45,23 @@ export function Footer() {
               <Link
                 key={n.href}
                 href={n.href}
-                className="py-2 hover:text-white hover:underline"
+                className="navigation-link w-fit py-2 hover:text-white"
               >
                 {n.label}
               </Link>
             ))}
           </nav>
-        </div>
-        <div className="mt-16 pt-6 border-t border-white/20 flex flex-col md:flex-row justify-between gap-4 text-[10px] text-concrete">
+        </Reveal>
+        <Reveal
+          rule
+          className="footer-legal mt-16 pt-6 border-t border-white/20 flex flex-col md:flex-row justify-between gap-4 text-[10px] text-concrete"
+        >
           <p>{site.copyright}</p>
           <p>{site.demoNote}</p>
           <Link href="/privacy" className="underline underline-offset-4">
             Privacy & demo terms
           </Link>
-        </div>
+        </Reveal>
       </div>
     </footer>
   );

@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
+import { ScrollImage } from "@/components/ui/ScrollImage";
 import type { Project } from "@/types/content";
 import { projects } from "@/content/projects";
 import { Breadcrumbs } from "@/components/ui/Primitives";
@@ -9,49 +10,53 @@ export function ProjectDetail({ project: p }: { project: Project }) {
     <>
       <div className="shell">
         <Breadcrumbs parent="Projects" href="/projects" title={p.title} />
-        <div className="py-12 md:py-20">
+        <Reveal stagger className="py-12 md:py-20">
           <p className="eyebrow text-accent mb-7">CONCEPT STUDY / {p.sector}</p>
           <h1 className="display">{p.title}</h1>
           <p className="max-w-xl text-muted leading-relaxed mt-8">
             {p.description}
           </p>
-        </div>
+        </Reveal>
         <Reveal
           variant="image"
           className="relative aspect-[4/3] md:aspect-[2/1]"
         >
-          <Image
-            src={p.image}
-            alt={p.alt}
-            fill
-            preload
-            sizes="100vw"
-            className="object-cover"
-          />
+          <ScrollImage>
+            <Image
+              src={p.image}
+              alt={p.alt}
+              fill
+              preload
+              sizes="100vw"
+              className="object-cover"
+            />
+          </ScrollImage>
         </Reveal>
         <p className="eyebrow text-muted mt-4">
           ILLUSTRATIVE RENDERING / NOT A COMPLETED CLIENT PROJECT
         </p>
       </div>
       <section className="shell section-space grid md:grid-cols-[1fr_2fr] gap-14">
-        <dl className="text-sm">
-          <dt className="eyebrow text-accent mb-3">SECTOR</dt>
-          <dd className="mb-8">{p.sector}</dd>
-          <dt className="eyebrow text-accent mb-3">STUDY SCOPE</dt>
-          <dd className="mb-8">{p.scope}</dd>
-          <dt className="eyebrow text-accent mb-3">STATUS</dt>
-          <dd>Independent concept demonstration</dd>
-        </dl>
+        <Reveal>
+          <dl className="text-sm">
+            <dt className="eyebrow text-accent mb-3">SECTOR</dt>
+            <dd className="mb-8">{p.sector}</dd>
+            <dt className="eyebrow text-accent mb-3">STUDY SCOPE</dt>
+            <dd className="mb-8">{p.scope}</dd>
+            <dt className="eyebrow text-accent mb-3">STATUS</dt>
+            <dd>Independent concept demonstration</dd>
+          </dl>
+        </Reveal>
         <div className="space-y-12">
-          <div>
+          <Reveal stagger>
             <h2 className="text-3xl tracking-tight">The question</h2>
             <p className="mt-5 leading-relaxed text-muted">{p.challenge}</p>
-          </div>
-          <div>
+          </Reveal>
+          <Reveal stagger>
             <h2 className="text-3xl tracking-tight">A considered approach</h2>
             <p className="mt-5 leading-relaxed text-muted">{p.approach}</p>
-          </div>
-          <div>
+          </Reveal>
+          <Reveal stagger>
             <h2 className="text-3xl tracking-tight mb-5">Study outputs</h2>
             <ul>
               {p.deliverables.map((d, i) => (
@@ -61,12 +66,12 @@ export function ProjectDetail({ project: p }: { project: Project }) {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </div>
       </section>
       <section className="shell pb-24">
         <div className="grid md:grid-cols-2 gap-8">
-          <figure>
+          <Reveal as="figure" variant="image">
             <Image
               src="/graphics/samples/slab-plan.svg"
               width={900}
@@ -77,8 +82,8 @@ export function ProjectDetail({ project: p }: { project: Project }) {
             <figcaption className="eyebrow text-muted mt-4">
               SUPPORTING SCHEMATIC / NOT FOR CONSTRUCTION
             </figcaption>
-          </figure>
-          <figure>
+          </Reveal>
+          <Reveal as="figure" variant="image">
             <Image
               src="/graphics/samples/coordination-view.svg"
               width={900}
@@ -89,12 +94,14 @@ export function ProjectDetail({ project: p }: { project: Project }) {
             <figcaption className="eyebrow text-muted mt-4">
               INTERFACE STUDY / NOT TO SCALE
             </figcaption>
-          </figure>
+          </Reveal>
         </div>
       </section>
       <section className="shell section-space border-t border-line">
-        <p className="eyebrow text-accent mb-7">CONTINUE EXPLORING</p>
-        <h2 className="heading mb-12">Related studies.</h2>
+        <Reveal stagger>
+          <p className="eyebrow text-accent mb-7">CONTINUE EXPLORING</p>
+          <h2 className="heading mb-12">Related studies.</h2>
+        </Reveal>
         <div className="grid md:grid-cols-2 gap-8">
           {projects
             .filter((x) => x.slug !== p.slug)

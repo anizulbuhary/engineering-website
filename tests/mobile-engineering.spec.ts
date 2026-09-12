@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { approachStory } from "./story-helpers";
 import AxeBuilder from "@axe-core/playwright";
 
 for (const viewport of [
@@ -18,7 +19,7 @@ for (const viewport of [
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto("http://localhost:3000");
-    await page.getByRole("link", { name: "Enter the experience" }).tap();
+    await approachStory(page);
     const canvas = page.locator(".engineering-canvas.is-ready canvas");
     await expect(canvas).toBeVisible({ timeout: 30000 });
     await expect(page.locator(".story-poster")).toHaveCSS(
@@ -29,7 +30,7 @@ for (const viewport of [
       "src",
       /pavilion-roofline/,
     );
-    const start = await canvas.screenshot();
+    const start = await page.screenshot();
     for (const index of [1, 2, 3, 4, 5, 3, 0]) {
       const chapter = page.getByRole("button", {
         name: new RegExp(`Chapter ${index + 1}:`),
@@ -40,7 +41,7 @@ for (const viewport of [
         .poll(async () => Number(await canvas.getAttribute("data-progress")))
         .toBeCloseTo(index / 5, 2);
       if (index === 3)
-        expect((await canvas.screenshot()).equals(start)).toBe(false);
+        expect((await page.screenshot()).equals(start)).toBe(false);
     }
     // Swipe-equivalent ordinary scrolling also drives the same timeline.
     await page.evaluate(() =>
@@ -87,7 +88,7 @@ test("mobile graphics failure keeps the six readable chapters", async ({
   await page.setViewportSize({ width: 390, height: 844 });
   await page.route("**/models/formwork-pavilion.glb", (route) => route.abort());
   await page.goto("/");
-  await page.getByRole("link", { name: "Enter the experience" }).click();
+  await approachStory(page);
   await expect(page.locator(".story-static-chapters article")).toHaveCount(6);
   await expect(page.locator("#engineering-story canvas")).toHaveCount(0);
 });

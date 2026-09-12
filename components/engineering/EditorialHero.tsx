@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import { Reveal } from "@/components/ui/Reveal";
 import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { home } from "@/content/pages";
@@ -49,16 +51,24 @@ export function EditorialHero() {
           <span>{copy.label}</span>
         </div>
         <div className="editorial-intro">
-          <h1>
-            {copy.title[0]} <br />
-            {copy.title[1]} <em>{copy.title[2]}</em>
-          </h1>
+          <Reveal>
+            <h1>
+              <span className="editorial-title-line">{copy.title[0]} </span>
+              <span className="editorial-title-line">
+                {copy.title[1]} <em>{copy.title[2]}</em>
+              </span>
+            </h1>
+          </Reveal>
           <div className="editorial-summary">
-            <p>{home.intro}</p>
-            <a className="editorial-explore" href="#engineering-story">
-              {copy.action}
-              <ArrowUpRight size={20} />
-            </a>
+            <Reveal delay={70}>
+              <p>{home.intro}</p>
+            </Reveal>
+            <Reveal delay={140}>
+              <Link className="editorial-explore" href={copy.actionHref}>
+                {copy.action}
+                <ArrowUpRight size={20} />
+              </Link>
+            </Reveal>
           </div>
         </div>
       </div>

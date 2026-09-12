@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
 import {
   ArrowDownToLine,
@@ -12,6 +13,7 @@ import type { Sample } from "@/types/content";
 import { containDialogFocus } from "@/lib/dialog";
 export function SampleGallery({ samples }: { samples: Sample[] }) {
   const [category, setCategory] = useState("All");
+  const [hasFiltered, setHasFiltered] = useState(false);
   const [selected, setSelected] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
@@ -31,7 +33,10 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
           <button
             key={c}
             aria-pressed={category === c}
-            onClick={() => setCategory(c)}
+            onClick={() => {
+              setHasFiltered(true);
+              setCategory(c);
+            }}
             className="py-3 text-xs border-b border-transparent aria-pressed:border-accent aria-pressed:text-accent"
           >
             {c}
@@ -42,8 +47,13 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
         {filtered.length} samples shown
       </p>
       <div className="grid md:grid-cols-2 gap-x-8 gap-y-12">
-        {filtered.map((s) => (
-          <article key={s.id}>
+        {filtered.map((s, i) => (
+          <Reveal
+            as="article"
+            key={`${category}-${s.id}`}
+            variant={hasFiltered ? "fade" : "rise"}
+            delay={(i % 2) * 70}
+          >
             <button
               className="sample-preview group relative w-full bg-concrete p-5 md:p-8"
               onClick={(e) => {
@@ -75,7 +85,7 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
               Download illustrative PDF{" "}
               <ArrowDownToLine size={15} aria-hidden />
             </a>
-          </article>
+          </Reveal>
         ))}
       </div>
       <dialog

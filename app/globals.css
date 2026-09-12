@@ -14,9 +14,10 @@
   box-sizing: border-box;
 }
 html {
+  --site-header-height: 72px;
   scrollbar-gutter: stable;
   scroll-behavior: smooth;
-  scroll-padding-top: 100px;
+  scroll-padding-top: calc(var(--site-header-height) + 12px);
 }
 html:has(dialog[open]) {
   overflow: hidden;
@@ -122,7 +123,7 @@ dialog::backdrop {
   overflow-anchor: none;
   background: #141c18;
   color: #f0eee5;
-  /* Combined with the document's 100px scroll padding, align below the 88px header. */
+  /* Cancel the extra anchor gap to align exactly with the header. */
   scroll-margin-top: -12px;
 }
 .engineering-experience.is-immersive {
@@ -138,8 +139,8 @@ dialog::backdrop {
 }
 .has-model-view .engineering-stage {
   position: sticky;
-  top: 88px;
-  height: calc(100svh - 88px);
+  top: var(--site-header-height);
+  height: calc(100svh - var(--site-header-height));
   overflow: hidden;
 }
 .engineering-topline {
@@ -463,7 +464,7 @@ dialog::backdrop {
 .editorial-summary {
   padding-bottom: 6px;
 }
-.editorial-summary > p {
+.editorial-summary p {
   font-size: 14px;
   line-height: 1.75;
   max-width: 310px;
@@ -483,9 +484,6 @@ dialog::backdrop {
 }
 .editorial-explore svg {
   transition: transform 0.2s;
-}
-.editorial-explore:hover svg {
-  transform: translate(3px, -3px);
 }
 .editorial-figure {
   margin: 0;
@@ -540,7 +538,7 @@ dialog::backdrop {
     gap: 40px;
     justify-content: space-between;
   }
-  .editorial-summary > p {
+  .editorial-summary p {
     max-width: 390px;
   }
   .editorial-explore {
@@ -569,7 +567,7 @@ dialog::backdrop {
   .editorial-summary {
     display: block;
   }
-  .editorial-summary > p {
+  .editorial-summary p {
     font-size: 13px;
     max-width: 340px;
   }
@@ -775,7 +773,7 @@ dialog::backdrop {
   background: currentColor;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 320ms cubic-bezier(0.2, 0.65, 0.25, 1);
+  transition: transform 220ms cubic-bezier(0.2, 0.65, 0.25, 1);
 }
 .navigation-link::after {
   bottom: 5px;
@@ -796,12 +794,12 @@ dialog::backdrop {
 .project-arrow,
 .article-link > svg {
   transition:
-    transform 320ms cubic-bezier(0.2, 0.65, 0.25, 1),
+    transform 220ms cubic-bezier(0.2, 0.65, 0.25, 1),
     background-color 240ms,
     color 240ms;
 }
 .project-arrow svg {
-  transition: transform 320ms;
+  transition: transform 220ms;
 }
 .project-link:focus-visible .project-arrow {
   background: var(--color-ink);
@@ -813,7 +811,7 @@ dialog::backdrop {
   color: var(--color-accent);
 }
 .capability-row {
-  transition: border-color 280ms;
+  transition: border-color 220ms;
 }
 .sample-preview {
   overflow: hidden;
@@ -941,4 +939,93 @@ dialog::backdrop {
 }
 .engineering-canvas.has-opening {
   transition: none;
+}
+
+/* Shared header geometry and progressive editorial details. */
+.site-header {
+  height: var(--site-header-height);
+}
+.motion-rule {
+  position: relative;
+  border-top-color: transparent !important;
+}
+.motion-rule > [data-reveal-rule] {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--reveal-line, var(--color-line));
+  transform-origin: left;
+  pointer-events: none;
+}
+.scroll-image {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.scroll-image-inner {
+  position: absolute;
+  inset: -14px 0;
+  transform: translateY(var(--image-drift, 0px));
+}
+.editorial-title-line {
+  display: block;
+}
+input,
+textarea {
+  transition:
+    border-color 200ms,
+    background-color 200ms;
+}
+input:focus,
+textarea:focus {
+  border-color: var(--color-accent);
+}
+@media (max-width: 767px) {
+  html {
+    --site-header-height: 64px;
+  }
+  .scroll-image-inner {
+    inset-block: -6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-image-inner {
+    transform: none;
+  }
+  .text-link::after,
+  .navigation-link::after {
+    transition: none;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .project-link:hover .project-image img,
+  .article-link:hover img {
+    transform: scale(1.025);
+  }
+}
+
+.process-step {
+  --reveal-line: #1719184d;
+}
+.footer-legal {
+  --reveal-line: #ffffff33;
+}
+
+.editorial-explore:focus-visible svg {
+  transform: translate(2px, -2px);
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .editorial-explore:hover svg {
+    transform: translate(2px, -2px);
+  }
+  .text-link:hover svg {
+    transform: translate(2px, -2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .editorial-explore svg {
+    transform: none !important;
+  }
 }
