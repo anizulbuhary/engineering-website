@@ -63,12 +63,13 @@ for (const width of [375, 430, 768, 1024, 1440, 1920]) {
   });
 }
 
-test("device default, saved choices, navigation and cross-tab changes", async ({
+test("dark default, saved choices, navigation and cross-tab changes", async ({
   page,
   context,
 }) => {
-  await page.emulateMedia({ colorScheme: "dark" });
+  await page.emulateMedia({ colorScheme: "light" });
   await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator("body")).toHaveCSS(
     "background-color",
     backgrounds.dark,
@@ -96,6 +97,8 @@ test("device default, saved choices, navigation and cross-tab changes", async ({
   await chooseTheme(second, "dark");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await chooseTheme(second, "system");
+  await second.reload();
+  await expect(second.locator("html")).toHaveAttribute("data-theme", "system");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "system");
   await page.emulateMedia({ colorScheme: "light" });
   await expect(page.locator("body")).toHaveCSS(
@@ -108,7 +111,7 @@ test("device default, saved choices, navigation and cross-tab changes", async ({
     backgrounds.dark,
   );
   await second.evaluate(() => localStorage.clear());
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "system");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await second.close();
 });
 
@@ -121,13 +124,21 @@ test("appearance panel has keyboard selection, dismissal and stable geometry", a
   const initial = await page.locator(".site-header").boundingBox();
   await button.click();
   await expect(
-    page.getByRole("radio", { name: "System", exact: true }),
+    page.getByRole("radio", { name: "Dark", exact: true }),
   ).toBeFocused();
   expect(
     (await new AxeBuilder({ page }).include(".site-header").analyze())
       .violations,
   ).toEqual([]);
   await page.keyboard.press("ArrowUp");
+  await expect(
+    page.getByRole("radio", { name: "Light", exact: true }),
+  ).toBeChecked();
+  await expect(page.locator("body")).toHaveCSS(
+    "background-color",
+    backgrounds.light,
+  );
+  await page.keyboard.press("ArrowDown");
   await expect(
     page.getByRole("radio", { name: "Dark", exact: true }),
   ).toBeChecked();
@@ -217,7 +228,7 @@ test("blocked storage and invalid saved values fall back safely", async ({
   browser,
 }) => {
   for (const blocked of [false, true]) {
-    const context = await browser.newContext({ colorScheme: "dark" });
+    const context = await browser.newContext({ colorScheme: "light" });
     const page = await context.newPage();
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
@@ -232,7 +243,7 @@ test("blocked storage and invalid saved values fall back safely", async ({
       } else localStorage.setItem("formwork-theme", "invalid");
     }, blocked);
     await page.goto("/");
-    await expect(page.locator("html")).toHaveAttribute("data-theme", "system");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
     await expect(page.locator("body")).toHaveCSS(
       "background-color",
       backgrounds.dark,
@@ -276,7 +287,7 @@ for (const theme of ["light", "dark"] as const) {
     ).not.toBeVisible();
   });
 
-  test(`${theme} device preference works without JavaScript`, async ({
+  test(`dark default works without JavaScript on a ${theme} device`, async ({
     browser,
   }) => {
     const context = await browser.newContext({
@@ -287,9 +298,9 @@ for (const theme of ["light", "dark"] as const) {
     await page.goto("/projects/the-frame");
     await expect(page.locator("body")).toHaveCSS(
       "background-color",
-      backgrounds[theme],
+      backgrounds.dark,
     );
-    await expect(page.locator("html")).toHaveCSS("color-scheme", theme);
+    await expect(page.locator("html")).toHaveCSS("color-scheme", "dark");
     await page.locator(".detail-selector").nth(1).click();
     await expect(page.locator(".explanation-reinforcement")).toBeVisible();
     await expect(
@@ -355,6 +366,7 @@ test("theme changes preserve the live scene, paused image, scroll and reading st
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
+  await chooseTheme(page, "light");
   await page.locator(".detail-selector").nth(2).click();
   await approachStory(page);
   const canvas = page.locator(".engineering-canvas.is-ready canvas");

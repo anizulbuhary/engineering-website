@@ -5,6 +5,12 @@ import AxeBuilder from "@axe-core/playwright";
 for (const colorScheme of ["light", "dark"] as const) {
   test.describe(`${colorScheme} engineering experience`, () => {
     test.use({ colorScheme });
+    test.beforeEach(async ({ page }) => {
+      await page.addInitScript(
+        (theme) => localStorage.setItem("formwork-theme", theme),
+        colorScheme,
+      );
+    });
     test("3D story loads on approach, follows chapters in both directions, and can be paused", async ({
       page,
     }) => {

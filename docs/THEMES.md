@@ -27,9 +27,9 @@ The footer and contact invitation use `.permanent-dark` and `--on-dark-*` tokens
 - `lib/theme-preference.ts` defines `ThemePreference` and the trusted pre-paint script used in the root layout.
 - `lib/theme-store.ts` synchronizes the root `data-theme` attribute, the appearance control and other tabs. It uses `useSyncExternalStore`; page content and the building do not remount when colors change.
 - `content/appearance.ts` contains the control labels and description.
-- Only an explicit choice writes `formwork-theme` to local storage. Missing or invalid values resolve to System. No cookie, request or backend is involved.
-- The root attribute stores the preference, including `system`. CSS resolves System using `prefers-color-scheme`, including without JavaScript. Native `color-scheme` follows the resolved theme.
-- Blocked storage is caught. A manual choice still works during the current client-side session; a fresh document returns to the device preference if it cannot read storage.
+- Dark is the default for new visitors. Only an explicit choice writes `formwork-theme` to local storage. Missing or invalid values resolve to Dark; saved Light, Dark and System choices are respected. No cookie, request or backend is involved.
+- The root attribute stores the preference, including `system`. CSS resolves an explicit System choice using `prefers-color-scheme`. The server renders Dark before the pre-paint script reads saved choices, and JavaScript-free pages remain Dark. Native `color-scheme` follows the resolved theme.
+- Blocked storage is caught. A manual choice still works during the current client-side session; a fresh document returns to Dark if it cannot read storage.
 - Device changes apply while System is selected. Storage changes or deletion in another tab update open pages. Subscriptions are cleaned up on unmount.
 - Color transitions are suppressed for two animation frames during a change. Existing transforms, opacity entrances, image drift and building playback retain their state and timing.
 

@@ -10,6 +10,10 @@ for (const colorScheme of ["light", "dark"] as const) {
     }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.emulateMedia({ colorScheme });
+      await page.addInitScript(
+        (theme) => localStorage.setItem("formwork-theme", theme),
+        colorScheme,
+      );
       await page.goto("/");
       await approachStory(page);
       const section = page.locator("#engineering-story");

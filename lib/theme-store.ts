@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  DEFAULT_THEME,
   isThemePreference,
   THEME_STORAGE_KEY,
   type ThemePreference,
@@ -28,7 +29,7 @@ function applyTheme(preference: ThemePreference) {
 
 export function getTheme(): ThemePreference {
   const value = document.documentElement.dataset.theme;
-  return isThemePreference(value) ? value : "system";
+  return isThemePreference(value) ? value : DEFAULT_THEME;
 }
 
 export function getServerTheme(): null {
@@ -47,12 +48,12 @@ export function setTheme(preference: ThemePreference) {
 
 export function subscribeTheme(callback: () => void) {
   if (!isThemePreference(document.documentElement.dataset.theme)) {
-    let preference: ThemePreference = "system";
+    let preference: ThemePreference = DEFAULT_THEME;
     try {
       const value = localStorage.getItem(THEME_STORAGE_KEY);
       if (isThemePreference(value)) preference = value;
     } catch {
-      /* Device preference remains available through CSS. */
+      /* Keep the default when storage is unavailable. */
     }
     applyTheme(preference);
   }
@@ -67,7 +68,9 @@ export function subscribeTheme(callback: () => void) {
     } catch {
       return;
     }
-    applyTheme(isThemePreference(event.newValue) ? event.newValue : "system");
+    applyTheme(
+      isThemePreference(event.newValue) ? event.newValue : DEFAULT_THEME,
+    );
     callback();
   };
   window.addEventListener(changeEvent, callback);
