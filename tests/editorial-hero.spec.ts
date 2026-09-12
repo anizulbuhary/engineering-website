@@ -12,7 +12,7 @@ test("editorial hero reveals on scroll without loading a Blender image sequence"
   await expect(page.locator(".editorial-hero h1")).toHaveText(
     "Engineering what endures.",
   );
-  await expect(page.locator(".editorial-image img")).toBeVisible();
+  await expect(page.locator(".comparison-image")).toBeVisible();
   const inset = () =>
     page
       .locator(".editorial-image")
@@ -30,5 +30,5 @@ test("reduced motion keeps the hero image still", async ({ page }) => {
   await page.goto("/");
   await page.evaluate(() => window.scrollTo({ top: 450, behavior: "instant" }));
   await expect(page.locator(".editorial-hero")).toHaveCSS("--hero-reveal", "0");
-  await expect(page.locator(".editorial-image img")).toBeVisible();
+  await expect(page.locator(".comparison-image")).toBeVisible();
 });

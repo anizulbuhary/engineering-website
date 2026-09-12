@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024" fill="none">
+  <title>Concrete frame — perspective construction study</title>
+  <desc>Three connected concrete portal frames, with drawn slab edges, column returns, formwork joints and setting-out lines. An illustrative interpretation of the hero image, not a construction document.</desc>
+  <defs>
+    <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+      <path d="M0 0V9" stroke="#7e8174" stroke-width=".7" opacity=".42"/>
+    </pattern>
+    <pattern id="pencil" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-37)">
+      <path d="M0 0V6" stroke="#898a7c" stroke-width=".65" opacity=".3"/>
+    </pattern>
+    <pattern id="grain" width="61" height="57" patternUnits="userSpaceOnUse">
+      <path d="M11 13h1m33 16h.7M25 49h1.2" stroke="#a9a18d" stroke-width=".7" opacity=".3"/>
+    </pattern>
+    <clipPath id="front-frame"><path d="M171 65H1366V766H1214V210H327V766H171Z"/></clipPath>
+    <clipPath id="middle-frame"><path d="M476 328H1059V669H987V395H554V669H476Z"/></clipPath>
+  </defs>
+  <path d="M0 0H1536V1024H0Z" fill="#f3f0e7"/>
+  <path d="M0 0H1536V1024H0Z" fill="url(#grain)"/>
+  <!-- Setting-out perspective follows the same central vanishing region as the photograph. -->
+  <g stroke="#919383" stroke-width=".75" opacity=".3">
+    <path d="M0 596H1536M0 639H1536M0 924L766 548L1536 912M306 1024L766 548L1240 1024M665 1024L766 548L911 1024"/>
+    <path d="M0 770L1536 774M0 879L1536 891M0 1008L1536 1020"/>
+    <path d="M0 0L766 548L1536 0M323 0L766 548L1198 0M658 0L766 548L904 0"/>
+  </g>
+  <!-- Continuous overhead slab and the side bays. -->
+  <g stroke="#60665a" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M0 0H1536V349L1177 407H363L0 344Z" fill="#e5e1d4"/>
+    <path d="M0 0H1536V349L1177 407H363L0 344Z" fill="url(#hatch)"/>
+    <path d="M0 291L171 355V404L0 346ZM1366 356L1536 292V345L1366 404Z" fill="#e8e3d6"/>
+    <path d="M31 354L74 370V667H31ZM74 370L97 380V664L74 667Z" fill="#e7e1d2"/>
+    <path d="M74 370L97 380V664L74 667Z" fill="url(#pencil)"/>
+    <path d="M1434 381L1455 369V667L1434 665ZM1455 369L1498 353V669L1455 667Z" fill="#e7e1d2"/>
+    <path d="M1434 381L1455 369V667L1434 665Z" fill="url(#pencil)"/>
+  </g>
+  <!-- Faint ground shadows locate the supports without overpowering the linework. -->
+  <g fill="#c5c6b6" opacity=".25">
+    <path d="M171 763L327 763L771 1024H231Z"/>
+    <path d="M476 669L554 669L1413 902L1152 896Z"/>
+    <path d="M987 667L1059 670L1536 758V723Z"/>
+  </g>
+  <!-- Furthest portal and its short inner returns. -->
+  <g stroke="#727868" stroke-width="1.4" stroke-linejoin="round">
+    <path d="M562 415H976V647H925V449H612V647H562Z" fill="#ebe6d9"/>
+    <path d="M608 449H928L924 453H614V646H608Z" fill="#d9d8ca"/>
+    <path d="M925 449L922 453V646H925Z" fill="url(#hatch)"/>
+    <path d="M563 435H975M589 416V646M949 416V646" stroke="#a5a492" stroke-width=".6"/>
+  </g>
+  <!-- Middle portal, including its actual beam soffit and column returns. -->
+  <g stroke="#555e51" stroke-width="1.65" stroke-linejoin="round">
+    <path d="M476 328H1059V669H987V395H554V669H476Z" fill="#e9e4d7"/>
+    <path d="M554 395H987L976 415H563Z" fill="#dedaca"/>
+    <path d="M554 395H987L976 415H563Z" fill="url(#hatch)"/>
+    <path d="M554 395L563 415V647L554 669Z" fill="#dedaca"/>
+    <path d="M987 395L976 415V647L987 669Z" fill="#d4d5c7"/>
+    <path d="M987 395L976 415V647L987 669Z" fill="url(#pencil)"/>
+    <g clip-path="url(#middle-frame)" stroke="#9e9f8c" stroke-width=".7" opacity=".65">
+      <path d="M490 319V680M520 319V680M1020 319V680M1041 319V680M470 366H1068M470 442H1068M470 522H1068M470 604H1068"/>
+    </g>
+  </g>
+  <!-- Foreground portal: large uninterrupted beam, grounded columns, supported slab. -->
+  <g stroke="#4e584c" stroke-width="2" stroke-linejoin="round">
+    <path d="M171 65H1366V766H1214V210H327V766H171Z" fill="#ece6d9"/>
+    <path d="M327 210H1214L1177 242H363Z" fill="#dfd9c9"/>
+    <path d="M327 210H1214L1177 242H363Z" fill="url(#hatch)"/>
+    <path d="M327 210L363 242V749L327 766Z" fill="#dedacb"/>
+    <path d="M327 210L363 242V749L327 766Z" fill="url(#pencil)"/>
+    <path d="M1214 210L1177 242V748L1214 766Z" fill="#e6dfcf"/>
+    <path d="M1214 210L1177 242V748L1214 766Z" fill="url(#pencil)"/>
+    <g clip-path="url(#front-frame)" stroke="#a6a18e" stroke-width=".7" opacity=".7">
+      <path d="M203 50V779M256 50V779M305 50V779M1249 50V779M1300 50V779M1347 50V779"/>
+      <path d="M160 209H1375M160 348H1375M160 488H1375M160 625H1375M327 103H1214M327 156H1214"/>
+      <path d="M477 58V215M632 58V215M787 58V215M939 58V215M1090 58V215"/>
+    </g>
+  </g>
+  <!-- Quiet tie-hole marks, drawn from the image's visible concrete texture. -->
+  <g fill="#929581" opacity=".65">
+    <circle cx="246" cy="115" r="2"/><circle cx="250" cy="307" r="2"/><circle cx="246" cy="505" r="2"/><circle cx="249" cy="699" r="2"/>
+    <circle cx="1288" cy="305" r="2"/><circle cx="1288" cy="508" r="2"/><circle cx="1286" cy="700" r="2"/>
+    <circle cx="375" cy="122" r="2"/><circle cx="578" cy="122" r="2"/><circle cx="781" cy="122" r="2"/><circle cx="981" cy="122" r="2"/><circle cx="1157" cy="122" r="2"/>
+    <circle cx="515" cy="438" r="1.4"/><circle cx="515" cy="601" r="1.4"/><circle cx="1025" cy="438" r="1.4"/><circle cx="1025" cy="601" r="1.4"/>
+  </g>
+  <!-- Selective pencil retraces retain precision without a uniform CAD finish. -->
+  <g stroke="#717967" stroke-width=".65" opacity=".5" stroke-linecap="round">
+    <path d="M158 62L1376 67M168 54L173 779M1369 52L1365 779M319 207L1226 212M325 201L329 777M1217 201L1212 777"/>
+    <path d="M469 325L1067 330M551 389L552 675M985 387L989 676M167 769L337 766M1206 769L1374 765"/>
+    <path d="M160 65H184M171 52V77M1354 65H1378M1366 53V77"/>
+  </g>
+  <!-- Setting-out axes connect to actual structural supports. -->
+  <g stroke="#ac744e" stroke-width="1" opacity=".65" stroke-dasharray="11 7 2 7">
+    <path d="M248 778V940M1290 778V940M520 683L1009 912"/>
+  </g>
+  <!-- A restrained joint study and real construction-element callouts. -->
+  <g stroke="#ad6c43" stroke-width="1.25" stroke-linecap="round">
+    <path d="M992 210H1214V412" stroke-width="2.6"/>
+    <circle cx="1214" cy="210" r="27" stroke-dasharray="5 5"/>
+    <path d="M1191 230L1121 282H946M985 413L1014 468H1144M1290 779L1175 864H1080"/>
+    <circle cx="987" cy="415" r="3" fill="#ad6c43" stroke="none"/>
+    <path d="M248 925H1290M239 935L257 916M1281 935L1299 916" stroke-width=".85" opacity=".65"/>
+  </g>
+  <g fill="#805236" font-family="monospace" font-size="12" letter-spacing="1.5">
+    <text x="946" y="269">BEAM / COLUMN JUNCTION</text>
+    <text x="1018" y="489">SOFFIT RETURN</text>
+    <text x="1080" y="886">GROUND CONTACT</text>
+    <text x="227" y="964">A</text><text x="1280" y="964">B</text>
+  </g>
+</svg>

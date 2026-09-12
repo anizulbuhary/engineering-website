@@ -108,11 +108,10 @@ for (const width of [375, 768, 1440]) {
   });
 }
 
-test("hero opens the connected dossier and services expose sample outputs", async ({
+test("the project dossier connects to services and sample outputs", async ({
   page,
 }) => {
-  await page.goto("/");
-  await page.getByRole("link", { name: "Read the study", exact: true }).click();
+  await page.goto("/projects/the-frame#study");
   await expect(page).toHaveURL(/\/projects\/the-frame#study$/);
   await expect(page.locator("#study")).toBeVisible();
   await expect(page.locator(".dossier-table tbody tr")).toHaveCount(3);

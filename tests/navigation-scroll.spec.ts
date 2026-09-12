@@ -50,19 +50,23 @@ test("same-page links return to the top and section links retain their destinati
   await page.locator('footer a[href="/projects"]').first().click();
   await expect.poll(() => page.evaluate(() => scrollY)).toBe(0);
   await page.goto("/");
-  await page.getByRole("link", { name: "Read the study", exact: true }).click();
-  await expect(page).toHaveURL("/projects/the-frame#study");
+  await page
+    .getByRole("link", { name: "See the engineering", exact: true })
+    .click();
+  await expect(page).toHaveURL("/#engineering-story");
   await expect
     .poll(() =>
-      page.locator("#study").evaluate((el) => el.getBoundingClientRect().top),
+      page
+        .locator("#engineering-story")
+        .evaluate((el) => el.getBoundingClientRect().top),
     )
-    .toBeGreaterThanOrEqual(72);
+    .toBeLessThan(130);
   expect(
     await page
-      .locator("#study")
-      .evaluate((el) => el.getBoundingClientRect().top),
-  ).toBeLessThan(130);
-  await expect(page.locator("#study")).toBeFocused();
+      .locator("#engineering-story")
+      .evaluate((el) => Math.round(el.getBoundingClientRect().top)),
+  ).toBeGreaterThanOrEqual(72);
+  await expect(page.locator("#engineering-story")).toBeFocused();
 });
 
 test("mobile navigation lands on the new heading without late focus jumps", async ({

@@ -5,9 +5,10 @@ import Link from "@/components/ui/SiteLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { TextLink } from "@/components/ui/Primitives";
 import { useEffect, useRef } from "react";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { home } from "@/content/pages";
 import { editorialHero as copy } from "@/content/engineering-story";
+import { ImageComparison } from "./ImageComparison";
 
 export function EditorialHero() {
   const section = useRef<HTMLElement>(null);
@@ -74,18 +75,7 @@ export function EditorialHero() {
         </div>
       </div>
       <figure className="editorial-figure">
-        <div className="editorial-image">
-          <Image
-            src={copy.image}
-            alt={copy.imageAlt}
-            fill
-            sizes="100vw"
-            priority
-          />
-          <div className="editorial-image-mark" aria-hidden="true">
-            <ArrowDown size={26} />
-          </div>
-        </div>
+        <ImageComparison />
         <figcaption className="hero-companion shell">
           <Reveal rule className="hero-companion-inner">
             <div className="hero-companion-caption">
@@ -101,7 +91,7 @@ export function EditorialHero() {
                   src={copy.image}
                   alt={copy.companion.imageAlt}
                   fill
-                  sizes="(max-width: 767px) 240px, 400px"
+                  sizes="(max-width: 767px) 400px, 600px"
                 />
               </div>
               <div>

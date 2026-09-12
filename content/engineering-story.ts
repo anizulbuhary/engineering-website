@@ -30,23 +30,33 @@ export const immersiveStory = {
     "Architectural model of Courtyard House, with pale limestone wings, smoked glazing, subtle copper accents and planted courtyard terraces",
 };
 export const editorialHero = {
+  comparison: {
+    drawing: "/graphics/studies/construction-landscape-drawing.svg",
+    drawingPortrait: "/graphics/studies/construction-portrait-drawing.svg",
+    label: "Compare the concept image and vector construction sketch",
+    valueLabel: "{value}% concept image",
+    description:
+      "An AI-generated unfinished concrete structure and an illustrative vector sketch of the same view. The sketch traces the columns, beams and slabs, highlighting their connections. Neither image is construction documentation.",
+    initial: 58,
+  },
   label: "PRECISION. FROM THE INSIDE OUT.",
   title: ["Engineering", "what", "endures."],
   action: "Contact",
   actionHref: "/contact",
-  image: "/images/projects/frame.webp",
+  image: "/images/hero/construction-landscape-image.webp",
+  imagePortrait: "/images/hero/construction-portrait-image.webp",
   imageAlt:
-    "Concept image of an exposed concrete structure with repeating floor slabs, columns and reinforcement",
-  caption: "01 / THE FRAME / CONCEPT STUDY",
+    "Concept image of an unfinished concrete building, with three connected portal frames and warm daylight across the floor",
+  caption: "Concrete frame — concept study",
   companion: {
     label: "FIG. 01 / A CLOSER LOOK",
     title: "The whole, in every detail.",
     description:
-      "Slab, column and edge. A closer crop of the same frame reveals the relationships behind the larger structure.",
+      "A beam meets a column. A slab spans an opening. Before the finishes, the structure reveals the connections that make the building work.",
     imageAlt:
-      "Close crop of the same concept photograph, showing a concrete slab meeting its column",
-    link: "Read the study",
-    href: "/projects/the-frame#study",
+      "Close crop of a concrete beam meeting its column, with warm light across the recessed soffit",
+    link: "See the engineering",
+    href: "#engineering-story",
   },
 };
 export const engineeringStages = [

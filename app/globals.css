@@ -580,6 +580,72 @@ dialog::backdrop {
 .editorial-figure {
   margin: 0;
 }
+.image-comparison {
+  isolation: isolate;
+}
+.comparison-drawing {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 var(--comparison));
+  pointer-events: none;
+}
+.comparison-divider {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.comparison-divider::before {
+  content: "";
+  position: absolute;
+  left: var(--comparison);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #dba078;
+  transform: translateX(-1px);
+  box-shadow: 0 0 0 1px #191b1940;
+  pointer-events: none;
+}
+.comparison-divider > span {
+  visibility: hidden;
+  position: absolute;
+  left: clamp(24px, var(--comparison), calc(100% - 24px));
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 52px;
+  border: 1px solid #dba078;
+  background: #191b19;
+  color: #f4f2ed;
+}
+[data-interactive] .comparison-divider > span {
+  visibility: visible;
+}
+.comparison-input {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  margin: 0;
+  touch-action: pan-y;
+}
+.image-comparison:has(.comparison-input:focus-visible) {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 5px;
+}
+.image-comparison:has(.comparison-input:focus-visible)
+  .comparison-divider
+  > span {
+  background: #f4f2ed;
+  color: #191b19;
+  outline: 2px solid #191b19;
+  outline-offset: 3px;
+}
 /* A photographic detail belongs to the same frame as its overview. */
 .hero-companion-inner {
   display: grid;
@@ -609,9 +675,9 @@ dialog::backdrop {
 }
 .hero-detail-crop img {
   object-fit: cover;
-  object-position: 76% 62%;
-  transform: scale(2);
-  transform-origin: 76% 62%;
+  object-position: 20% 12%;
+  transform: scale(2.8);
+  transform-origin: 20% 12%;
 }
 /* Native selectors make the drawing explorable even without JavaScript. */
 .detail-explorer {
@@ -993,27 +1059,15 @@ dialog::backdrop {
 }
 .editorial-image {
   position: relative;
-  height: clamp(360px, 47vw, 670px);
+  height: clamp(360px, 47vw, 800px);
   overflow: hidden;
   margin-inline: calc(4.2vw * (1 - var(--hero-reveal)));
   background: var(--color-concrete);
 }
 .editorial-image img {
   object-fit: cover;
-  object-position: 50% 47%;
+  object-position: center;
   transform: scale(calc(1.075 - var(--hero-reveal) * 0.075));
-}
-.editorial-image-mark {
-  position: absolute;
-  left: 28px;
-  bottom: 28px;
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  border: 1px solid #eee8dc;
-  color: #fff;
-  background: #171918;
 }
 @media (max-width: 1100px) {
   .editorial-intro {
@@ -1067,17 +1121,12 @@ dialog::backdrop {
     max-width: 260px;
   }
   .editorial-image {
-    height: 330px;
+    height: auto;
+    aspect-ratio: 10 / 11;
     margin-inline: calc(22px * (1 - var(--hero-reveal)));
   }
   .editorial-image img {
-    object-position: 62% center;
-  }
-  .editorial-image-mark {
-    left: 18px;
-    bottom: 18px;
-    width: 42px;
-    height: 42px;
+    object-position: center;
   }
 
   .engineering-experience.is-immersive {
