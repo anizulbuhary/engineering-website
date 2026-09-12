@@ -355,7 +355,7 @@ export function EngineeringStory() {
                 </div>
               </div>
               <div className="story-model-note eyebrow" aria-hidden="true">
-                <span>FW—01 / CONCEPT PAVILION</span>
+                <span>{immersiveStory.modelReference}</span>
                 <span>{immersiveStory.views[active]}</span>
               </div>
               <div className="story-bottom">
@@ -397,7 +397,7 @@ export function EngineeringStory() {
               <div className="story-static-poster">
                 <Image
                   src={immersiveStory.poster}
-                  alt="Blender-created architectural model of a terraced pavilion with bronze facade fins and pale concrete floors"
+                  alt={immersiveStory.posterAlt}
                   fill
                   sizes="(max-width: 767px) 700px, 70vw"
                 />

@@ -1,5 +1,13 @@
 import { chromium, expect } from "@playwright/test";
 import sharp from "sharp";
+import { readFileSync } from "node:fs";
+
+const model = JSON.parse(
+  readFileSync(
+    new URL("../content/engineering-model.json", import.meta.url),
+    "utf8",
+  ),
+);
 
 // Run against the current build: node scripts/capture-engineering-poster.mjs
 // This derives the transparent loading/fallback poster from the actual scene.
@@ -21,7 +29,7 @@ try {
   });
   await expect(
     page.locator(".engineering-canvas.is-ready canvas"),
-  ).toHaveAttribute("data-progress", "0.0000");
+  ).toHaveAttribute("data-progress", "0.0000", { timeout: 30000 });
   await page.getByRole("button", { name: "Pause motion" }).click();
   const still = page.locator(".story-paused-image img");
   await expect(still).toBeVisible();
@@ -30,7 +38,7 @@ try {
     throw new Error("No opening capture available");
   const result = await sharp(Buffer.from(source.split(",")[1], "base64"))
     .webp({ lossless: true })
-    .toFile("public/models/pavilion-studio-refined.webp");
+    .toFile(`public${model.poster}`);
   console.log(
     `Transparent opening: ${result.width} × ${result.height}, ${result.size} bytes`,
   );

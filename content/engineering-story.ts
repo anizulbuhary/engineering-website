@@ -1,4 +1,8 @@
+import engineeringModel from "./engineering-model.json";
+
 export const immersiveStory = {
+  modelName: engineeringModel.name,
+  modelReference: engineeringModel.reference,
   intro:
     "Follow the building from architectural form to coordinated details and construction drawings. Explore six stages, or go straight to our services.",
   skipLabel: "Skip to services",
@@ -20,9 +24,10 @@ export const immersiveStory = {
   pause: "Pause motion",
   resume: "Resume motion",
   pausedLabel: "THE ENGINEERING EXPERIENCE / STILL VIEW",
-  poster: "/models/pavilion-studio-refined.webp",
+  model: engineeringModel.model,
+  poster: engineeringModel.poster,
   posterAlt:
-    "Architectural illustration of the completed terraced pavilion, with honed stone floors, bronze facade frames, a sheltered entrance and paved roof terraces",
+    "Architectural model of Courtyard House, with pale limestone wings, smoked glazing, subtle copper accents and planted courtyard terraces",
 };
 export const editorialHero = {
   label: "PRECISION. FROM THE INSIDE OUT.",

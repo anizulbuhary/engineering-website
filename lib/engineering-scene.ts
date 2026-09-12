@@ -1,12 +1,15 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { immersiveStory } from "@/content/engineering-story";
 
 type Part = {
   mesh: THREE.Mesh;
   system: string;
   level: number;
   materials: THREE.MeshStandardMaterial[];
+  materialOpacities: number[];
   shadowMaterial: THREE.MeshDepthMaterial;
   edges?: THREE.LineSegments;
 };
@@ -106,12 +109,12 @@ export function mountEngineeringScene(
   const pmrem = new THREE.PMREMGenerator(renderer);
   const environment = pmrem.fromScene(studio, 0.05);
   scene.environment = environment.texture;
-  scene.environmentIntensity = 0.42;
+  scene.environmentIntensity = 0.24;
   studio.dispose();
   pmrem.dispose();
-  scene.add(new THREE.HemisphereLight(0xe8ece6, 0x52493d, 0.95));
-  const key = new THREE.DirectionalLight(0xffedda, 2.6);
-  key.position.set(10, 24, 14);
+  scene.add(new THREE.HemisphereLight(0xe8ece6, 0x52493d, 0.5));
+  const key = new THREE.DirectionalLight(0xffedda, 3);
+  key.position.set(-9, 20, 12);
   key.target.position.set(0, 5, 0);
   key.castShadow = true;
   key.shadow.mapSize.set(compact ? 1024 : 2048, compact ? 1024 : 2048);
@@ -123,10 +126,10 @@ export function mountEngineeringScene(
   key.shadow.bias = -0.00008;
   key.shadow.radius = 2.2;
   scene.add(key, key.target);
-  const rim = new THREE.DirectionalLight(0xd8e2e1, 0.65);
+  const rim = new THREE.DirectionalLight(0xd8e2e1, 0.45);
   rim.position.set(-10, 12, -8);
   scene.add(rim);
-  const fill = new THREE.DirectionalLight(0xe9d3bb, 0.3);
+  const fill = new THREE.DirectionalLight(0xe9d3bb, 0.15);
   fill.position.set(8, 4, -10);
   scene.add(fill);
   const grid = createGroundGrid();
@@ -198,7 +201,7 @@ export function mountEngineeringScene(
       renderer.shadowMap.needsUpdate = true;
       previousShadowState = shadowState;
     }
-    const centerHeight = 5.4 + 3.5 * at("spread");
+    const centerHeight = 4.8 + 3 * at("spread");
     const distance = at("distance") * Math.max(1, 0.75 / camera.aspect);
     target.set(0, centerHeight, 0);
     camera.position.set(
@@ -212,6 +215,7 @@ export function mountEngineeringScene(
       system,
       level,
       materials,
+      materialOpacities,
       shadowMaterial,
       edges,
     } of parts) {
@@ -229,16 +233,23 @@ export function mountEngineeringScene(
       mesh.castShadow = system !== "rebar" && system !== "services";
       // Ghosted explanatory layers should not accumulate a dense, stippled
       // shadow through many overlapping floors. Keep the assembled shadow full.
-      shadowMaterial.opacity = opacity ** 3;
+      shadowMaterial.opacity = (opacity * Math.max(...materialOpacities)) ** 3;
       const fadingShadow = shadowMaterial.opacity < 1;
       if (shadowMaterial.alphaHash !== fadingShadow) {
         shadowMaterial.alphaHash = fadingShadow;
         shadowMaterial.needsUpdate = true;
       }
-      for (const mat of materials) {
-        mat.opacity = opacity;
-        mat.depthWrite = opacity > 0.95;
-      }
+      materials.forEach((mat, index) => {
+        mat.opacity = opacity * materialOpacities[index];
+        // Fully assembled walls belong in the opaque pass. Treating every
+        // surface as transparent allowed interior walls to overwrite glazing.
+        const transparent = mat.opacity < 1;
+        if (mat.transparent !== transparent) {
+          mat.transparent = transparent;
+          mat.needsUpdate = true;
+        }
+        mat.depthWrite = !transparent;
+      });
       if (edges) {
         edges.position.copy(mesh.position);
         (edges.material as THREE.LineBasicMaterial).opacity =
@@ -304,7 +315,8 @@ export function mountEngineeringScene(
   renderer.domElement.addEventListener("webglcontextlost", contextLost);
   const controller = new AbortController();
   const loader = new GLTFLoader();
-  fetch("/models/formwork-pavilion.glb", { signal: controller.signal })
+  loader.setMeshoptDecoder(MeshoptDecoder);
+  fetch(immersiveStory.model, { signal: controller.signal })
     .then((response) => {
       if (!response.ok) throw new Error("Model unavailable");
       return response.arrayBuffer();
@@ -327,7 +339,11 @@ export function mountEngineeringScene(
         ).map((mat) => {
           originals.add(mat);
           const clone = (mat as THREE.MeshStandardMaterial).clone();
-          clone.transparent = true;
+          clone.transparent = clone.opacity < 1;
+          // The model batches each floor at a shared origin. Distance sorting
+          // cannot reliably order its glass and interior surfaces when fading;
+          // composite glazing after the architectural solids in every chapter.
+          if (clone.opacity < 1) node.renderOrder = 1;
           if (system === "rebar" || system === "services") {
             clone.emissive.copy(clone.color);
             clone.emissiveIntensity = 0.25;
@@ -355,6 +371,7 @@ export function mountEngineeringScene(
           system,
           level: metadata?.level ?? -1,
           materials,
+          materialOpacities: materials.map((material) => material.opacity),
           shadowMaterial,
           edges,
         });
@@ -456,14 +473,21 @@ function createGroundGrid() {
 }
 
 function disposeObject(root: THREE.Object3D) {
+  const textures = new Set<THREE.Texture>();
   root.traverse((node) => {
     if (node instanceof THREE.Mesh || node instanceof THREE.LineSegments) {
       node.geometry.dispose();
       const materials = Array.isArray(node.material)
         ? node.material
         : [node.material];
-      materials.forEach((mat) => mat.dispose());
+      materials.forEach((mat) => {
+        for (const value of Object.values(mat)) {
+          if (value instanceof THREE.Texture) textures.add(value);
+        }
+        mat.dispose();
+      });
       if (node instanceof THREE.Mesh) node.customDepthMaterial?.dispose();
     }
   });
+  textures.forEach((texture) => texture.dispose());
 }

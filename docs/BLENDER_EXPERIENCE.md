@@ -1,80 +1,104 @@
-# Architectural experience
+﻿# Courtyard House engineering experience
 
-The homepage uses an editorial hero with a Contact link: oversized HTML typography, a structural concept image and a subtle scroll-linked image reveal. It has no Blender scene, image sequence, canvas or extra dependencies. Reduced motion and disabled JavaScript preserve a complete static composition.
+The signature section is a custom Blender model rendered through Three.js. It uses ordinary scrolling and retains six reversible chapters: architectural form, structure, reinforcement, coordinated services, documentation and the assembled building.
 
-## Building assets and reproduction
+## Design and source files
 
-- `assets/blender/formwork-pavilion.blend`: editable building with enclosed roof core, parapets, covered setbacks, connected facade rails, entrance doors and grounded podium/steps.
-- `public/models/`: the building GLB (approximately 1.9 MB) and optimized static poster.
+The selected courtyard concept replaces the former terraced pavilion. Its defining elements are a six-storey left wing, five-storey rear wing, four-storey right wing and a two-storey entrance hall beneath an elevated garden. The refined exterior uses continuous pale limestone floor edges, slim dark anodised bronze mullions, larger smoked-glass panels and glass terrace guards. Planted terraces, olive trees, restrained furniture and an enclosed roof core retain the original courtyard identity. The entrance has grounded steps and an adjoining side ramp.
 
-After `npm ci`, regenerate the building:
+- `assets/blender/courtyard-reference.png`: the selected generated design reference, not a website render.
+- `assets/blender/formwork-courtyard.blend`: editable source, including inspection lights and camera.
+- `content/engineering-model.json`: shared wing dimensions, floor height, model name and asset configuration.
+- `scripts/create-engineering-model.py`: deterministic geometry, materials, packed limestone grain and GLB export.
+- `public/models/formwork-courtyard.glb`: approximately 1.44 MB, with embedded texture and Meshopt compression.
+- `public/models/courtyard-finished-studio.webp`: approximately 220 KB, transparent lossless capture of the actual live opening.
+- `lib/engineering-scene.ts`: lazy renderer, camera timeline, system fades, shadow updates and resource disposal.
+- `components/engineering/StructureDrawing.tsx`: static SVG studies using the same wing dimensions as Blender.
+
+The former pavilion model, Blender file and poster are removed; their previous versions remain in Git history. No package dependency, backend or public API was added. Meshopt decoding uses the small decoder already shipped with Three.js, loaded with the deferred scene module.
+
+## Model and animation contracts
+
+All meshes retain `system` and `level` metadata. Floor plates, supports and core sections belong to `structure`; the architectural skin, glazing, roof finishes, planters and vegetation belong to `facade` at their supporting level. Reinforcement and services occupy their corresponding wing floors. The entrance's tall piers span two storeys; no intermediate slab crosses the double-height entrance. The central courtyard has no floor plates above level 2.
+
+The generator checks 98 columns against their supporting plates at both ends. It checks geometry against the ground datum and exports 20 structural plates. These checks supplement visual review; this is an architectural communication illustration, not construction documentation or a certified structural design.
+
+The camera retains the previous angular sequence and damping. Its vertical target is adjusted to the shorter courtyard massing. Deliberate floor separation remains inside explanatory chapters; the opening, final state and paused view are fully assembled. Glazing retains its source transparency as the facade fades. Vegetation and planters fade and travel together rather than remaining suspended above the stripped structure.
+
+The fixed warm key light, subdued fill and studio reflection environment are independent of the theme. Alpha-hashed shadow depth uses material opacity and a cubic fade so ghosted floors and glazing do not leave opaque shadows behind. Shadow maps update for geometry/opacity changes and are reused during camera-only movement. Materials, shared textures, custom shadow materials and the reflection environment are disposed on teardown.
+
+## Seamless loading and motion controls
+
+The theme-aware studio remains CSS behind a transparent canvas. The loading poster comes from the same live model, materials, camera and lighting. Its distinct asset path avoids serving a cached pavilion image. Pause visibly rewinds, captures the exact opening and replaces the scroll track with a static section retaining all six steps. Resume aligns the section before rebuilding the live scene. Both states use the shared 72 px desktop/tablet and 64 px phone header definition.
+
+Reduced motion, disabled JavaScript, failed downloads and graphics-context loss retain the new poster and all six readable chapter descriptions. Static drawings describe the courtyard model. The scene's visibility recovery and interrupted rewind/resume behavior remain in place. The 3D canvas never contains essential copy or form controls.
+
+## Regeneration
 
 ```powershell
-& 'C:\Program Files\Blender Foundation\Blender 5.2\blender.exe' --background --python scripts/create-engineering-model.py
+& 'C:/Program Files/Blender Foundation/Blender 5.2/blender.exe' --background --python scripts/create-engineering-model.py -- --no-render
+npm run build
+npm run start
+# With the server running, in another terminal:
+node scripts/capture-engineering-poster.mjs
 ```
 
-The building script includes geometry contact checks before mesh merging. Run `scripts/review-engineering-model.py` with Blender to regenerate front, rear, side, roof, ground and underside inspection renders without modifying the source model. Blender is not needed to run or deploy the site. The previous colonnade source and frame assets are archived locally under ignored `artifacts/retired-colonnade/` and are no longer part of the deployed site.
+The capture script also accepts a preview URL. When replacing a published poster, use a new filename in the content configuration to avoid stale optimized-image caches. Regenerate the poster after any change to geometry, materials, opening framing or lighting. The optional Blender render is an inspection image, not the web fallback.
 
-All geometry is original and fictional. Reinforcement and services are schematic illustrations, not certified construction documentation.
+```powershell
+& 'C:/Program Files/Blender Foundation/Blender 5.2/blender.exe' --background --python scripts/review-engineering-model.py
+```
 
-## Runtime
+Inspection renders and browser screenshots are stored locally under ignored `artifacts/courtyard-review/`. Review front, rear, sides, roof, underside, courtyard, facade joints and entrance separately from browser checks. Browser review also covers the six chapters and intermediate transitions in both scroll directions, both themes and phone/tablet/desktop layouts.
 
-The engineering story lazy-loads its GLB within 100 px of the viewport. Seven occupied storeys terminate at a supported roof; parapets and the roof enclosure travel with their slab. Each floor's facade, reinforcement and services share its vertical offset. Exploded states expand upward from the grounded first floor, with camera framing following the building centre. Facade components fade together without stretching.
+## Original courtyard integration coverage
 
-Desktop and phones both run the live model. Portrait phones use a vertical layout: heading, model, current chapter and six touch-friendly chapter buttons. A compact layout covers short landscape screens. Ordinary scrolling moves through all six chapters in either direction; chapter buttons navigate the same timeline. Desktop travel remains 650 viewport heights; phone travel is 480.
+Lint, TypeScript and the production build pass. The full existing 75-test suite ran with one worker and a 120-second overall test budget: 70 passed initially, and five scene-loading/motion waits passed on isolated reruns with their original assertions unchanged. Two additional courtyard tests pass: the published WebP matches the actual opening capture, and an unreadable GLB retains the new poster and all six chapters. This gives 77 covered scenarios across the full run and focused reruns; it was not a single all-green suite run.
 
-Mobile or short-screen initialization caps rendering at device pixel ratio 1 and uses a 1024 px shadow map. Desktop uses a maximum ratio of 1.5 and a 2048 px shadow map. Framing responds to the canvas aspect ratio. Rendering stops after the camera settles, while offscreen and when the tab is hidden.
+Visual review covers both themes at 375, 430, 768, 1024, 1440 and 1920 px, every chapter and intermediate forward/reverse transitions, plus the six updated fallback studies. The wider model revealed a tablet caption overlap; its note now sits above the model. The final stylesheet was rebuilt and the caption position reviewed again at all six sizes. Strict live/paused pixel checks pass on phones and desktop in both themes, including a theme switch while paused. Those original assets were 2,048,880 bytes and 232,676 bytes respectively, before the exterior refinement below.
 
-Reduced motion, disabled JavaScript, model download failure and graphics context loss show the complete illustrated story. Disabling motion visibly rewinds both the camera/model timeline and page position to the opening, targeting 650 ms. Per-frame time is capped so slower GPUs still show intermediate frames. Wheel, touch, pointer or scrolling-key input can interrupt the return.
+Local automated coverage uses Chromium on Windows with SwiftShader software graphics. Timing failures in the full run mean this is not a device-performance certification. Safari and physical-device frame rates require separate testing.
 
-At the opening, the renderer captures a transparent PNG directly from its current canvas. That image replaces the live canvas in exactly the same layout: camera, materials, lighting, background, scale and position all match. The image is generated locally in memory, with no upload or extra asset download. The renderer is then disposed. The six chapter labels remain visible as a static ordered list with the opening highlighted. Paused mode has no sticky positioning, long scroll track or interactive chapter navigation; its one-viewport composition scrolls normally with the page. Resume retains the captured opening while the live model loads, then switches back in place and waits for scrolling. The static image is replaced on the next pause, keeping just one capture in memory. Both toggles align the section below the header before paint. The hero remains independent of model loading and graphics support.
+## Modern exterior refinement
 
-## Verification
+The courtyard massing, 98 columns, 20 plates, camera path and scroll controls remain unchanged. Masonry course marks, intermediate stone piers, repeated facade screens and dense terrace balusters are replaced by larger glass openings, continuous floor bands and sparse glass-guard posts. The palette is pearl limestone, warm grey concrete and dark anodised bronze. Window and guard glass use separate transparency values, preserved by the existing renderer and shadow fade.
 
-The engineering suites exercise desktop and touch-emulated phone chapter navigation, forward/reverse scrolling, actual canvas image changes, pause/resume, portrait/landscape resizing, reduced motion and graphics/download failure. The hero suite covers reversible image reveal, reduced motion and absence of retired sequence requests. The frontend suite covers routes at 375, 430, 768, 1024, 1440 and 1920 px, accessibility and JavaScript-free content.
+The regenerated GLB is 1,473,680 bytes; its lossless opening poster is 219,590 bytes. The poster has a new URL to avoid stale optimized-image caches. The editable Blender source contains the same updated facade. Blender inspection covers all four elevations, roof, underside, courtyard, entrance, facade joints and ground contact. Browser screenshots use the `modern-` prefix in `artifacts/courtyard-review/`.
 
-Visual review is separate from browser assertions. Current browser coverage is Chromium on Windows, including phone viewport/touch emulation. Physical phones and Safari have not been tested; phone GPU performance cannot be inferred from desktop emulation.
+Validation for this refinement: lint, TypeScript and production build pass. All 34 selected browser tests pass in one run (courtyard model/poster, engineering chapters, mobile motion, strict paused-image comparisons and themes). This includes reduced motion, JavaScript-free theme rendering, graphics failures, both touch viewports, live theme switching and accessibility checks. The entire 77-test suite was not repeated for this asset-only refinement. Chromium/SwiftShader on Windows was used; Safari and physical devices remain untested.
 
-The pause suite records intermediate rewind frames from a later chapter and compares the static image pixels with the live opening. It also checks the six static chapter labels, removal of the canvas and scroll controls, a loaded image, a compact section height, ordinary scrolling and resuming at the opening chapter.
+Final visual review passed at 375, 430, 768, 1024, 1440 and 1920 px in both themes, with no horizontal overflow. Seventeen sampled states per theme cover all six chapters and intermediate forward/reverse transitions. Separate desktop accessibility scans of the engineering section report no violations in either theme. No unintended connection defects or clipping were observed in these reviewed views.
 
-The loading and fallback poster uses `pavilion-studio-refined.webp`, a transparent lossless WebP captured from the runtime opening. After regenerating the model, build and start the website, then run `node scripts/capture-engineering-poster.mjs` (optionally supply the preview URL). This keeps the poster's model and lighting consistent with the live scene. The Blender script retains its inspection render under `artifacts/blender/`; it no longer publishes an opaque poster. The loading poster hides immediately once the live canvas is ready.
-Verified for the matching still/rewind behavior: build, lint and TypeScript passed; both pause tests and all 22 remaining browser tests passed. The pause tests verify multiple intermediate rewind frames and compare opening/still pixels at 390 and 1440 px. Static compositions were visually reviewed at 390, 768 and 1440 px. Physical devices and Safari remain untested.
-After removing the capabilities link from the experience, lint, TypeScript and the production build passed. The nine engineering browser checks passed, with the 375 px chapter-navigation timeout passing on an isolated rerun. Desktop, tablet and phone still views were visually checked again.
-After retaining the six step labels while paused, build, lint, TypeScript and all six engineering/pause browser checks passed. The static list was visually reviewed on phone, tablet and desktop layouts.
+## Website palette accents
 
-The shared header is now 72 px on tablet/desktop and 64 px on phones. Scene scrolling, sticky sizing, rewind and still alignment read the shared header height; the engineering interaction otherwise retains its existing behavior.
+A restrained brushed-copper material now accents the two inner entrance columns, terrace handrails and rooftop screen, echoing the website accent palette. Primary window metalwork uses warm charcoal and the smoked glazing has a more neutral green tint. Pale limestone remains the dominant finish. Geometry, lighting, animation and material transparency are unchanged. Both themes use the same architectural materials, including during live theme switches. The regenerated GLB is 1,479,936 bytes and the matching lossless poster is 219,712 bytes. Its new `courtyard-copper-studio.webp` URL replaces the previous modern-exterior poster.
 
-## Theme-aware studio background
+Palette validation: lint, TypeScript and production build pass. Reviewed the opening in both themes at all six documented widths; no overflow was detected. Nine relevant browser scenarios were exercised: eight passed in the first run, and the light-desktop pause test exceeded its 10-second rewind assertion. That test passed in isolation with unchanged assertions. Poster matching, unreadable-model fallback, both touch viewports, all four strict pause-image comparisons and live theme switching are covered. Chromium software graphics remain a timing limitation; Safari and physical devices were not tested.
 
-The backdrop is now warm limestone in light mode and neutral charcoal in dark mode. Its colors and the surrounding text/control colors use CSS tokens. A subdivided ground grid fades through vertex alpha before its perimeter; its neutral tone and the existing shadow composite over either theme. The paused PNG therefore remains valid when the visitor switches themes.
+## Glazing visibility correction
 
-The technical edge overlay uses dark ink in light mode and pale ink in dark mode. A narrowly scoped appearance observer updates only that overlay, without remounting the scene or changing timeline progress. The model geometry, material colors, lighting, camera shots, floor separation, chapter navigation and rewind behavior are unchanged. Fallback illustration labels inherit the theme text colors.
+Opaque architecture now writes depth in the opaque render pass when assembled; it only enters transparency blending during explanatory fades. Glass composites after the architectural solids, including while fading, because shared floor origins cannot reliably sort glass against interior walls by distance. Technical reinforcement/services overlays keep their later render order. This prevents opaque interior surfaces overwriting the window tint. Source window alpha is increased from 0.64 to 0.78; clear terrace guards retain 0.24. Shapes, copper accents, lighting and camera choreography are unchanged.
 
-Local visual captures are in `artifacts/backdrop-review/`. Review the six chapter states and intermediate transitions, particularly the fine lines against limestone, independently of the automated accessibility and pause-image comparisons. Safari and physical devices remain outside local coverage.
+The Blender source and GLB are regenerated. The corrected transparent opening poster is 217,398 bytes, published at a fresh `courtyard-glazed-studio.webp` path. The glazing regression renders a shared-origin wall and glass fixture in both mesh export orders, compares their pixels and verifies a visible tint against a no-glass control.
 
-Both themes were reviewed at 375, 430, 768, 1024, 1440 and 1920 px; all six stages and five intermediate transitions were captured at desktop width. Reduced-motion and JavaScript-free fallback compositions were checked separately on phone, tablet and desktop. The transparent poster is approximately 220 KB; phone image sizing accounts for its cropped transparent margins to avoid a soft preview.
+Glazing validation: lint, TypeScript and production build pass. Ten targeted browser scenarios cover the new export-order regression, published-poster matching, malformed-model fallback, both mobile viewports, four strict pause-image comparisons and live theme switching. Eight passed initially; two rewind waits exceeded their existing 10-second assertions and passed in an isolated rerun without assertion changes. The intermittent software-renderer rewind timing limitation remains; this change does not claim to resolve it. Safari and physical devices remain untested.
 
-The visible stage now rounds towards the sticky boundary on resume, removing a fractional-pixel offset between the captured still and live canvas. The animation timeline and rewind duration are unchanged. Tests measure the visible stage's alignment rather than the outer scroll track. The expanded 55-test browser suite passed, including strict image matching within each theme and across a theme switch while paused. Lint, TypeScript and production build passed.
+Visual glazing review covers both themes at 430, 768 and 1440 px, plus seventeen sampled states per theme spanning all six chapters and forward/reverse transitions. No new layering or clipping defects were observed. Desktop accessibility scans report zero violations in both themes; mobile accessibility is covered by the touch-viewport tests. Review images have a `glazed-` prefix in `artifacts/courtyard-review/`.
 
-Scroll recovery now checks the canvas's current bounds when progress changes or the viewport resizes, so a stale visibility notification cannot keep a visible model asleep. Visibility callbacks also read current bounds, and returning to a tab or restored page restarts scheduling and refreshes the scroll position. Rendering still stops off-screen and when the page is hidden; the camera timeline and damping are unchanged.
+## Closed facade corners
 
-`tests/engineering-recovery.spec.ts` deliberately suppresses renderer visibility notifications to verify this recovery on phone, tablet and desktop. That controlled fault reproduced a frozen opening before the fix; it does not establish which browser condition caused the original intermittent report. The suite also checks loading mid-story and continuing to scroll after cancelling a rewind.
+Adjoining facade strips previously stopped at their wall boundaries, leaving a notched outer quadrant at perpendicular corners. Each corner now uses one closed stone return, including inward-facing courtyard corners. Straight facade junctions share one continuous pier. The 34 perpendicular corners and 49 total returns retain their original floor metadata, so explanatory separation remains level-local. Massing, glazing, lighting and camera motion are unchanged.
 
-All 19 recovery, engineering, touch-emulation and pause tests passed after this change, including strict opening-image comparisons in both themes. Lint and production build (including TypeScript) passed. Coverage remains Chromium on Windows; Safari and physical devices were not tested.
+The generator checks closed edge connectivity, filled corner outlines and diagonal ray intersections against all 34 finished, bevelled corners. These checks pass. The regenerated editable Blender source and GLB use the same geometry; the GLB is 1,444,336 bytes. Its matching lossless poster is 216,460 bytes at a fresh `courtyard-closed-studio.webp` URL.
 
+Corner validation: lint, TypeScript and production build pass. All nine targeted browser scenarios pass in a single run: published-poster matching, unreadable-model fallback, both touch viewports, four strict pause/rewind opening comparisons and live theme switching. The full browser suite was not repeated for this geometry change. Blender review includes all elevations, roof, underside, courtyard, entrance, facade joints and ground contact. Chromium on Windows uses software graphics; Safari and physical devices remain untested.
 
-## Pavilion refinement and consistent shadows
+### Continuous terrace curbs
 
-The terraced silhouette and six camera shots remain the same. The model now has a quieter bronze fin rhythm, closed corner frames, a connected entrance canopy and threshold, recessed fascia joints, terrace paving and deeper finished parapets. Honed limestone, brushed bronze and recessed smoked glazing have distinct roughness and metal response. Bevels are limited to visible structural edges and corner frames; fine fins, paving and joints remain inexpensive geometry. The final GLB is approximately 1.9 MB and retains the existing `system` and `level` groups.
+The follow-up terrace-corner correction replaces individual parapet strips with four closed, mitred mesh runs. This fills the exposed corner quadrants and removes overlapping internal faces. Shared railing posts are emitted once at each junction. All eight turns are checked from both sides against the bevelled geometry (16 passing ray probes), alongside the 34 passing facade-corner probes and existing support checks. An explicit terrace-corner inspection view is included in the review script.
 
-The web scene uses a small generated studio reflection environment, restrained fill lighting and a single fixed shadow-casting key. The shadow receiver sits at the podium's ground level. Larger PCF maps and a lower normal bias improve narrow facade and contact shadows. Custom depth materials fade shadow coverage continuously with alpha hashing; a cubic weight clears shadows from translucent explanatory layers. Whole systems no longer stop casting shadows abruptly at 95% opacity. Rebar and services are illustrative overlays and do not cast shadows.
+Final assets: 1,437,368-byte GLB and 215,948-byte matching lossless poster, now using `courtyard-finished-studio.webp` to avoid cached interim images. The editable source includes both corner corrections.
 
-Shadow maps are regenerated only when floor separation or facade/structure opacity changes. Camera-only movement, theme changes and settled frames reuse them. Reflection and custom depth resources are disposed when the live view is removed. The loading/fallback WebP is captured from the actual revised opening; pause still captures the viewport's exact live image in memory.
+Final visual review covers both themes at 430, 768 and 1440 px, all six chapter states and sampled reverse transitions. No open corner seams, new clipping or horizontal overflow were observed in the reviewed views. Both desktop engineering-section accessibility scans report zero violations. Fresh review images use the `finished-` prefix; `terrace-corner.png` shows the joined curb in detail.
 
-Regenerate the editable source and GLB without the separate Cycles poster with `-- --no-render` after the Blender script argument. The web poster always comes from `scripts/capture-engineering-poster.mjs`. The Blender script uses OptiX for inspection rendering when available, falling back to its existing render device otherwise.
-
-Visual review files for this refinement are under ignored `artifacts/pavilion-refinement/` and `artifacts/building-review/`. Geometry is an architectural communication illustration. Physical-device and Safari coverage remain unavailable.
-
-The refined geometry was inspected from the front, rear, sides, roof, ground and underside. Browser captures cover both themes at 375, 430, 768, 1024, 1440 and 1920 px, with all six chapter states and intermediate transitions reviewed separately from automated checks. Final translucent-stage captures confirm the cubic shadow weighting removes the dense grain beneath ghosted floors. The exported model retains 22 typed system/level groups and is 1,915,836 bytes; the transparent opening poster is 217,740 bytes.
-
-Lint, TypeScript and production build passed. All 22 targeted engineering, recovery, touch, pause and theme/poster scenarios passed across the initial run and focused reruns, using one Chromium worker. Three longer interaction scenarios exceeded the default 60-second total test budget and passed with `--timeout=120000`; individual interaction assertions were retained. The theme-switch test now waits up to 30 seconds for initial model readiness, consistent with the engineering tests, before checking progress. Strict opening/paused pixel comparisons pass in both themes and across a theme change. These are functional and visual checks in local Chromium, not measurements of physical-device frame rates; the unrelated full-site suite was not rerun for this model refinement.
+After the terrace update, lint, TypeScript and production build pass again. Four focused browser checks pass in one run: final-poster matching, model-load fallback, 430 px touch interaction/accessibility and strict dark-desktop pause/rewind matching. The nine-case run above predates the final curb update; the full suite was not rerun. Safari and physical-device coverage remain outstanding.

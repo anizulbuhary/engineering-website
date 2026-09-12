@@ -28,7 +28,7 @@ for (const viewport of [
     );
     await expect(page.locator(".story-poster")).toHaveAttribute(
       "src",
-      /pavilion-studio/,
+      /courtyard-finished-studio/,
     );
     const start = await page.screenshot();
     for (const index of [1, 2, 3, 4, 5, 3, 0]) {
@@ -86,7 +86,7 @@ test("mobile graphics failure keeps the six readable chapters", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.route("**/models/formwork-pavilion.glb", (route) => route.abort());
+  await page.route("**/models/formwork-courtyard.glb", (route) => route.abort());
   await page.goto("/");
   await approachStory(page);
   await expect(page.locator(".story-static-chapters article")).toHaveCount(6);

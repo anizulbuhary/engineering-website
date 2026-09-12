@@ -91,7 +91,7 @@ for (const colorScheme of ["light", "dark"] as const) {
       page,
     }) => {
       await page.setViewportSize({ width: 1440, height: 1000 });
-      await page.route("**/models/formwork-pavilion.glb", (route) =>
+      await page.route("**/models/formwork-courtyard.glb", (route) =>
         route.abort(),
       );
       await page.goto("/");

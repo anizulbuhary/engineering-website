@@ -67,7 +67,7 @@ test("late model loading and interrupted rewind keep following normal scroll", a
   const pending = new Promise<void>((resolve) => {
     release = resolve;
   });
-  await page.route("**/models/formwork-pavilion.glb", async (route) => {
+  await page.route("**/models/formwork-courtyard.glb", async (route) => {
     await pending;
     await route.continue();
   });

@@ -457,7 +457,7 @@ test("theme changes preserve the live scene, paused image, scroll and reading st
 test("studio fallback poster has transparent margins and no baked backdrop", async ({
   request,
 }) => {
-  const response = await request.get("/models/pavilion-studio-refined.webp");
+  const response = await request.get("/models/courtyard-finished-studio.webp");
   expect(response.ok()).toBe(true);
   const { data, info } = await sharp(await response.body())
     .ensureAlpha()
