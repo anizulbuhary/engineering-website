@@ -149,7 +149,7 @@ def closed_corner(outline,level):
         for a,b in zip(face,face[1:]+face[:1]):
             edge=tuple(sorted((a,b))); edges[edge]=edges.get(edge,0)+1
     assert all(uses==2 for uses in edges.values()), 'Open corner mesh'
-    bucket=BUCKETS.setdefault(('facade',level),{'verts':[],'faces':[],'mats':[],'bevel':set()})
+    bucket=BUCKETS.setdefault(('frame',level),{'verts':[],'faces':[],'mats':[],'bevel':set()})
     start=len(bucket['verts'])
     bucket['verts'].extend((p.x,p.y,z) for z in [level*H,(level+1)*H] for p in outline)
     bucket['faces'].extend(tuple(start+i for i in face) for face in faces)
@@ -197,10 +197,10 @@ def facade(a,b,floors,bays,kind='facade',start=0):
     a,b=Vector(a),Vector(b)
     along=(b-a).normalized(); normal=Vector((along.y,-along.x))
     length=(b-a).length
-    def block(t,offset,z,width,depth,height,mat,level,bevel=False):
+    def block(t,offset,z,width,depth,height,mat,level,bevel=False,role=None):
         p=a+along*t+normal*offset
         dims=(width,depth,height) if abs(along.x)>.5 else (depth,width,height)
-        box('Facade component',(p.x,p.y,z),dims,mat,kind,level,bevel)
+        box('Facade component',(p.x,p.y,z),dims,mat,role or kind,level,bevel)
     bay=length/bays
     for level in range(start,floors):
         z=level*H
@@ -214,7 +214,7 @@ def facade(a,b,floors,bays,kind='facade',start=0):
         # Continuous bands span the slim intermediate mullions, meeting only
         # the stone corner returns. No gaps or coplanar overlapping faces.
         for dz in [.055,H-.055]:
-            block(length/2,0,z+dz,length-.60,.32,.11,stone,level,True)
+            block(length/2,0,z+dz,length-.60,.32,.11,stone,level,True,role='frame')
         for i in range(bays):
             left=.30 if i==0 else i*bay+.0325
             right=length-.30 if i==bays-1 else (i+1)*bay-.0325
@@ -275,8 +275,8 @@ for (x,y,level),ends in FACADE_ENDS.items():
 print('CORNER_CONTACT_CHECKS',joined_corners,'joined corners;',len(FACADE_ENDS),'closed returns',flush=True)
 # Dark metal jackets closely wrap the actual double-height entrance columns.
 for x in [-1.48,-.28,.92,1.88]:
-    box('Entrance metal pier',(x,-3.35,H-.04),(.32,.36,2*H-.28),copper if x in [-.28,.92] else bronze,'facade',0,True)
-box('Entrance architrave',(.2,-3.35,2*H-.03),(3.8,.56,.30),stone,'facade',2,True)
+    box('Entrance metal pier',(x,-3.35,H-.04),(.32,.36,2*H-.28),copper if x in [-.28,.92] else bronze,'frame',0,True)
+box('Entrance architrave',(.2,-3.35,2*H-.03),(3.8,.56,.30),stone,'frame',2,True)
 box('Recessed lobby glazing',(.2,-2.75,H),(3.3,.03,2*H-.32),glass,'facade',0)
 box('Lobby back wall',(.2,.95,H),(3.3,.12,2*H-.30),inside,'facade',0)
 for x in [-1.42,-.32,.78,1.82]:
@@ -495,7 +495,8 @@ for (kind,level),b in BUCKETS.items():
         for loop_index in poly.loop_indices:
             co=mesh.vertices[mesh.loops[loop_index].vertex_index].co
             uv.data[loop_index].uv=(co[dims[0]]*.75,co[dims[1]]*.75)
-    ob['system']=kind; ob['level']=level
+    ob['system']='facade' if kind=='frame' else kind; ob['level']=level
+    if kind=='frame': ob['animationRole']='frame'
     if b['bevel']:
         group=ob.vertex_groups.new(name='Finished stone edges'); group.add(list(b['bevel']),1,'REPLACE')
         bpy.context.view_layer.objects.active=ob
@@ -509,11 +510,12 @@ for (kind,level),b in BUCKETS.items():
 # independent strips leave this diagonal ray travelling through the open notch.
 bpy.context.view_layer.update()
 depsgraph=bpy.context.evaluated_depsgraph_get()
-facade_trees={ob['level']:BVHTree.FromObject(ob,depsgraph) for ob in assets if ob['system']=='facade'}
+facade_trees={ob['level']:BVHTree.FromObject(ob,depsgraph) for ob in assets if ob['system']=='facade' and not ob.get('animationRole')}
+frame_trees={ob['level']:BVHTree.FromObject(ob,depsgraph) for ob in assets if ob.get('animationRole')=='frame'}
 for point,outward,level in CORNER_PROBES:
     origin=Vector((point.x+outward.x*.30,point.y+outward.y*.30,(level+.5)*H))
     direction=Vector((-outward.x,-outward.y,0)).normalized()
-    hit,normal,index,distance=facade_trees[level].ray_cast(origin,direction,.5)
+    hit,normal,index,distance=frame_trees[level].ray_cast(origin,direction,.5)
     assert hit is not None and .14<distance<.24, ('Open finished corner',point,level,distance)
 print('FINISHED_CORNER_RAYS',len(CORNER_PROBES),'passed',flush=True)
 for point,outward,level in PARAPET_PROBES:

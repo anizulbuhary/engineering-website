@@ -13,6 +13,7 @@ The selected courtyard concept replaces the former terraced pavilion. Its defini
 - `public/models/formwork-courtyard.glb`: approximately 1.44 MB, with embedded texture and Meshopt compression.
 - `public/models/courtyard-finished-studio.webp`: approximately 220 KB, transparent lossless capture of the actual live opening.
 - `lib/engineering-scene.ts`: lazy renderer, camera timeline, system fades, shadow updates and resource disposal.
+- `lib/engineering-timeline.ts`: deterministic camera and assembly interpolation with gentler opening and completion.
 - `components/engineering/StructureDrawing.tsx`: static SVG studies using the same wing dimensions as Blender.
 
 The former pavilion model, Blender file and poster are removed; their previous versions remain in Git history. No package dependency, backend or public API was added. Meshopt decoding uses the small decoder already shipped with Three.js, loaded with the deferred scene module.
@@ -102,3 +103,15 @@ Final assets: 1,437,368-byte GLB and 215,948-byte matching lossless poster, now 
 Final visual review covers both themes at 430, 768 and 1440 px, all six chapter states and sampled reverse transitions. No open corner seams, new clipping or horizontal overflow were observed in the reviewed views. Both desktop engineering-section accessibility scans report zero violations. Fresh review images use the `finished-` prefix; `terrace-corner.png` shows the joined curb in detail.
 
 After the terrace update, lint, TypeScript and production build pass again. Four focused browser checks pass in one run: final-poster matching, model-load fallback, 430 px touch interaction/accessibility and strict dark-desktop pause/rewind matching. The nine-case run above predates the final curb update; the full suite was not rerun. Safari and physical-device coverage remain outstanding.
+
+## Gentler opening and completion
+
+`lib/engineering-timeline.ts` separates camera interpolation from assembly fades. The first 6% of the ordinary scroll track keeps the building fully assembled while the camera begins its orbit. The first reveal then eases into the structural chapter. On completion, the exterior is fully assembled by 94% of the track; a quintic camera curve settles more gently into the final view. Chapter positions, scroll distance and rewind progress remain unchanged, and the same deterministic timeline works in either direction.
+
+The limestone floor bands and corner returns, plus the entrance frame finishes, now carry an internal `animationRole: frame`. They retain `system: facade` and their original floor levels: these are architectural finishes, not newly classified structural members. Their visibility follows the structural frame, so removing glass no longer removes the building's front outline. They fade with the structure for the reinforcement, services and drawing studies. Terraces, interiors and glazing retain their facade fade. Connected frame components retain their existing floor transforms.
+
+The source and GLB are regenerated (1,443,660 bytes). The opening appearance is unchanged and the existing published poster passes the strict opening comparison, so no replacement poster URL is needed. All 34 facade and 16 parapet ray probes, closed-mesh checks and support checks pass.
+
+Pacing validation: lint, TypeScript and production build pass. Thirteen targeted scenarios cover the new opening/ending timing contracts, actual exported frame roles, poster matching, malformed-model fallback, glazing order, mobile interactions and all four strict pause/rewind comparisons. Eleven passed initially; the two light-theme pause cases exceeded the existing 10-second initial scene-ready wait, before pause began. Both passed in an isolated rerun with assertions unchanged. This was not a single all-green run or a full-suite rerun. Chromium/SwiftShader loading time remains a coverage limitation; Safari and physical devices were not tested.
+
+Visual pacing review covers both themes at 430, 768 and 1440 px, with twelve sampled opening, structural and completion states per theme in both scroll directions. The assembled opening remains readable through the small-scroll samples and the perimeter frame remains visible after glazing clears. No new clipping, open corners or horizontal overflow was observed in these views. Desktop engineering-section accessibility scans report zero violations in both themes. Review assets use the `pacing-` prefix under ignored `artifacts/courtyard-review/`.

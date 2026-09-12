@@ -2,87 +2,19 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { sampleEngineeringTimeline } from "./engineering-timeline";
 import { immersiveStory } from "@/content/engineering-story";
 
 type Part = {
   mesh: THREE.Mesh;
   system: string;
+  animationRole?: string;
   level: number;
   materials: THREE.MeshStandardMaterial[];
   materialOpacities: number[];
   shadowMaterial: THREE.MeshDepthMaterial;
   edges?: THREE.LineSegments;
 };
-// The camera and building systems share one reversible scroll timeline.
-const shots = [
-  {
-    angle: 0.68,
-    height: 0.43,
-    distance: 28,
-    spread: 0,
-    facade: 1,
-    solid: 1,
-    rebar: 0,
-    services: 0,
-    drawing: 0,
-  },
-  {
-    angle: 1.2,
-    height: 0.36,
-    distance: 30,
-    spread: 0.28,
-    facade: 0,
-    solid: 1,
-    rebar: 0,
-    services: 0,
-    drawing: 0,
-  },
-  {
-    angle: 1.95,
-    height: 0.28,
-    distance: 30,
-    spread: 0.55,
-    facade: 0,
-    solid: 0.055,
-    rebar: 1,
-    services: 0,
-    drawing: 0.22,
-  },
-  {
-    angle: 2.65,
-    height: 0.53,
-    distance: 32,
-    spread: 0.65,
-    facade: 0,
-    solid: 0.065,
-    rebar: 0,
-    services: 1,
-    drawing: 0.25,
-  },
-  {
-    angle: Math.PI,
-    height: 0.025,
-    distance: 31,
-    spread: 0.22,
-    facade: 0,
-    solid: 0.025,
-    rebar: 0,
-    services: 0,
-    drawing: 1,
-  },
-  {
-    angle: Math.PI * 2 + 0.68,
-    height: 0.43,
-    distance: 28,
-    spread: 0,
-    facade: 1,
-    solid: 1,
-    rebar: 0,
-    services: 0,
-    drawing: 0,
-  },
-];
-
 export function mountEngineeringScene(
   host: HTMLElement,
   onReady: () => void,
@@ -185,13 +117,8 @@ export function mountEngineeringScene(
     if (current !== desired) wake();
   }
   function renderFrame() {
-    const p = current * (shots.length - 1);
-    const index = Math.min(Math.floor(p), shots.length - 2);
-    const local = p - index;
-    const blend = local * local * (3 - 2 * local);
-    const a = shots[index],
-      b = shots[index + 1];
-    const at = (k: keyof typeof a) => THREE.MathUtils.lerp(a[k], b[k], blend);
+    const state = sampleEngineeringTimeline(current);
+    const at = (key: keyof typeof state) => state[key];
     // Camera-only movement reuses the same world-space shadow map. Geometry
     // separation and material fades invalidate it, in either scroll direction.
     const shadowState = [at("spread"), at("facade"), at("solid")]
@@ -213,6 +140,7 @@ export function mountEngineeringScene(
     for (const {
       mesh,
       system,
+      animationRole,
       level,
       materials,
       materialOpacities,
@@ -222,7 +150,9 @@ export function mountEngineeringScene(
       mesh.position.y = level >= 0 ? level * at("spread") : 0;
       let opacity = 1;
       if (system === "facade") {
-        opacity = at("facade");
+        // Retain the architectural beam/column outline while glazing clears;
+        // fade it with the structure in the technical chapters.
+        opacity = animationRole === "frame" ? at("solid") : at("facade");
       }
       if (system === "structure") opacity = at("solid");
       if (system === "rebar") opacity = at("rebar");
@@ -369,6 +299,7 @@ export function mountEngineeringScene(
         parts.push({
           mesh: node,
           system,
+          animationRole: metadata?.animationRole,
           level: metadata?.level ?? -1,
           materials,
           materialOpacities: materials.map((material) => material.opacity),
