@@ -56,7 +56,7 @@ export function ImageComparison() {
             </div>
             <div className="comparison-divider" aria-hidden="true">
               <span>
-                <MoveHorizontal size={20} />
+                <MoveHorizontal size={18} />
               </span>
             </div>
             <input

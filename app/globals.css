@@ -613,8 +613,8 @@ dialog::backdrop {
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 52px;
+  width: 36px;
+  height: 44px;
   border: 1px solid #dba078;
   background: #191b19;
   color: #f4f2ed;
