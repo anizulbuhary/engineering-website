@@ -45,7 +45,7 @@ export function Footer() {
               <Link
                 key={n.href}
                 href={n.href}
-                className="navigation-link w-fit min-h-11 py-3 hover:text-white"
+                className="navigation-link w-fit min-h-11 py-3 hover:text-white focus-visible:text-white transition-colors duration-200"
               >
                 {n.label}
               </Link>

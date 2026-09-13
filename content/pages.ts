@@ -93,8 +93,16 @@ export const contact = {
   identityNote:
     "FORMWORK is a demo identity. Verified company contact information will be added before launch.",
   notice:
-    "Enquiries are not open yet. This form is a preview; nothing entered here is sent or saved.",
-  button: "Submissions opening soon",
+    "Try the enquiry experience. This is a demo: nothing you enter is sent or saved. Name, email and project details are required.",
+  button: "Submit enquiry",
+  noScript:
+    "Enable JavaScript to try this enquiry preview. Nothing is sent or saved.",
+  confirmation: {
+    label: "ENQUIRY PREVIEW COMPLETE",
+    title: "A good project starts with a conversation.",
+    text: "Thank you for trying the enquiry experience. This was a demonstration; your details have not been sent or saved.",
+    again: "Start another enquiry",
+  },
   asideTitle: "What to include",
   asideText:
     "A short outline is enough. You do not need to prepare a full technical brief.",
@@ -111,7 +119,13 @@ export const contact = {
   messageHint:
     "For example: a residential building in Dubai, at design stage, needing reinforcement drawings.",
   fields: [
-    { name: "name", label: "Full name", type: "text", autoComplete: "name" },
+    {
+      name: "name",
+      label: "Full name",
+      type: "text",
+      autoComplete: "name",
+      required: true,
+    },
     {
       name: "company",
       label: "Company (optional)",
@@ -123,6 +137,7 @@ export const contact = {
       label: "Email address",
       type: "email",
       autoComplete: "email",
+      required: true,
     },
     {
       name: "location",

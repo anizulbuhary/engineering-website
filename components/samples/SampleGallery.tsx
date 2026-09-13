@@ -16,14 +16,19 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
   const [category, setCategory] = useState("All");
   const [hasFiltered, setHasFiltered] = useState(false);
   const [selected, setSelected] = useState(0);
+  const [previous, setPrevious] = useState<number | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
   const filtered = samples.filter(
     (s) => category === "All" || s.category === category,
   );
   const sample = samples[selected];
-  const move = (delta: number) =>
+  const move = (delta: number) => {
+    setPrevious(selected);
     setSelected((i) => (i + delta + samples.length) % samples.length);
+  };
+  const position = (index: number) =>
+    `${String(index + 1).padStart(2, "0")} / ${String(samples.length).padStart(2, "0")}`;
   return (
     <section className="shell pb-24">
       <div
@@ -59,6 +64,7 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
               className="sample-preview group relative w-full bg-concrete p-5 md:p-8"
               onClick={(e) => {
                 opener.current = e.currentTarget;
+                setPrevious(null);
                 setSelected(samples.indexOf(s));
                 dialog.current?.showModal();
               }}
@@ -71,7 +77,7 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
                 height={640}
                 className="w-full h-auto"
               />
-              <span className="absolute right-4 bottom-4 px-3 py-3 inline-flex items-center gap-2 text-xs bg-paper group-hover:bg-ink group-hover:text-paper transition-colors">
+              <span className="absolute right-4 bottom-4 px-3 py-3 inline-flex items-center gap-2 text-xs bg-paper group-hover:bg-ink group-hover:text-paper group-focus-visible:bg-ink group-focus-visible:text-paper transition-colors duration-200">
                 {sampleGalleryCopy.preview}
                 <Expand size={17} aria-hidden />
               </span>
@@ -120,7 +126,7 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
             autoFocus
             onClick={() => dialog.current?.close()}
             aria-label="Close preview"
-            className="p-3"
+            className="p-3 shrink-0"
           >
             <X />
           </button>
@@ -141,8 +147,28 @@ export function SampleGallery({ samples }: { samples: Sample[] }) {
             >
               <ArrowLeft size={18} />
             </button>
-            <span className="eyebrow" aria-live="polite">
-              {selected + 1} / {samples.length}
+            <span
+              className="gallery-position eyebrow"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {previous !== null && (
+                <span
+                  key={`previous-${selected}`}
+                  className="gallery-position-previous"
+                  aria-hidden="true"
+                >
+                  {position(previous)}
+                </span>
+              )}
+              <span
+                key={selected}
+                className={
+                  previous === null ? undefined : "gallery-position-current"
+                }
+              >
+                {position(selected)}
+              </span>
             </span>
             <button
               aria-label="Next sample"

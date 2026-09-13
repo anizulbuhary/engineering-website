@@ -3,9 +3,11 @@ import Image from "next/image";
 import { ScrollImage } from "@/components/ui/ScrollImage";
 import type { Article } from "@/types/content";
 import { Breadcrumbs, TextLink } from "@/components/ui/Primitives";
+import { ReadingProgress } from "./ReadingProgress";
 export function ArticleDetail({ article: a }: { article: Article }) {
   return (
     <article className="shell pb-24">
+      <ReadingProgress key={a.slug} />
       <Breadcrumbs parent="Insights" href="/insights" title={a.category} />
       <header className="max-w-4xl mx-auto py-14 md:py-20">
         <Reveal stagger>

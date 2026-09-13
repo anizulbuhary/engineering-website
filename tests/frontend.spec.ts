@@ -176,11 +176,18 @@ test("Contact preview sends and stores nothing", async ({ page }) => {
     .getByLabel("Tell us about your project")
     .fill("A demonstration project brief.");
   await expect(
-    page.getByRole("button", { name: "Submissions opening soon" }),
-  ).toBeDisabled();
-  await page
-    .locator("form")
-    .evaluate((form) => (form as HTMLFormElement).requestSubmit());
+    page.getByRole("button", { name: "Submit enquiry" }),
+  ).toBeEnabled();
+  await page.getByRole("button", { name: "Submit enquiry" }).click();
+  await expect(
+    page.getByRole("heading", {
+      name: "A good project starts with a conversation.",
+    }),
+  ).toBeFocused();
+  await expect(page.locator("#enquiry-complete-description")).toContainText(
+    "not been sent or saved",
+  );
+  await expect(page.locator("form")).toHaveCount(0);
   await expect(page).toHaveURL("/contact");
   expect(requests).toEqual([]);
   expect(
@@ -198,6 +205,11 @@ test("Contact preview sends and stores nothing", async ({ page }) => {
     path: "artifacts/contact-desktop.png",
     fullPage: true,
   });
+  await page.getByRole("button", { name: "Start another enquiry" }).click();
+  await expect(page.getByLabel("Full name", { exact: true })).toBeFocused();
+  await expect(page.getByLabel("Full name", { exact: true })).toHaveValue("");
+  await expect(page.getByLabel("Email address")).toHaveValue("");
+  await expect(page.getByLabel("Tell us about your project")).toHaveValue("");
 });
 test("Unknown detail routes return 404", async ({ page }) => {
   for (const route of [
@@ -279,7 +291,7 @@ test("Reduced motion and JavaScript-free content remain usable", async ({
   ).toBeVisible();
   await staticPage.goto("/contact");
   await expect(
-    staticPage.getByRole("button", { name: "Submissions opening soon" }),
+    staticPage.getByRole("button", { name: "Submit enquiry" }),
   ).toBeDisabled();
   await context.close();
 });

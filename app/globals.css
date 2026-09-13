@@ -1298,6 +1298,178 @@ dialog::backdrop {
 }
 
 /* Small, deliberate interactions; layout and reading positions stay stable. */
+.enquiry-confirmation h2:focus {
+  outline: none;
+}
+.enquiry-restart > svg {
+  transition: transform 250ms ease-out;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .enquiry-restart.text-link:focus-visible > svg,
+  .enquiry-restart.text-link:active > svg {
+    transform: rotate(-90deg);
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .enquiry-restart.text-link:hover > svg {
+    transform: rotate(-90deg);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .enquiry-confirmation {
+    animation: enquiry-confirmation-in 360ms ease-out;
+  }
+  .enquiry-check svg {
+    animation: enquiry-confirmation-in 500ms ease-out;
+  }
+}
+@keyframes enquiry-confirmation-in {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.comparison-divider > span {
+  transition:
+    background-color 180ms,
+    color 180ms;
+}
+.image-comparison:has(.comparison-input:active) .comparison-divider > span {
+  background: #dba078;
+  color: #191b19;
+}
+.page-marker {
+  position: relative;
+}
+.page-marker::before {
+  content: "";
+  position: absolute;
+  left: -11px;
+  top: calc(50% - 1px);
+  width: 5px;
+  height: 2px;
+  background: var(--text-accent);
+  opacity: 0;
+}
+.page-marker[aria-current="page"]::before {
+  opacity: 1;
+}
+.mobile-page-marker {
+  padding-left: 18px;
+}
+.mobile-page-marker::before {
+  left: 0;
+  width: 8px;
+}
+.navigation-link.page-marker[aria-current="page"]::after {
+  transform: scaleX(0);
+}
+.project-image::before,
+.project-image::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  border: solid #dba078;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.project-image::before {
+  top: 12px;
+  right: 12px;
+  border-width: 1px 1px 0 0;
+}
+.project-image::after {
+  bottom: 12px;
+  left: 12px;
+  border-width: 0 0 1px 1px;
+}
+.project-link:focus-visible .project-image::before,
+.project-link:focus-visible .project-image::after {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .project-link:hover .project-image::before,
+  .project-link:hover .project-image::after {
+    opacity: 1;
+  }
+}
+button:not(:disabled):active,
+.press-feedback:active,
+.text-link:active,
+.editorial-explore:active {
+  filter: brightness(0.9);
+}
+.press-feedback > svg,
+button > .lucide-arrow-left,
+button > .lucide-arrow-right {
+  transition: transform 180ms;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .press-feedback:active > svg,
+  .text-link:active > svg,
+  .editorial-explore:active > svg {
+    transform: translate(2px, -2px);
+  }
+  button:active > .lucide-arrow-left {
+    transform: translateX(-2px);
+  }
+  button:active > .lucide-arrow-right {
+    transform: translateX(2px);
+  }
+}
+.reading-progress {
+  position: fixed;
+  top: var(--site-header-height);
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 39;
+  background: var(--text-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+.gallery-position {
+  position: relative;
+  display: inline-grid;
+  min-width: 7ch;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.gallery-position-previous {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gallery-position-current {
+    animation: gallery-count-in 180ms ease-out;
+  }
+  .gallery-position-previous {
+    animation: gallery-count-out 180ms ease-out;
+  }
+}
+@keyframes gallery-count-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes gallery-count-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .text-link,
 .navigation-link {
   position: relative;
@@ -1358,6 +1530,12 @@ dialog::backdrop {
 }
 .sample-preview > img {
   transition: transform 600ms cubic-bezier(0.2, 0.65, 0.25, 1);
+}
+@media (max-width: 767px) {
+  /* Reserve two title lines so gallery controls stay put when changing sheets. */
+  .sample-dialog h2 {
+    min-height: 2lh;
+  }
 }
 @media (hover: hover) and (pointer: fine) {
   .text-link:hover::after,
@@ -1505,6 +1683,12 @@ dialog::backdrop {
   place-items: center;
   color: var(--text-primary);
   border: 1px solid transparent;
+  transition:
+    color 180ms,
+    background-color 180ms;
+}
+.appearance-trigger:focus-visible {
+  color: var(--text-accent);
 }
 .appearance-trigger[aria-expanded="true"] {
   color: var(--text-accent);
@@ -1536,6 +1720,9 @@ dialog::backdrop {
   padding: 10px;
   font-size: 13px;
   cursor: pointer;
+  transition:
+    background-color 180ms,
+    color 180ms;
 }
 .appearance-option:has(input:checked) {
   background: var(--selected-surface);
@@ -1548,6 +1735,7 @@ dialog::backdrop {
   flex-shrink: 0;
 }
 .appearance-option:has(input:focus-visible) {
+  background: var(--selected-surface);
   outline: 2px solid var(--focus-color);
   outline-offset: 2px;
 }

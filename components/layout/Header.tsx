@@ -72,7 +72,7 @@ export function Header() {
                 key={n.href}
                 href={n.href}
                 aria-current={isCurrent(n.href) ? "page" : undefined}
-                className="navigation-link inline-flex min-h-11 items-center py-3 hover:text-accent aria-[current=page]:text-accent"
+                className="navigation-link page-marker inline-flex min-h-11 items-center py-3 hover:text-accent focus-visible:text-accent aria-[current=page]:text-accent transition-colors duration-200"
               >
                 {n.label}
               </Link>
@@ -82,7 +82,7 @@ export function Header() {
           <Link
             href="/contact"
             aria-current={isCurrent("/contact") ? "page" : undefined}
-            className="hidden lg:inline-flex min-h-11 items-center gap-8 border border-ink px-5 py-3 text-xs hover:bg-ink hover:text-paper aria-[current=page]:border-accent transition-colors"
+            className="press-feedback hidden lg:inline-flex min-h-11 items-center gap-8 border border-ink px-5 py-3 text-xs hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper aria-[current=page]:border-accent transition-colors duration-200"
           >
             {navigationCopy.contact} <ArrowUpRight size={15} aria-hidden />
           </Link>
@@ -136,7 +136,7 @@ export function Header() {
                 key={n.href}
                 href={n.href}
                 aria-current={isCurrent(n.href) ? "page" : undefined}
-                className="flex items-center gap-6 border-b border-line py-3 text-2xl aria-[current=page]:text-accent"
+                className="page-marker mobile-page-marker flex items-center gap-6 border-b border-line py-3 text-2xl aria-[current=page]:text-accent"
               >
                 {n.label}
               </Link>
