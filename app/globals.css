@@ -613,8 +613,8 @@ dialog::backdrop {
   transform: translate(-50%, -50%);
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 44px;
+  width: 28px;
+  height: 36px;
   border: 1px solid #dba078;
   background: #191b19;
   color: #f4f2ed;
@@ -1126,6 +1126,14 @@ dialog::backdrop {
   }
   .editorial-image img {
     object-position: center;
+  }
+  .comparison-divider > span {
+    width: 22px;
+    height: 28px;
+  }
+  .comparison-divider > span svg {
+    width: 14px;
+    height: 14px;
   }
 
   .engineering-experience.is-immersive {
