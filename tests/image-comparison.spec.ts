@@ -35,6 +35,16 @@ test("dragging and keyboard controls reveal both views and keep their crops alig
   await expect(image).toHaveCSS("outline-style", "solid");
   for (const width of [375, 768, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
+    for (const key of ["Home", "End"]) {
+      await control.focus();
+      await page.keyboard.press(key);
+      const frame = (await image.boundingBox())!;
+      const handle = (await page
+        .locator(".comparison-divider > span")
+        .boundingBox())!;
+      const edge = key === "Home" ? frame.x : frame.x + frame.width;
+      expect(handle.x + handle.width / 2).toBeCloseTo(edge, 1);
+    }
     await page.evaluate(() => scrollTo(0, 140));
     const geometry = await image.locator("img").evaluateAll((nodes) =>
       nodes.map((node) => {
@@ -118,6 +128,43 @@ test("phone gestures compare horizontally and scroll vertically", async ({
   await expect
     .poll(async () => Number(await input.inputValue()))
     .toBeGreaterThan(70);
+  const y = rect.y + 160;
+  const checkEdge = async (value: "0" | "100") => {
+    await expect(input).toHaveValue(value);
+    const frame = (await page.locator(".image-comparison").boundingBox())!;
+    const handle = (await page
+      .locator(".comparison-divider > span")
+      .boundingBox())!;
+    const edge = value === "0" ? frame.x : frame.x + frame.width;
+    expect(handle.x + handle.width / 2).toBeCloseTo(edge, 1);
+    const visible =
+      Math.min(handle.x + handle.width, frame.x + frame.width) -
+      Math.max(handle.x, frame.x);
+    expect(visible).toBeCloseTo(handle.width / 2, 1);
+    await expect(page.locator(".image-comparison")).toHaveCSS(
+      "overflow",
+      "hidden",
+    );
+  };
+  await gesture(
+    { x: rect.x + rect.width * 0.8, y },
+    { x: rect.x + rect.width - 1, y },
+  );
+  await checkEdge("100");
+  // The visible half remains usable for dragging back into the image.
+  await gesture(
+    { x: rect.x + rect.width - 4, y },
+    { x: rect.x + rect.width * 0.2, y },
+  );
+  await expect
+    .poll(async () => Number(await input.inputValue()))
+    .toBeLessThan(30);
+  await gesture({ x: rect.x + rect.width * 0.2, y }, { x: rect.x + 1, y });
+  await checkEdge("0");
+  await gesture({ x: rect.x + 4, y }, { x: rect.x + rect.width * 0.6, y });
+  await expect
+    .poll(async () => Number(await input.inputValue()))
+    .toBeGreaterThan(50);
   await gesture({ x: 100, y: rect.y + 180 }, { x: 100, y: rect.y + 40 });
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(50);
   expect(

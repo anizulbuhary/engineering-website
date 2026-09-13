@@ -608,7 +608,7 @@ dialog::backdrop {
 .comparison-divider > span {
   visibility: hidden;
   position: absolute;
-  left: clamp(24px, var(--comparison), calc(100% - 24px));
+  left: var(--comparison);
   top: 50%;
   transform: translate(-50%, -50%);
   display: grid;
